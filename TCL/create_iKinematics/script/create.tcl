@@ -36,7 +36,7 @@
 set work_dir ".\\"
 
 # Set the reference directory for source file relative paths (by default the value is script directory path)
-set origin_dir "$work_dir\\create_tcl\\iKinematics"
+set origin_dir "$work_dir\\TCL\\create_iKinematics"
 
 set origin_constraints_dir "$origin_dir\\constraints"
 set origin_sources_dir "$origin_dir\\sources"
