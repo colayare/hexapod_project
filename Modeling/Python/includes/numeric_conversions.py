@@ -1,12 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Sep  5 19:46:04 2019
-
-@author: Roy
-
-Python2.7
-"""
-
 from ctypes import *
 
 class numeric_conversions:
