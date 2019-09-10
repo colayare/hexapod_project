@@ -16,9 +16,9 @@ arty7z10_ikinematics_v2_2/*
 ##	Petalinux Directory
 !Petalinux/*
 ##	Modeling Directory
+!Modeling/*
 Modeling/*.pyc
 Modeling/*.~
-!Modeling/*
 ###########################################################################
 ##	SDK .metadata Folder content to avoid SDK not opening issue
 arty7z10_ikinematics_v2_2/arty7z10_ikinematics_v2_2.sdk/.metadata/
