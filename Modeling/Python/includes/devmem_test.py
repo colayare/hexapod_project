@@ -7,7 +7,7 @@ Created on Sun Sep  1 21:06:41 2019
 import sys
 sys.path.append('./includes')
 from numeric_conversions import numeric_conversions as nc
-import kinematics as ki
+#import kinematics as ki
 
 def addroff(axi_address):
     baseaddr = 0x40000000
