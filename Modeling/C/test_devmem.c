@@ -16,9 +16,9 @@
 int main() {
         //-
         printf("Testing /dev/mem/ iKinematics Access.\n");
-        printf("AXI_IKINEMATICS_BASEADDR=0x%x\n", AXI_IKINEMATICS_BASEADDR);
-        printf("AXI_IKINEMATICS_HIGHADDR=0x%x\n", AXI_IKINEMATICS_HIGHADDR);
-        printf("AXI_IKINEMATICS_RMAPSIZE=0x%x\n", AXI_IKINEMATICS_RMAPSIZE);
+        printf("AXI_IK_BASEADDR=0x%x\n", AXI_IK_BASEADDR);
+        printf("AXI_IK_HIGHADDR=0x%x\n", AXI_IK_HIGHADDR);
+        printf("AXI_IK_RMAPSIZE=0x%x\n", AXI_IK_RMAPSIZE);
 
         int _fdmem;
         int *map = NULL;
@@ -34,7 +34,7 @@ int main() {
         }
 
         // mmap() the opened /dev/mem
-        map = (int *)(mmap(0, AXI_IKINEMATICS_RMAPSIZE*4, PROT_READ|PROT_WRITE, MAP_SHARED, _fdmem, AXI_IKINEMATICS_BASEADDR));
+        map = (int *)(mmap(0, AXI_IK_RMAPSIZE*4, PROT_READ|PROT_WRITE, MAP_SHARED, _fdmem, AXI_IK_BASEADDR));
 
         // map ptr to access mapped area
         for (int i=0;i<5;i++)
