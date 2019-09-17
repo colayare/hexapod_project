@@ -2,6 +2,16 @@ import os
 
 class axi_ikinematics_ip:
     __base_address = 0x40000000
+    __base_address_str = str(hex(0x40000000))
+    
+    def get_address(self, relative_address, return_type="str"):
+        absolute_address = self.__base_address + relative_address * 4
+        if ( return_type == "int" ):
+            return absolute_address
+        elif ( return_type == "hex" ):
+            return hex(absolute_address)
+        else:
+            return str(hex(absolute_address))
     
     def __init__(self, base_address=0x40000000):
         self.__base_address = base_address
@@ -28,13 +38,6 @@ class axi_ikinematics_ip:
     def trigger_iKinematics(self):
         os.system('devmem '+self.__str_base_address+' w 0x00000002')
         os.system('devmem '+self.__str_base_address+' w 0x00000000')
-        return True
-    
-    def set_hexapod_leg(self, leg_idx):
-        value = hex(leg_idx)[2:].zfill(8)[0:8]
-        addr = str( hex(self.__base_address+4) )
-        os.system('devmem '+addr+' w '+value )
-        os.system('devmem '+self.__str_base_address+' w 0x00000002' )
         return True
     
     def explore_pwm(self):

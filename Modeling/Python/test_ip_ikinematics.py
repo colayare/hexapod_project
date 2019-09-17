@@ -2,20 +2,20 @@ import sys
 sys.path.append('./includes')
 import numpy as np
 import math as mt
-import numeric_conversions as nc
+from numeric_conversions import numeric_conversions as NUM_CONV
 from hexapod_class import hexapod_kinematics as hc
-from devmem import axi_ikinematics_ip as iKinematics_IP
 
 #### Params Files
 joint_offsets_filename = "./params/joint_offset.params"
 gait_steps_filename = './params/gait_steps.params'
 
+####
+nc = NUM_CONV()
+
 #### Code
 ## Initialize Hexapod Class
 hexapod = hc()
-## Initialize devmem Class
-axi_ip = iKinematics_IP()
-axi_ip.base_address = 0x40000000
+#hexapod.init_axi()
 
 ## Import Parameters
 hexapod.offsets_file = joint_offsets_filename
@@ -25,19 +25,23 @@ print('Joint offsets:')
 print(hexapod.j_offs)
 
 ## Import Gait Seps
-hexapod.read_gait_steps()
+hexapod.read_gait_steps(1)
 
-axi_ip.set_hexapod_leg(0)
-for i in range ( 10 ):
-    [x, y, z] = hexapod.gait_step(i)
-    axi_ip.axi_write(2, int(x, 16))
-    axi_ip.axi_write(3, int(y, 16))
-    axi_ip.axi_write(4, int(z, 16))
-    axi_ip.write_fifo()
-    axi_ip.set_hexapod_leg(0)
-    axi_ip.trigger_iKinematics()
-    q1 = axi_ip.axi_read(2)
-    q2 = axi_ip.axi_read(3)
-    q3 = axi_ip.axi_read(4)
-#    print(q1, q2, q3, axi_ip.axi_read(1))
-    axi_ip.explore_pwm()
+#hexapod.config_leg_ctr("mux_leg", 3)
+
+
+#for i in range ( 10 ):
+#    [x, y, z] = hexapod.gait_step(i)
+#    hexapod.axi_ip.axi_write(2, x)
+#    hexapod.axi_ip.axi_write(3, y)
+#    hexapod.axi_ip.axi_write(4, z)
+#    hexapod.axi_write_fifo()
+#    hexapod.axi_trigger_ikinematics()
+#    q1 = hex(nc.to_int(hexapod.axi_ip.axi_read(2)))
+#    q2 = hex(nc.to_int(hexapod.axi_ip.axi_read(3)))
+#    q3 = hex(nc.to_int(hexapod.axi_ip.axi_read(4)))
+##    q1 = nc.bytes2dfloat(hexapod.axi_ip.axi_read(2))
+##    q2 = nc.bytes2dfloat(hexapod.axi_ip.axi_read(3))
+##    q3 = nc.bytes2dfloat(hexapod.axi_ip.axi_read(4))
+#    leg = hex(nc.to_int(hexapod.axi_ip.axi_read(1)))
+#    print(q1, q2, q3, leg)

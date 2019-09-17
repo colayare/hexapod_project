@@ -1,13 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Sep  5 19:46:04 2019
-
-@author: Roy
-
-Python2.7
-"""
-
 from ctypes import *
+import struct
 
 class numeric_conversions:
     ################
@@ -94,3 +86,13 @@ class numeric_conversions:
         c_ptr   = pointer(c_float(flp_in))
         hexflp  = cast(c_ptr, POINTER(c_int))
         return hex(hexflp.contents.value)[2:]
+    
+    def to_int(self, bytes_in):
+        return struct.unpack('>HH', bytes_in)[1]
+
+    def to_bytes(self, int_in):
+        return struct.pack(">I", int_in)
+    
+    def bytes2dfloat(self, bytes_in):
+        int_in = self.to_int(bytes_in)
+        return self.hfloat2dfloat(str(hex(int_in))[2:])
