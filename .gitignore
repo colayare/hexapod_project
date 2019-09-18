@@ -12,13 +12,13 @@
 arty7z10_ikinematics_v2_2/*
 !*/
 ##	TCL's Directory
-!TCL/*
+#!TCL/*
 ##	Petalinux Directory
-!Petalinux/*
+#!Petalinux/*
 ##	Modeling Directory
 Modeling/*.pyc
 Modeling/*.~
-!Modeling/*
+#!Modeling/*
 ###########################################################################
 ##	SDK .metadata Folder content to avoid SDK not opening issue
 arty7z10_ikinematics_v2_2/arty7z10_ikinematics_v2_2.sdk/.metadata/
