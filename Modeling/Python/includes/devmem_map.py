@@ -39,9 +39,22 @@ class ikinematics_mmap:
     
     def axi_read(self, address):
         self.set_ptr(address)
-        return self.axi_map.read(self.__axi_word_size)
+        return hex(self.to_int(self.axi_map.read(self.__axi_word_size))).rstrip("L")
     
     def axi_write(self, address, value):
         self.set_ptr(address)
-        self.axi_map.write(struct.pack(">I", value))
+        self.axi_map.write(self.to_bytes(value))
         return True
+    
+    def to_int(self, bytes_in):
+        return struct.unpack("<HH", bytes_in)[0]+(struct.unpack("<HH", bytes_in)[1]<<16)
+
+    def to_bytes(self, int_in):
+        return struct.pack("<I", int_in)
+    
+    def show_regs(self, from_address, to_address):
+        for i in range (int(to_address-from_address)):
+            address = from_address+i
+            read_val = hex(self.to_int(self.axi_read(address)))
+            print(read_val)
+        return None

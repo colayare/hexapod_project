@@ -88,10 +88,10 @@ class numeric_conversions:
         return hex(hexflp.contents.value)[2:]
     
     def to_int(self, bytes_in):
-        return struct.unpack('>HH', bytes_in)[1]
+        return struct.unpack("<HH", bytes_in)[0]+(struct.unpack("<HH", bytes_in)[1]<<16)
 
     def to_bytes(self, int_in):
-        return struct.pack(">I", int_in)
+        return struct.pack("<I", int_in)
     
     def bytes2dfloat(self, bytes_in):
         int_in = self.to_int(bytes_in)
