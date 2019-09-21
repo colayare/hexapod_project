@@ -135,6 +135,10 @@
 	//----------------------------------------------
 	//-- User Signals Definitions
 	//----------------------------------------------
+	//-- Leg counter signals
+	wire [C_JOI_CTR_SIZE-1:0]		lgc_leg_sel;
+	wire							lgc_invalid;
+	reg								lgc_set;
 	//-- Floating-point to Fixed-point conversion signals
 	wire signed [C_FXP_WIDTH-1:0]	fxp_input_x,
 									fxp_input_y,
@@ -168,13 +172,13 @@
 									ikn_data_ready,
 									ikn_busy;
 	// Joint Counter 
-	reg [C_JOI_CTR_SIZE-1:0]		joi_ctr;
+	//reg [C_JOI_CTR_SIZE-1:0]		joi_ctr; #DELETE
 	wire [C_S_AXI_DATA_WIDTH-1:0] 	reg_config_out;
 	// Inverse Kinematics Output Register
 	//reg [C_FXP_WIDTH*3-1:0]			ikn_output_rb	[0:C_ROB_NLEGS-1];
 	//-- PWM Generation Signals --
 	// Inverse Kinematics angles offset addition
-	reg signed [C_FXP_WIDTH-1:0]	ikn_q1_mux_offset,
+	reg signed [C_FLP_WIDTH-1:0]	ikn_q1_mux_offset,
 									ikn_q2_mux_offset,
 									ikn_q3_mux_offset;
 	wire signed [C_FXP_WIDTH-1:0]	ikn_q1_p_offset,
@@ -183,6 +187,9 @@
 									ikn_q1_offset,
 									ikn_q2_offset,
 									ikn_q3_offset;
+	reg signed [C_FXP_WIDTH-1:0]	reg_ikn_q1_offset,
+									reg_ikn_q2_offset,
+									reg_ikn_q3_offset;
 	// Inverse Kinematics angles trimmed to 8 bit
 	wire [7:0]						ikn_q1_pwm,
 									ikn_q2_pwm,
@@ -889,6 +896,15 @@
 	        6'h26   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*15+:C_PWM_SIZE]};		// PWM Q16
 	        6'h27   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*16+:C_PWM_SIZE]};		// PWM Q17
 	        6'h28   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*17+:C_PWM_SIZE]};		// PWM Q18
+//	        6'h29	: reg_data_out <= {{12{1'b0}}, ikn_q1_p_offset};
+//	        6'h2A	: reg_data_out <= {{12{1'b0}}, ikn_q2_p_offset};
+//	        6'h2B	: reg_data_out <= {{12{1'b0}}, ikn_q3_p_offset};
+//	        6'h2C	: reg_data_out <= {{12{1'b0}}, ikn_q1_offset};
+//			6'h2D	: reg_data_out <= {{12{1'b0}}, ikn_q2_offset};
+//			6'h2E	: reg_data_out <= {{12{1'b0}}, ikn_q3_offset};
+//			6'h2F	: reg_data_out <= {{12{1'b0}}, ikn_q1};
+//			6'h30	: reg_data_out <= {{12{1'b0}}, ikn_q2};
+//			6'h31	: reg_data_out <= {{12{1'b0}}, ikn_q3};
 	        default : reg_data_out <= 0;	
 	      endcase
 	end
@@ -1023,7 +1039,7 @@
 		.CLK(S_AXI_ACLK),
 		//-- CONTROL INTERFACE --
 		.START(ikn_start),
-		.DATA_VALID(ikn_data_valid),
+		.DATA_VALID(ikn_data_valid),	// Lacks output
 		.OUT_DATA_READY(ikn_data_ready),
 		.BUSY(ikn_busy),
 		//-- FIFO INTERFACE --
@@ -1116,7 +1132,7 @@
 	.C_FXP_POINT(C_FXP_POINT)
 	) FXP_Q1_plus_Offset (
 		.S_NUM1(ikn_q1),
-		.S_NUM2(ikn_q1_offset),
+		.S_NUM2(reg_ikn_q1_offset),
 		.S_OPE(1'b0),
 		.S_RESULT(ikn_q1_p_offset),
 		.S_OF_FLAG()
@@ -1127,7 +1143,7 @@
 	.C_FXP_POINT(C_FXP_POINT)
 	) FXP_Q2_plus_Offset (
 		.S_NUM1(ikn_q2),
-		.S_NUM2(ikn_q2_offset),
+		.S_NUM2(reg_ikn_q2_offset),
 		.S_OPE(1'b0),
 		.S_RESULT(ikn_q2_p_offset),
 		.S_OF_FLAG()
@@ -1138,11 +1154,25 @@
 	.C_FXP_POINT(C_FXP_POINT)
 	) FXP_Q3_plus_Offset (
 		.S_NUM1(ikn_q3),
-		.S_NUM2(ikn_q3_offset),
+		.S_NUM2(reg_ikn_q3_offset),
 		.S_OPE(1'b0),
 		.S_RESULT(ikn_q3_p_offset),
 		.S_OF_FLAG()
 		);
+	
+	// Leg Counter
+	leg_counter #(
+	.N_LEGS(C_ROB_NLEGS)
+	) LEG_COUNTER (
+	.CLK(S_AXI_ACLK),
+	.nRST(S_AXI_ARESETN),
+	.CTR_MODE(slv_reg1[5:4]),
+	.SET(lgc_set),
+	.TRIGGER(ikn_data_ready),
+	.LEG_IN_SELECT(slv_reg1[C_JOI_CTR_SIZE-1:0]),
+	.INVALID_SELECT(lgc_invalid),
+	.LEG_OUT_SELECT(lgc_leg_sel)
+	);
 	
 	//----------------------------------------------
 	//-- User Behavioral
@@ -1152,7 +1182,7 @@
 	  if ( S_AXI_ARESETN == 1'b0 )
 	  	fifo_wr_en <= 1'b0;
 	  else
-	  	if (slv_reg_wren && ((axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 3'h0)))
+	  	if (slv_reg_wren && ((axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 6'h00)))
 	  		fifo_wr_en <= S_AXI_WDATA[0];
 	  	else
 	  		fifo_wr_en <= 1'b0;
@@ -1162,7 +1192,7 @@
 	  if ( S_AXI_ARESETN == 1'b0 )
 	  	ikn_start <= 1'b0;
 	  else
-	  	if (slv_reg_wren && ((axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 3'h0)))
+	  	if (slv_reg_wren && ((axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 6'h00)))
 	  		ikn_start <= S_AXI_WDATA[1];
 	  	else
 	  		ikn_start <= 1'b0;
@@ -1173,42 +1203,37 @@
 	assign ikn_q3_pwm = ikn_q3_p_offset[C_FXP_PWM_OFFSET-:8];
 	  
 	//-- Joint Counter --
+	//assign lgc_set = slv_reg_wren && (axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 6'h01) && S_AXI_WDATA[3];
 	always @( posedge S_AXI_ACLK )
-		if ( S_AXI_ARESETN == 1'b0 )
-	  		joi_ctr <= 0;
+	  if ( S_AXI_ARESETN == 1'b0 )
+	  	lgc_set <= 1'b0;
+	  else
+	  	if (slv_reg_wren && ((axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 6'h01)))
+	  		lgc_set <= S_AXI_WDATA[3];
 	  	else
-	  		if (slv_reg_wren && ((axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 3'h0)))
-				if ( S_AXI_WDATA[2] )
-					joi_ctr <= slv_reg1[C_JOI_CTR_SIZE-1:0];
-				else
-					joi_ctr <= joi_ctr;
-			else
-				if ( ikn_data_ready )
-					if ( joi_ctr < (C_ROB_NLEGS) - 1 )
-						joi_ctr <= joi_ctr + 1;
-					else
-						joi_ctr <= 0;
-				else
-					joi_ctr <= joi_ctr;
+	  		lgc_set <= 1'b0;
 	  
 	//-- Inverse Kinematics Memory -- O_JOINT_PWM
 	always @( posedge S_AXI_ACLK )
 	if ( S_AXI_ARESETN == 1'b0 )
 		O_JOINT_PWM <= 0;
 	else
-	  	case (joi_ctr)
-	  		0	: O_JOINT_PWM[0+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
-	  		1	: O_JOINT_PWM[C_PWM_SIZE*3+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
-	  		2	: O_JOINT_PWM[C_PWM_SIZE*3*2+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
-	  		3	: O_JOINT_PWM[C_PWM_SIZE*3*3+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
-	  		4	: O_JOINT_PWM[C_PWM_SIZE*3*4+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
-	  		5	: O_JOINT_PWM[C_PWM_SIZE*3*5+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
-	  		default	: O_JOINT_PWM <= 0;
-	  	endcase
+		if ( ikn_data_ready )
+			case (lgc_leg_sel)
+				0	: O_JOINT_PWM[0+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
+				1	: O_JOINT_PWM[C_PWM_SIZE*3+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
+				2	: O_JOINT_PWM[C_PWM_SIZE*3*2+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
+				3	: O_JOINT_PWM[C_PWM_SIZE*3*3+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
+				4	: O_JOINT_PWM[C_PWM_SIZE*3*4+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
+				5	: O_JOINT_PWM[C_PWM_SIZE*3*5+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
+				default	: O_JOINT_PWM <= O_JOINT_PWM;
+			endcase
+		else
+			O_JOINT_PWM <= O_JOINT_PWM;
 	  
 	  //-- Offset Selector --
 	  always @(*)
-	  	case (joi_ctr)
+	  	case (lgc_leg_sel)
 	  		0	: begin
 					ikn_q1_mux_offset = slv_reg5;
 					ikn_q2_mux_offset = slv_reg6;
@@ -1247,7 +1272,7 @@
 		endcase
 	
 	//--
-	assign reg_config_out = {{C_JOI_CTR_SIZE_COMPL{1'b0}}, joi_ctr , {C_JOI_CTR_SIZE_COMPL{1'b0}}, slv_reg1[C_JOI_CTR_SIZE-1:0]};
+	assign reg_config_out = {slv_reg1[31:13], fifo_full, fifo_empty, ikn_busy, lgc_invalid, lgc_leg_sel, slv_reg1[5:4], slv_reg1[C_JOI_CTR_SIZE], slv_reg1[C_JOI_CTR_SIZE-1:0]};
 	
 	//-- Pipeline Reg Output
 	always @( posedge S_AXI_ACLK )
@@ -1255,6 +1280,10 @@
 		reg_flp_output_q1 <= flp_output_q1;
 		reg_flp_output_q2 <= flp_output_q2;
 		reg_flp_output_q3 <= flp_output_q3;
+		//
+		reg_ikn_q1_offset <= ikn_q1_offset;
+		reg_ikn_q2_offset <= ikn_q2_offset;
+		reg_ikn_q3_offset <= ikn_q3_offset;
 		end
 	
 	// User logic ends
