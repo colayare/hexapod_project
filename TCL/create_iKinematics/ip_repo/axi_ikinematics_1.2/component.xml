@@ -266,7 +266,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>d9dedbad</spirit:value>
+            <spirit:value>2cc79fcc</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -282,7 +282,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>d9dedbad</spirit:value>
+            <spirit:value>2cc79fcc</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -836,6 +836,10 @@
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
+        <spirit:name>src/fxp_to_pwm.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>src/leading_one_detector.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
@@ -901,6 +905,10 @@
       </spirit:file>
       <spirit:file>
         <spirit:name>src/fxp_multiplier.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_to_pwm.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -1139,211 +1147,270 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>axi_ikinematics_v1.2</xilinx:displayName>
-      <xilinx:coreRevision>15</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2019-09-13T02:49:11Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>20</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2019-10-22T01:36:00Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@d9d7e34_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5fc8481d_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@66249426_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@75f19092_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f37ce9e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@353540fb_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@57de5175_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@20a6d680_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a548a15_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6f7425e4_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f8f4df8_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4bc14216_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5c1e5c95_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7ef67de7_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2a62cec9_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7a601068_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@40b754c7_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@46e2bb05_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d9745ac_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@641290b3_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@42e0cc09_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@62493ace_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4d577dd3_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ec387b3_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@68122886_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@61794a0e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f0bdaef_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@42fe121d_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2c8b6065_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1508834e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a702fee_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d07cd9b_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@d5f78bf_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3b1a821f_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@d85b69b_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d84ca8e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7957378e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@65f7f934_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ae8d9bf_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1dc5ee00_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@424b38f4_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@38dac69f_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@55451d47_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@76b72a4e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3aa087a4_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@20e2bd64_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ac512c4_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@23dc1c0e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@753c9524_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@29d591a8_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1f0df05e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2928ad8e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4b2c5ee6_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f70f14b_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@49c289e0_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@62245d21_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@17c8e3e1_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@75813e00_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@437fb6e3_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@740d4f4c_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@24db40a4_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4997bb8_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7bc57be3_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@52e506d9_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@29cda6ff_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d19c86c_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@434c95a_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6ad1ef0b_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@30a51e45_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@329366e2_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3e62779_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1b1be676_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f24ba26_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@37981974_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2641adb_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@59f6c103_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@782da8aa_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@733568d9_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c74b6ae_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3eca16a5_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6deafed7_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3290e443_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a2923d1_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@57f670e4_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6112a1be_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6711585f_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6b4acc25_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6396b71b_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@52658601_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@68fc19c_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1feba615_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a34287d_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@57b8e914_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@58ebbe0d_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6cf8b391_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@67138293_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d507ad2_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3c39c299_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@44f72b79_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3072f08c_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6fa50169_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@62736f86_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@20167fe5_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@41037827_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6f3d6d9c_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@69e381ed_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@611032df_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1c896146_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@411a8961_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d6c7a61_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@164dd391_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@48c66548_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2b41e563_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@44ca41_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6462adb2_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d76a7fa_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a506c20_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f00a575_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2c96750e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2964452e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3bc207c7_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d653763_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@db61fef_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@37b6dc95_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@59540a1c_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@45b0eb99_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@ec4dda7_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@585b4f92_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@26c9b5f2_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@709a2a93_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@23cb0cbb_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@26928ab5_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7033fa80_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@164b8c1_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4329dc92_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@150b4387_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2fc770_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7baae299_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@529ca687_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4276472f_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7587f6ed_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@31e96214_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7975056b_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2f95c10b_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@55bf9442_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d2356a2_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@69ef357d_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@71d1ff76_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1a44dc0b_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@437b1718_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@164f98e5_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1eba531b_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@49d4b774_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@540815f6_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f812d54_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@71cde972_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@59890c99_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1936c277_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@c59097d_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@60d6b883_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6590a7aa_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5531f8d5_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c131896_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@468dc162_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6696d144_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3783e2fc_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3456693f_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@318ccf62_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ef6db03_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@78347266_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2524bd11_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7fc4a006_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7b658c26_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@334b3610_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7e728e81_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@533459c7_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7aacf65e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@742e206a_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@69e872cd_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@153991d8_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7af8256b_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@760065a6_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3823173e_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@322e3087_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@190dfdf2_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@45dcaa65_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5ebc0c31_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@620e85b3_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c69f754_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@470dfc41_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@661a6f9d_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1e5cbe9f_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6590c44b_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@39335070_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7b5748e6_ARCHIVE_LOCATION">c:/Users/Roy/Documents/Vivado/robotics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@d9d7e34_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5fc8481d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@66249426_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@75f19092_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f37ce9e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@353540fb_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@57de5175_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@20a6d680_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a548a15_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6f7425e4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f8f4df8_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4bc14216_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5c1e5c95_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7ef67de7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2a62cec9_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7a601068_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@40b754c7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@46e2bb05_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d9745ac_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@641290b3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@42e0cc09_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@62493ace_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4d577dd3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ec387b3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@68122886_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61794a0e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f0bdaef_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@42fe121d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2c8b6065_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1508834e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a702fee_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d07cd9b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@d5f78bf_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3b1a821f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@d85b69b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d84ca8e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7957378e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@65f7f934_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ae8d9bf_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1dc5ee00_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@424b38f4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@38dac69f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@55451d47_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@76b72a4e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3aa087a4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@20e2bd64_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ac512c4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@23dc1c0e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@753c9524_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@29d591a8_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1f0df05e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2928ad8e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4b2c5ee6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f70f14b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@49c289e0_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@62245d21_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@17c8e3e1_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@75813e00_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@437fb6e3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@740d4f4c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@24db40a4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4997bb8_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7bc57be3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@52e506d9_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@29cda6ff_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d19c86c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@434c95a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6ad1ef0b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@30a51e45_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@329366e2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3e62779_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1b1be676_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f24ba26_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37981974_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2641adb_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@59f6c103_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@782da8aa_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@733568d9_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c74b6ae_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3eca16a5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6deafed7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3290e443_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a2923d1_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@57f670e4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6112a1be_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6711585f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6b4acc25_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6396b71b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@52658601_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@68fc19c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1feba615_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a34287d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@57b8e914_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@58ebbe0d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6cf8b391_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@67138293_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d507ad2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3c39c299_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@44f72b79_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3072f08c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6fa50169_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@62736f86_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@20167fe5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@41037827_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6f3d6d9c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@69e381ed_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@611032df_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1c896146_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@411a8961_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d6c7a61_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@164dd391_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@48c66548_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2b41e563_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@44ca41_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6462adb2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d76a7fa_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a506c20_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f00a575_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2c96750e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2964452e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3bc207c7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d653763_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@db61fef_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37b6dc95_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@59540a1c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@45b0eb99_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@ec4dda7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@585b4f92_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@26c9b5f2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@709a2a93_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@23cb0cbb_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@26928ab5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7033fa80_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@164b8c1_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4329dc92_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@150b4387_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2fc770_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7baae299_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@529ca687_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4276472f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7587f6ed_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@31e96214_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7975056b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2f95c10b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@55bf9442_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d2356a2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@69ef357d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@71d1ff76_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1a44dc0b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@437b1718_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@164f98e5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1eba531b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@49d4b774_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@540815f6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f812d54_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@71cde972_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@59890c99_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1936c277_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@c59097d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@60d6b883_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6590a7aa_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5531f8d5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c131896_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@468dc162_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6696d144_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3783e2fc_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3456693f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@318ccf62_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ef6db03_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@78347266_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2524bd11_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7fc4a006_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7b658c26_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@334b3610_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7e728e81_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@533459c7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7aacf65e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@742e206a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@69e872cd_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@153991d8_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7af8256b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@760065a6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3823173e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@322e3087_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@190dfdf2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@45dcaa65_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5ebc0c31_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@620e85b3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c69f754_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@470dfc41_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@661a6f9d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1e5cbe9f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6590c44b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@39335070_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7b5748e6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5495262f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6e6be9b2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5b3f2cfc_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3d8b1f01_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5467ef45_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6ae08271_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7a3c0a3a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@487c8a9d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7429aa6b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@57ff3fe2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@789e83ac_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@55bc201_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7883216e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@99f7fba_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5e8a0e59_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a252a91_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d297581_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2bf21c74_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@b174c7c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@586168fe_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2db9b1f5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@9b9e41b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5e4a52ea_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1b4e4e52_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@76077e5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5a949f9e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d2b0b3a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7649c9cb_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2e95241b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1a0eee87_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1588e027_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@64ed2f50_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@512e94a9_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@581d787d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@21fee08c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@22b8a099_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@400051e7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1bc583b9_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@e6b5d95_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4616a293_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3d7edb3b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@58e462e8_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3c4fb65f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a13dcd9_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2051a77a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d0488c5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@375fce07_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5e42ccb4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2f5e6fb6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4c723c87_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@946c176_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@99450dd_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61dbd9e0_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@463cff7a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d7036b4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a7c29e6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3e4f44dc_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1646215e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7fb8dce0_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2018.3</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="2bde1f26"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="ed1368d5"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="1492fe6f"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="a9f9ed7c"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="bfe2dc01"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="085cefc8"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="d6b424a7"/>

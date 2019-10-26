@@ -1444,3 +1444,11 @@ move_dashboard_gadget -name {utilization_2} -row 1 -col 1
 move_dashboard_gadget -name {methodology_1} -row 2 -col 1
 # Set current dashboard to 'default_dashboard' 
 current_dashboard default_dashboard 
+
+# Run Implementation
+update_compile_order -fileset sources_1
+launch_runs impl_1 -jobs 4
+
+set_property AUTO_INCREMENTAL_CHECKPOINT 1 [get_runs impl_1]
+
+launch_runs impl_1 -jobs 4

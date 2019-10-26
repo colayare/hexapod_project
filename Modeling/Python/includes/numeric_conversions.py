@@ -1,5 +1,6 @@
 from ctypes import *
 import struct
+import math as mt
 
 class numeric_conversions:
     ################
@@ -7,7 +8,7 @@ class numeric_conversions:
     ################
     fxp_width   = 20    # Fixed Point Number Width
     fxp_int     = 4     # Fixed Point Number of integer bits
-    flp_width   = 32    # Floating Point Number Width
+    flp_width   = 32    # Floating Point Number Width (Only 32-bit 64-bit)
     
     ### Constructor
     def __init__(self, fxp_width=20, fxp_int=4, flp_width=32):
@@ -81,11 +82,15 @@ class numeric_conversions:
         return flp.contents.value
     
     #### dfloat2hfloat
+    # Convert Decimal Float number to Hexa Float
     def dfloat2hfloat(self, num):
         flp_in  = num
         c_ptr   = pointer(c_float(flp_in))
         hexflp  = cast(c_ptr, POINTER(c_int))
-        return hex(hexflp.contents.value)[2:]
+        if ( hexflp.contents.value >= 0 ):
+            return hex(hexflp.contents.value)[2:]
+        else:
+            return hex(hexflp.contents.value & (2**self.flp_width-1) )[2:].rstrip('L')
     
     def to_int(self, bytes_in):
         return struct.unpack("<HH", bytes_in)[0]+(struct.unpack("<HH", bytes_in)[1]<<16)
@@ -96,3 +101,10 @@ class numeric_conversions:
     def bytes2dfloat(self, bytes_in):
         int_in = self.to_int(bytes_in)
         return self.hfloat2dfloat(str(hex(int_in))[2:])
+    
+    ## Numeric functions
+    def rad2sec(self, rad):
+        return rad * 180 / mt.pi
+    
+    def sec2rad(self, sec):
+        return sec * mt.pi / 180

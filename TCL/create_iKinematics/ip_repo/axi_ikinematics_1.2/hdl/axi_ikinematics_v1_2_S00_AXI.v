@@ -49,7 +49,7 @@
 	(
 		// Users to add ports here
 		// 
-		output reg [C_PWM_SIZE*C_ROB_NLEGS*C_ROB_NJOINTS-1:0] O_JOINT_PWM,
+		output wire [C_PWM_SIZE*C_ROB_NLEGS*C_ROB_NJOINTS-1:0] O_JOINT_PWM,
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -131,6 +131,8 @@
 	//-- Joint Counter Size --
 	localparam integer C_JOI_CTR_SIZE	= $clog2(C_ROB_NLEGS);
 	localparam integer C_JOI_CTR_SIZE_COMPL = 16 - C_JOI_CTR_SIZE;
+	//--
+	localparam integer C_FXP_DATA_FILL = C_S_AXI_DATA_WIDTH - C_FXP_WIDTH;
 
 	//----------------------------------------------
 	//-- User Signals Definitions
@@ -157,6 +159,9 @@
 	reg [C_FLP_WIDTH-1:0]			reg_flp_output_q1,
 									reg_flp_output_q2,
 									reg_flp_output_q3;
+	reg [C_FLP_WIDTH-1:0]			mux_flp_output_q1,
+									mux_flp_output_q2,
+									mux_flp_output_q3;
 	//-- FIFO Signals --
 	wire [FIFO_WIDTH-1:0]			fifo_dout;
 	reg 							fifo_wr_en;
@@ -171,11 +176,12 @@
 	wire							ikn_data_valid,
 									ikn_data_ready,
 									ikn_busy;
-	// Joint Counter 
-	//reg [C_JOI_CTR_SIZE-1:0]		joi_ctr; #DELETE
+	//-- Write Output Directly Flag --
+	reg 							reg_output_direct;
+	//-- Output Configuration Register --
 	wire [C_S_AXI_DATA_WIDTH-1:0] 	reg_config_out;
-	// Inverse Kinematics Output Register
-	//reg [C_FXP_WIDTH*3-1:0]			ikn_output_rb	[0:C_ROB_NLEGS-1];
+	//-- Inverse Kinematics Output Register + Offset --
+	reg [C_FXP_WIDTH*C_ROB_NLEGS*C_ROB_NJOINTS-1:0]	ikn_output_rb;
 	//-- PWM Generation Signals --
 	// Inverse Kinematics angles offset addition
 	reg signed [C_FLP_WIDTH-1:0]	ikn_q1_mux_offset,
@@ -857,9 +863,9 @@
 	      case ( axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] )
 	        6'h00   : reg_data_out <= slv_reg0;			// Trigger Register
 	        6'h01   : reg_data_out <= reg_config_out;	// Cofiguration : Leg Pointer
-	        6'h02   : reg_data_out <= reg_flp_output_q1;	// FLP : iKinematics Q1
-	        6'h03   : reg_data_out <= reg_flp_output_q2;	// FLP : iKinematics Q2
-	        6'h04   : reg_data_out <= reg_flp_output_q3;	// FLP : iKinematics Q3
+	        6'h02   : reg_data_out <= flp_output_q1;	// FLP : iKinematics Q1
+	        6'h03   : reg_data_out <= flp_output_q2;	// FLP : iKinematics Q2
+	        6'h04   : reg_data_out <= flp_output_q3;	// FLP : iKinematics Q3
 	        6'h05   : reg_data_out <= slv_reg5;			// Offset Q1	-- Leg 1
 	        6'h06   : reg_data_out <= slv_reg6;			// Offset Q2
 	        6'h07   : reg_data_out <= slv_reg7;			// Offset Q3
@@ -878,24 +884,24 @@
 	        6'h14   : reg_data_out <= slv_reg20;		// Offset Q16	-- Leg 6
 	        6'h15   : reg_data_out <= slv_reg21;		// Offset Q17
 	        6'h16   : reg_data_out <= slv_reg22;		// Offset Q18
-	        6'h17   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[0+:C_PWM_SIZE]};					// PWM Q1
-	        6'h18   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE+:C_PWM_SIZE]};		// PWM Q2
-	        6'h19   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*2+:C_PWM_SIZE]};		// PWM Q3
-	        6'h1A   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*3+:C_PWM_SIZE]};		// PWM Q4
-	        6'h1B   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*4+:C_PWM_SIZE]};		// PWM Q5
-	        6'h1C   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*5+:C_PWM_SIZE]};		// PWM Q6
-	        6'h1D   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*6+:C_PWM_SIZE]};		// PWM Q7
-	        6'h1E   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*7+:C_PWM_SIZE]};		// PWM Q8
-	        6'h1F   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*8+:C_PWM_SIZE]};		// PWM Q9
-	        6'h20   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*9+:C_PWM_SIZE]};		// PWM Q10
-	        6'h21   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*10+:C_PWM_SIZE]};		// PWM Q11
-	        6'h22   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*11+:C_PWM_SIZE]};		// PWM Q12
-	        6'h23   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*12+:C_PWM_SIZE]};		// PWM Q13
-	        6'h24   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*13+:C_PWM_SIZE]};		// PWM Q14
-	        6'h25   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*14+:C_PWM_SIZE]};		// PWM Q15
-	        6'h26   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*15+:C_PWM_SIZE]};		// PWM Q16
-	        6'h27   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*16+:C_PWM_SIZE]};		// PWM Q17
-	        6'h28   : reg_data_out <= {{24{1'b0}}, O_JOINT_PWM[C_PWM_SIZE*17+:C_PWM_SIZE]};		// PWM Q18
+	        6'h17   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[0+:C_FXP_WIDTH]};					// PWM Q1
+	        6'h18   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH+:C_FXP_WIDTH]};		// PWM Q2
+	        6'h19   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*2+:C_FXP_WIDTH]};		// PWM Q3
+	        6'h1A   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*3+:C_FXP_WIDTH]};		// PWM Q4
+	        6'h1B   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*4+:C_FXP_WIDTH]};		// PWM Q5
+	        6'h1C   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*5+:C_FXP_WIDTH]};		// PWM Q6
+	        6'h1D   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*6+:C_FXP_WIDTH]};		// PWM Q7
+	        6'h1E   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*7+:C_FXP_WIDTH]};		// PWM Q8
+	        6'h1F   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*8+:C_FXP_WIDTH]};		// PWM Q9
+	        6'h20   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*9+:C_FXP_WIDTH]};		// PWM Q10
+	        6'h21   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*10+:C_FXP_WIDTH]};	// PWM Q11
+	        6'h22   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*11+:C_FXP_WIDTH]};	// PWM Q12
+	        6'h23   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*12+:C_FXP_WIDTH]};	// PWM Q13
+	        6'h24   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*13+:C_FXP_WIDTH]};	// PWM Q14
+	        6'h25   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*14+:C_FXP_WIDTH]};	// PWM Q15
+	        6'h26   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*15+:C_FXP_WIDTH]};	// PWM Q16
+	        6'h27   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*16+:C_FXP_WIDTH]};	// PWM Q17
+	        6'h28   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*17+:C_FXP_WIDTH]};	// PWM Q18
 //	        6'h29	: reg_data_out <= {{12{1'b0}}, ikn_q1_p_offset};
 //	        6'h2A	: reg_data_out <= {{12{1'b0}}, ikn_q2_p_offset};
 //	        6'h2B	: reg_data_out <= {{12{1'b0}}, ikn_q3_p_offset};
@@ -1060,7 +1066,7 @@
 		.C_FXP_POINT(C_FXP_POINT),
 		.C_FLP_WIDTH(C_FLP_WIDTH)
 	) fxp2flp_converter_q1 (
-		.FXP_NUM(ikn_q1),
+		.FXP_NUM(reg_flp_output_q1),
 		.FLP_NUM(flp_output_q1),
 		.FLP_ZERO()
 		);
@@ -1071,7 +1077,7 @@
 		.C_FXP_POINT(C_FXP_POINT),
 		.C_FLP_WIDTH(C_FLP_WIDTH)
 	) fxp2flp_converter_q2 (
-		.FXP_NUM(ikn_q2),
+		.FXP_NUM(reg_flp_output_q2),
 		.FLP_NUM(flp_output_q2),
 		.FLP_ZERO()
 		);
@@ -1082,7 +1088,7 @@
 		.C_FXP_POINT(C_FXP_POINT),
 		.C_FLP_WIDTH(C_FLP_WIDTH)
 	) fxp2flp_converter_q3 (
-		.FXP_NUM(ikn_q3),
+		.FXP_NUM(reg_flp_output_q3),
 		.FLP_NUM(flp_output_q3),
 		.FLP_ZERO()
 		);
@@ -1196,14 +1202,18 @@
 	  		ikn_start <= S_AXI_WDATA[1];
 	  	else
 	  		ikn_start <= 1'b0;
-	  
-	//-- Trim Angles + Offset
-	assign ikn_q1_pwm = ikn_q1_p_offset[C_FXP_PWM_OFFSET-:8];
-	assign ikn_q2_pwm = ikn_q2_p_offset[C_FXP_PWM_OFFSET-:8];
-	assign ikn_q3_pwm = ikn_q3_p_offset[C_FXP_PWM_OFFSET-:8];
-	  
+	
+	//-- Write Output Directly
+	always @( posedge S_AXI_ACLK )
+	  if ( S_AXI_ARESETN == 1'b0 )
+	  	reg_output_direct <= 1'b0;
+	  else
+	  	if (slv_reg_wren && ((axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 6'h00)))
+	  		reg_output_direct <= S_AXI_WDATA[2];
+	  	else
+	  		reg_output_direct <= 1'b0;
+	  	  
 	//-- Joint Counter --
-	//assign lgc_set = slv_reg_wren && (axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 6'h01) && S_AXI_WDATA[3];
 	always @( posedge S_AXI_ACLK )
 	  if ( S_AXI_ARESETN == 1'b0 )
 	  	lgc_set <= 1'b0;
@@ -1213,27 +1223,45 @@
 	  	else
 	  		lgc_set <= 1'b0;
 	  
-	//-- Inverse Kinematics Memory -- O_JOINT_PWM
+	//-- Inverse Kinematics Memory  Map Out -- 
 	always @( posedge S_AXI_ACLK )
 	if ( S_AXI_ARESETN == 1'b0 )
-		O_JOINT_PWM <= 0;
+		ikn_output_rb <= {C_FXP_WIDTH*C_ROB_NLEGS*C_ROB_NJOINTS{1'b0}};
 	else
-		if ( ikn_data_ready )
-			case (lgc_leg_sel)
-				0	: O_JOINT_PWM[0+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
-				1	: O_JOINT_PWM[C_PWM_SIZE*3+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
-				2	: O_JOINT_PWM[C_PWM_SIZE*3*2+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
-				3	: O_JOINT_PWM[C_PWM_SIZE*3*3+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
-				4	: O_JOINT_PWM[C_PWM_SIZE*3*4+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
-				5	: O_JOINT_PWM[C_PWM_SIZE*3*5+:C_PWM_SIZE*3] <= {ikn_q3_pwm, ikn_q2_pwm, ikn_q1_pwm};
-				default	: O_JOINT_PWM <= O_JOINT_PWM;
-			endcase
-		else
-			O_JOINT_PWM <= O_JOINT_PWM;
+		casex ( {ikn_data_ready, reg_output_direct, lgc_leg_sel} )
+			5'b1x000	: ikn_output_rb[C_FXP_WIDTH*3*0+:C_FXP_WIDTH*3] <= {ikn_q3_p_offset, ikn_q2_p_offset, ikn_q1_p_offset};
+			5'b1x001	: ikn_output_rb[C_FXP_WIDTH*3*1+:C_FXP_WIDTH*3] <= {ikn_q3_p_offset, ikn_q2_p_offset, ikn_q1_p_offset};
+			5'b1x010	: ikn_output_rb[C_FXP_WIDTH*3*2+:C_FXP_WIDTH*3] <= {ikn_q3_p_offset, ikn_q2_p_offset, ikn_q1_p_offset};
+			5'b1x011	: ikn_output_rb[C_FXP_WIDTH*3*3+:C_FXP_WIDTH*3] <= {ikn_q3_p_offset, ikn_q2_p_offset, ikn_q1_p_offset};
+			5'b1x100	: ikn_output_rb[C_FXP_WIDTH*3*4+:C_FXP_WIDTH*3] <= {ikn_q3_p_offset, ikn_q2_p_offset, ikn_q1_p_offset};
+			5'b1x101	: ikn_output_rb[C_FXP_WIDTH*3*5+:C_FXP_WIDTH*3] <= {ikn_q3_p_offset, ikn_q2_p_offset, ikn_q1_p_offset};
+			5'b01000	: ikn_output_rb[C_FXP_WIDTH*3*0+:C_FXP_WIDTH*3] <= {fxp_input_z, fxp_input_y, fxp_input_x};
+			5'b01001	: ikn_output_rb[C_FXP_WIDTH*3*1+:C_FXP_WIDTH*3] <= {fxp_input_z, fxp_input_y, fxp_input_x};
+			5'b01010	: ikn_output_rb[C_FXP_WIDTH*3*2+:C_FXP_WIDTH*3] <= {fxp_input_z, fxp_input_y, fxp_input_x};
+			5'b01011	: ikn_output_rb[C_FXP_WIDTH*3*3+:C_FXP_WIDTH*3] <= {fxp_input_z, fxp_input_y, fxp_input_x};
+			5'b01100	: ikn_output_rb[C_FXP_WIDTH*3*4+:C_FXP_WIDTH*3] <= {fxp_input_z, fxp_input_y, fxp_input_x};
+			5'b01101	: ikn_output_rb[C_FXP_WIDTH*3*5+:C_FXP_WIDTH*3] <= {fxp_input_z, fxp_input_y, fxp_input_x};
+			default	: ikn_output_rb <= ikn_output_rb;
+		endcase
+	
+	//-- PWM Output --
+	genvar pwm_ctr;
+	generate
+		for (pwm_ctr=0; pwm_ctr<C_ROB_NLEGS*C_ROB_NJOINTS; pwm_ctr=pwm_ctr+1) begin : GENERATE_PWM_OUTPUT_BUS_ASSIGNMENT
+			fxp_to_pwm #(
+				.FXP_WIDTH(C_FXP_WIDTH),
+				.PWM_OFFSET(C_FXP_PWM_OFFSET),
+				.PWM_WIDTH(C_PWM_SIZE)
+			) FXP2PWM (
+				.FXP_IN(ikn_output_rb[C_FXP_WIDTH*pwm_ctr+:C_FXP_WIDTH]),
+				.PWM_OUT(O_JOINT_PWM[C_PWM_SIZE*pwm_ctr+:C_PWM_SIZE])
+			);
+		end
+	endgenerate
 	  
-	  //-- Offset Selector --
-	  always @(*)
-	  	case (lgc_leg_sel)
+	//-- Offset Selector --
+	always @(*)
+		case (lgc_leg_sel)
 	  		0	: begin
 					ikn_q1_mux_offset = slv_reg5;
 					ikn_q2_mux_offset = slv_reg6;
@@ -1271,15 +1299,61 @@
 					end
 		endcase
 	
-	//--
-	assign reg_config_out = {slv_reg1[31:13], fifo_full, fifo_empty, ikn_busy, lgc_invalid, lgc_leg_sel, slv_reg1[5:4], slv_reg1[C_JOI_CTR_SIZE], slv_reg1[C_JOI_CTR_SIZE-1:0]};
+	//-- Output Read Multiplexer
+	always @(*)
+		case ( slv_reg1[15:13] )
+			0 : begin
+				mux_flp_output_q1 = ikn_q1;
+				mux_flp_output_q2 = ikn_q2;
+				mux_flp_output_q3 = ikn_q3;
+				end
+			1 : begin
+				mux_flp_output_q1 = ikn_output_rb[0+:C_FXP_WIDTH];
+				mux_flp_output_q2 = ikn_output_rb[C_FXP_WIDTH+:C_FXP_WIDTH];
+				mux_flp_output_q3 = ikn_output_rb[C_FXP_WIDTH*2+:C_FXP_WIDTH];
+				end
+			2 : begin
+				mux_flp_output_q1 = ikn_output_rb[C_FXP_WIDTH*3+:C_FXP_WIDTH];
+				mux_flp_output_q2 = ikn_output_rb[C_FXP_WIDTH*4+:C_FXP_WIDTH];
+				mux_flp_output_q3 = ikn_output_rb[C_FXP_WIDTH*5+:C_FXP_WIDTH];
+				end
+			3 : begin
+				mux_flp_output_q1 = ikn_output_rb[C_FXP_WIDTH*6+:C_FXP_WIDTH];
+				mux_flp_output_q2 = ikn_output_rb[C_FXP_WIDTH*7+:C_FXP_WIDTH];
+				mux_flp_output_q3 = ikn_output_rb[C_FXP_WIDTH*8+:C_FXP_WIDTH];
+				end
+			4 : begin
+				mux_flp_output_q1 = ikn_output_rb[C_FXP_WIDTH*9+:C_FXP_WIDTH];
+				mux_flp_output_q2 = ikn_output_rb[C_FXP_WIDTH*10+:C_FXP_WIDTH];
+				mux_flp_output_q3 = ikn_output_rb[C_FXP_WIDTH*11+:C_FXP_WIDTH];
+				end
+			5 : begin
+				mux_flp_output_q1 = ikn_output_rb[C_FXP_WIDTH*12+:C_FXP_WIDTH];
+				mux_flp_output_q2 = ikn_output_rb[C_FXP_WIDTH*13+:C_FXP_WIDTH];
+				mux_flp_output_q3 = ikn_output_rb[C_FXP_WIDTH*14+:C_FXP_WIDTH];
+				end
+			6 : begin
+				mux_flp_output_q1 = ikn_output_rb[C_FXP_WIDTH*15+:C_FXP_WIDTH];
+				mux_flp_output_q2 = ikn_output_rb[C_FXP_WIDTH*16+:C_FXP_WIDTH];
+				mux_flp_output_q3 = ikn_output_rb[C_FXP_WIDTH*17+:C_FXP_WIDTH];
+				end
+			default : begin
+				mux_flp_output_q1 = ikn_q1;
+				mux_flp_output_q2 = ikn_q2;
+				mux_flp_output_q3 = ikn_q3;
+				end
+		endcase
+		
+	
+	//-- Configuration register read mode
+	assign reg_config_out = {slv_reg1[31:16], slv_reg1[15:13], fifo_full, fifo_empty, ikn_busy, lgc_invalid, lgc_leg_sel, slv_reg1[5:4], slv_reg1[C_JOI_CTR_SIZE], slv_reg1[C_JOI_CTR_SIZE-1:0]};
 	
 	//-- Pipeline Reg Output
 	always @( posedge S_AXI_ACLK )
 		begin
-		reg_flp_output_q1 <= flp_output_q1;
-		reg_flp_output_q2 <= flp_output_q2;
-		reg_flp_output_q3 <= flp_output_q3;
+		reg_flp_output_q1 <= mux_flp_output_q1;
+		reg_flp_output_q2 <= mux_flp_output_q2;
+		reg_flp_output_q3 <= mux_flp_output_q3;
 		//
 		reg_ikn_q1_offset <= ikn_q1_offset;
 		reg_ikn_q2_offset <= ikn_q2_offset;

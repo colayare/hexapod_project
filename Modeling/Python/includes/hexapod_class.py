@@ -1,5 +1,5 @@
 import numpy as np
-import numeric_conversions as nc
+from numeric_conversions import numeric_conversions as NUM_CONV
 import devmem_map as dm
 import math as mt
 import os
@@ -13,6 +13,8 @@ class hexapod_kinematics:
     l1 = 0.0275
     l2 = 0.0963
     l3 = 0.1051
+    
+    nc = NUM_CONV()
     
     #### Parameters
     offsets_file = ""
@@ -76,7 +78,7 @@ class hexapod_kinematics:
         return True
     
     def gait_step(self, idx):
-        x, y, z = self.gaits[0]
+        x, y, z = self.gaits[idx]
         return x, y, z
     
     ## Kinematics Functions
@@ -111,10 +113,10 @@ class hexapod_kinematics:
         return q1, q2, q3
     
     ## Numeric functions
-    def rad2sec(rad):
+    def rad2sec(self, rad):
         return rad * 180 / mt.pi
     
-    def sec2rad(sec):
+    def sec2rad(self, sec):
         return sec * mt.pi / 180
     
     #### Execution Functions
@@ -130,12 +132,85 @@ class hexapod_kinematics:
         self.axi_ip.axi_write(1, leg_in + 0x8 + mode_in)
         return True
     
+    # Write iKinematics Parameters on input FIFO
+    def axi_write_params_in(self, x_in, y_in, z_in):
+        if ( type(x_in) is str ):
+            x_in = int(x_in,16)
+        if ( type(y_in) is str ):
+            y_in = int(y_in,16)
+        if ( type(z_in) is str ):
+            z_in = int(z_in,16)
+        self.axi_ip.axi_write(2, x_in)
+        self.axi_ip.axi_write(3, y_in)
+        self.axi_ip.axi_write(4, z_in)
+        return True
+    
+    def axi_read_params(self):
+        x = self.axi_ip.axi_read(2)
+        y = self.axi_ip.axi_read(3)
+        z = self.axi_ip.axi_read(4)
+        return [x, y, z]
+    
+    # Write iKinematics parameters to input FIFO
     def axi_write_fifo(self):
         self.axi_ip.axi_write(0, 1)
         self.axi_ip.axi_write(0, 0)
         return True
     
+    # Trigger iKinematics Calculation
     def axi_trigger_ikinematics(self):
         self.axi_ip.axi_write(0, 2)
         self.axi_ip.axi_write(0, 0)
         return True
+    
+    # Write output directly without calculation
+    def axi_write_out_direct(self):
+        self.axi_ip.axi_write(0, 4)
+        self.axi_ip.axi_write(0, 0)
+        return True
+    
+    # Set Leg configuration
+    def axi_set_leg_conf(self, conf, leg_select):
+        reg1 = int(self.axi_ip.axi_read(1), 16)
+        set_val = 8 + (leg_select & 0x7)
+        config = (conf<<4) & 0x30
+        value = set_val + config + reg1
+        self.axi_ip.axi_write(1, value)
+        return True
+    
+    # Set output multiplexor
+    def axi_set_out_mux(self, selector):
+        mux_sel = (selector & 0x7) << 13
+        reg1 = int(self.axi_ip.axi_read(1), 16)
+        
+        write_val = (reg1 & ~(0x7 << 13)) + mux_sel
+        self.axi_ip.axi_write(1, write_val)
+        return True
+    
+    # Set hexapod offsets
+    def axi_set_offset(self, leg, off_q1, off_q2, off_q3):
+        self.axi_ip.axi_write(5+leg*3, off_q1)
+        self.axi_ip.axi_write(6+leg*3, off_q2)
+        self.axi_ip.axi_write(7+leg*3, off_q3)
+        return True
+    
+    # Set read offsets
+    def set_default_offsets(self):
+        for i in range(6):
+            offset_q1 = self.nc.dfloat2hfloat(self.sec2rad(self.j_offs[i][0])).lstrip('x')
+            offset_q2 = self.nc.dfloat2hfloat(self.sec2rad(self.j_offs[i][1])).lstrip('x')
+            offset_q3 = self.nc.dfloat2hfloat(self.sec2rad(self.j_offs[i][2])).lstrip('x')
+            print('Setting leg '+str(i)+' offset')
+            print('\tQ1 offset = 0x'+offset_q1+'|'+str(self.sec2rad(self.j_offs[i][0])))
+            print('\tQ2 offset = 0x'+offset_q2+'|'+str(self.sec2rad(self.j_offs[i][1])))
+            print('\tQ3 offset = 0x'+offset_q3+'|'+str(self.sec2rad(self.j_offs[i][2])))
+
+            self.axi_set_offset(i, int(offset_q1,16), int(offset_q2,16), int(offset_q3,16))
+        return True
+    
+    # Read offsets
+    def axi_read_offset(self, leg):
+        off1 = self.axi_ip.axi_read(5+leg*3)
+        off2 = self.axi_ip.axi_read(6+leg*3)
+        off3 = self.axi_ip.axi_read(7+leg*3)
+        return [off1, off2, off3]
