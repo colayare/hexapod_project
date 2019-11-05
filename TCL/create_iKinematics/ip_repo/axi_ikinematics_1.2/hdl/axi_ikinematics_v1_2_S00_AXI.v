@@ -159,6 +159,9 @@
 	reg [C_FLP_WIDTH-1:0]			reg_flp_output_q1,
 									reg_flp_output_q2,
 									reg_flp_output_q3;
+	wire							flp_output_q1_trigger,
+									flp_output_q2_trigger,
+									flp_output_q3_trigger;
 	reg [C_FLP_WIDTH-1:0]			mux_flp_output_q1,
 									mux_flp_output_q2,
 									mux_flp_output_q3;
@@ -1066,9 +1069,13 @@
 		.C_FXP_POINT(C_FXP_POINT),
 		.C_FLP_WIDTH(C_FLP_WIDTH)
 	) fxp2flp_converter_q1 (
+		.CLK(S_AXI_ACLK),
+		.nRST(S_AXI_ARESETN),
+		.TRIGGER(),
 		.FXP_NUM(reg_flp_output_q1),
 		.FLP_NUM(flp_output_q1),
-		.FLP_ZERO()
+		.FLP_ZERO(),
+		.VALID()
 		);
 	//-- Fixed-point to Floating-point Converter Q2
 	fixed_to_float_converter
@@ -1077,9 +1084,13 @@
 		.C_FXP_POINT(C_FXP_POINT),
 		.C_FLP_WIDTH(C_FLP_WIDTH)
 	) fxp2flp_converter_q2 (
+		.CLK(S_AXI_ACLK),
+		.nRST(S_AXI_ARESETN),
+		.TRIGGER(),
 		.FXP_NUM(reg_flp_output_q2),
 		.FLP_NUM(flp_output_q2),
-		.FLP_ZERO()
+		.FLP_ZERO(),
+		.VALID()
 		);
 	//-- Fixed-point to Floating-point Converter Q3
 	fixed_to_float_converter
@@ -1088,9 +1099,13 @@
 		.C_FXP_POINT(C_FXP_POINT),
 		.C_FLP_WIDTH(C_FLP_WIDTH)
 	) fxp2flp_converter_q3 (
+		.CLK(S_AXI_ACLK),
+		.nRST(S_AXI_ARESETN),
+		.TRIGGER(),
 		.FXP_NUM(reg_flp_output_q3),
 		.FLP_NUM(flp_output_q3),
-		.FLP_ZERO()
+		.FLP_ZERO(),
+		.VALID()
 		);
 	
 	//-- 
@@ -1343,7 +1358,11 @@
 				mux_flp_output_q3 = ikn_q3;
 				end
 		endcase
-		
+	
+	//-- Fixed Point to Floating Point conversion trigger
+	assign flp_output_q1_trigger = reg_output_direct | ikn_data_ready;
+	assign flp_output_q2_trigger = reg_output_direct | ikn_data_ready;
+	assign flp_output_q3_trigger = reg_output_direct | ikn_data_ready;
 	
 	//-- Configuration register read mode
 	assign reg_config_out = {slv_reg1[31:16], slv_reg1[15:13], fifo_full, fifo_empty, ikn_busy, lgc_invalid, lgc_leg_sel, slv_reg1[5:4], slv_reg1[C_JOI_CTR_SIZE], slv_reg1[C_JOI_CTR_SIZE-1:0]};

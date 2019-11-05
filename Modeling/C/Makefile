@@ -19,4 +19,3 @@ ikinematics_gait_test: $(OBJ)
 
 clean:
         rm -f $(ODIR)*.o *~ core $(INCDIR)*~
-

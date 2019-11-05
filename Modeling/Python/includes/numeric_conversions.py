@@ -63,7 +63,7 @@ class numeric_conversions:
                 intVal = ''+bin((2**intSize)-intPart-offset)[2:].zfill(intSize)
                 floatPart = 1-floatPart
         floatVal = ''
-        for i in range(self.flp_width-self.fxp_width):
+        for i in range(self.fxp_width-self.fxp_int):
             if (floatPart >= 2**(-i-1)):
                 floatVal += '1'
                 floatPart -= 2**(-i-1)

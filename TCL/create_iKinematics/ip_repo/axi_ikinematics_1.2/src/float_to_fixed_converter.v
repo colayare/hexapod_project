@@ -66,7 +66,7 @@ assign fxp_shifted = flp_shifted_mantisa[C_FLP_MANT_WIDTH-:C_FXP_WIDTH];
 
 // Operate Sign and Output Signed Fixed-Point
 assign fxp_signed = (FLP_NUM[C_FLP_WIDTH-1]) ? -fxp_shifted : fxp_shifted;
-assign FXP_NUM = fxp_signed;
+assign FXP_NUM = (|FLP_NUM) ? fxp_signed : {C_FXP_WIDTH{1'b0}};
 assign FLP_ZERO = ~|FLP_NUM;
 
 // Calculate Out of Range

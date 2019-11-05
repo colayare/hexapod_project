@@ -42,6 +42,8 @@ class ikinematics_mmap:
         return hex(self.to_int(self.axi_map.read(self.__axi_word_size))).rstrip("L")
     
     def axi_write(self, address, value):
+        if ( type(value) is str ):
+            value = int(value, 16)
         self.set_ptr(address)
         self.axi_map.write(self.to_bytes(value))
         return True
