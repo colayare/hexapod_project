@@ -1,6 +1,6 @@
 #!/bin/bash
 
-C_ROOT=$HOME/hexapod/Modeling/C/
+C_ROOT=$HOME/hexapod_project/Modeling/C/
 C_INC=$C_ROOT/includes/
 C_EXE=$C_ROOT/outputs/
 
@@ -16,3 +16,4 @@ gcc -c -o $C_EXE/hexapod_gaits.o -I$C_INC $C_INC/hexapod_gaits.c
 gcc -c -o $C_EXE/ikinematics_gait_test.o -I$C_INC $C_ROOT/ikinematics_gait_test.c
 gcc -o $C_EXE/ikinematics_gait_test $C_EXE/axi_ikinematics.o $C_EXE/hexapod_gaits.o $C_EXE/ikinematics_gait_test.o
 
+rm $C_EXE/*.o
