@@ -97,6 +97,7 @@ while(1):
         print('{:<12s}{:>10.4f}{:>12.4f}{:>12s}{:>10s}'.format('Q1 offset',nc.sec2rad(off_q1),off_q1,nc.dfloat2hfloat(nc.sec2rad(off_q1)),nc.dfloat2hfix(nc.sec2rad(off_q1))))
         print('{:<12s}{:>10.4f}{:>12.4f}{:>12s}{:>10s}'.format('Q2 offset',nc.sec2rad(off_q2),off_q2,nc.dfloat2hfloat(nc.sec2rad(off_q2)),nc.dfloat2hfix(nc.sec2rad(off_q2))))
         print('{:<12s}{:>10.4f}{:>12.4f}{:>12s}{:>10s}'.format('Q3 offset',nc.sec2rad(off_q3),off_q3,nc.dfloat2hfloat(nc.sec2rad(off_q3)),nc.dfloat2hfix(nc.sec2rad(off_q3))))
+		print(dash)
         print('{:<12s}{:>10.4f}{:>12.4f}{:>12s}{:>10s}'.format('Q1+offset',nc.sec2rad(float(sp_q1)+off_q1),float(sp_q1)+off_q1,sp_q1_p_offset_hex,nc.dfloat2hfix(nc.sec2rad(float(sp_q1)+off_q1))))
         print('{:<12s}{:>10.4f}{:>12.4f}{:>12s}{:>10s}'.format('Q2+offset',nc.sec2rad(float(sp_q2)+off_q2),float(sp_q2)+off_q2,sp_q2_p_offset_hex,nc.dfloat2hfix(nc.sec2rad(float(sp_q2)+off_q2))))
         print('{:<12s}{:>10.4f}{:>12.4f}{:>12s}{:>10s}'.format('Q1+offset',nc.sec2rad(float(sp_q3)+off_q3),float(sp_q3)+off_q3,sp_q3_p_offset_hex,nc.dfloat2hfix(nc.sec2rad(float(sp_q3)+off_q3))))
