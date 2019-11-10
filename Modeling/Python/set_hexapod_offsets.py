@@ -34,6 +34,7 @@ def print_title(title, char='#'):
 #### Params Files
 joint_offsets_filename = "./params/joint_offset.params"
 gait_steps_filename = './params/gait_steps.params'
+init_position_filename = './params/init_position.params'
 
 #### Numeric Conversions
 nc = NUM_CONV()
@@ -46,6 +47,8 @@ hexapod.init_axi()
 ## Import Parameters
 hexapod.offsets_file = joint_offsets_filename
 hexapod.gait_steps_file = gait_steps_filename
+hexapod.init_position_file = init_position_filename
+hexapod.import_init_pos()
 hexapod.import_offsets()
 hexapod.set_default_offsets()
 print('Joint offsets:')
@@ -64,12 +67,17 @@ while(1):
     
     print('Setting leg '+opt_leg)
     hexapod.config_leg_ctr("one_leg", int(opt_leg))
+    sp_q1 = str(hexapod.i_pos[int(opt_leg)][0])
+    sp_q2 = str(hexapod.i_pos[int(opt_leg)][1])
+    sp_q3 = str(hexapod.i_pos[int(opt_leg)][2])
+    
+    print('Q1 = '+sp_q1)
+    print('Q2 = '+sp_q2)
+    print('Q3 = '+sp_q3)
     print('Offset Q1 = '+str(hexapod.j_offs[int(opt_leg)][0]))
     print('Offset Q2 = '+str(hexapod.j_offs[int(opt_leg)][1]))
     print('Offset Q3 = '+str(hexapod.j_offs[int(opt_leg)][2]))
-    sp_q1 = raw_input('Set Q1 = ')
-    sp_q2 = raw_input('Set Q2 = ')
-    sp_q3 = raw_input('Set Q3 = ')
+    raw_input('Press enter...')
 
     while(1):
         off_q1 = hexapod.j_offs[int(opt_leg)][0]
@@ -97,7 +105,7 @@ while(1):
         print('{:<12s}{:>10.4f}{:>12.4f}{:>12s}{:>10s}'.format('Q1 offset',nc.sec2rad(off_q1),off_q1,nc.dfloat2hfloat(nc.sec2rad(off_q1)),nc.dfloat2hfix(nc.sec2rad(off_q1))))
         print('{:<12s}{:>10.4f}{:>12.4f}{:>12s}{:>10s}'.format('Q2 offset',nc.sec2rad(off_q2),off_q2,nc.dfloat2hfloat(nc.sec2rad(off_q2)),nc.dfloat2hfix(nc.sec2rad(off_q2))))
         print('{:<12s}{:>10.4f}{:>12.4f}{:>12s}{:>10s}'.format('Q3 offset',nc.sec2rad(off_q3),off_q3,nc.dfloat2hfloat(nc.sec2rad(off_q3)),nc.dfloat2hfix(nc.sec2rad(off_q3))))
-		print(dash)
+        print(dash)
         print('{:<12s}{:>10.4f}{:>12.4f}{:>12s}{:>10s}'.format('Q1+offset',nc.sec2rad(float(sp_q1)+off_q1),float(sp_q1)+off_q1,sp_q1_p_offset_hex,nc.dfloat2hfix(nc.sec2rad(float(sp_q1)+off_q1))))
         print('{:<12s}{:>10.4f}{:>12.4f}{:>12s}{:>10s}'.format('Q2+offset',nc.sec2rad(float(sp_q2)+off_q2),float(sp_q2)+off_q2,sp_q2_p_offset_hex,nc.dfloat2hfix(nc.sec2rad(float(sp_q2)+off_q2))))
         print('{:<12s}{:>10.4f}{:>12.4f}{:>12s}{:>10s}'.format('Q1+offset',nc.sec2rad(float(sp_q3)+off_q3),float(sp_q3)+off_q3,sp_q3_p_offset_hex,nc.dfloat2hfix(nc.sec2rad(float(sp_q3)+off_q3))))
@@ -125,10 +133,20 @@ while(1):
         elif ( 'a' in usr_opt.split(',')[0] and ',' in usr_opt ):
             new_angle = usr_opt.split(',')[1]
             if( usr_opt.split(',')[0][1:] == '0' ):
+                hexapod.i_pos[int(opt_leg)][int(usr_opt.split(',')[0][1:])] = float(new_angle)
                 sp_q1 = new_angle
             if( usr_opt.split(',')[0][1:] == '1' ):
+                hexapod.i_pos[int(opt_leg)][int(usr_opt.split(',')[0][1:])] = float(new_angle)
                 sp_q2 = new_angle
             if( usr_opt.split(',')[0][1:] == '2' ):
+                hexapod.i_pos[int(opt_leg)][int(usr_opt.split(',')[0][1:])] = float(new_angle)
                 sp_q3 = new_angle
-        elif ( usr_opt.upper() == 'SAVE' ):
+        elif ( usr_opt.upper() == 'SAVE OFFSET' ):
             hexapod.save_offsets()
+        elif ( usr_opt.upper() == 'SAVE INIT' ):
+            hexapod.save_init_positions()
+        elif( usr_opt.upper() == 'SAVE' ):
+            hexapod.save_offsets()
+            hexapod.save_init_positions()
+        else:
+            print('Unrecognized option. Press enter.')

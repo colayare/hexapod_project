@@ -6,9 +6,9 @@ import os
 
 class hexapod_kinematics:
     #### Kinematics Parameters
-    ee_pos = np.zeros(shape=(6,3))
-    joints = np.zeros(shape=(6,3))
-    j_offs = np.zeros(shape=(6,3))
+    i_pos   = np.zeros(shape=(6,3))
+    joints  = np.zeros(shape=(6,3))
+    j_offs  = np.zeros(shape=(6,3))
     gaits   = np.zeros(shape=(30,3))
     l1 = 0.0275
     l2 = 0.0963
@@ -17,6 +17,7 @@ class hexapod_kinematics:
     nc = NUM_CONV()
     
     #### Parameters
+    init_position_file = ""
     offsets_file = ""
     gait_steps_file = ""
     
@@ -46,6 +47,22 @@ class hexapod_kinematics:
             self.j_offs[i][2] = float(off_2)
         return True
     
+    def import_init_pos(self):
+        if ( self.init_position_file == '' or not os.path.exists(self.init_position_file) ):
+            print('No joint offsets file detected.')
+            return None
+        file = open(self.init_position_file, 'r')
+        file_cont = file.read().split('\n')
+        file.close()
+        if ( len(file_cont) < 6 ):
+            print('Offsets size missmatch')
+        for i in range ( 6 ):
+            [sp_q1, sp_q2, sp_q3] = file_cont[i].split(',')
+            self.i_pos[i][0] = float(sp_q1)
+            self.i_pos[i][1] = float(sp_q2)
+            self.i_pos[i][2] = float(sp_q3)
+        return True
+    
     ## Save Joints Offsets
     def save_offsets(self):
         if ( self.offsets_file == '' or not os.path.exists(self.offsets_file) ):
@@ -61,6 +78,23 @@ class hexapod_kinematics:
         off_file = open(self.offsets_file, 'w+')
         off_file.write(off_cont)
         off_file.close()
+        return True
+        
+    ## Save Joints Offsets
+    def save_init_positions(self):
+        if ( self.init_position_file == '' or not os.path.exists(self.init_position_file) ):
+            print('No initial positions file detected.')
+            return None
+        
+        init_cont = ''
+        for i in range ( 6 ):
+            for j in range ( 3 ):
+                init_cont += str(self.i_pos[i][j])+','
+            init_cont = init_cont[:-1]+'\n'
+        init_cont = init_cont[:-1]
+        init_file = open(self.init_position_file, 'w+')
+        init_file.write(init_cont)
+        init_file.close()
         return True
     
     ## Import Gait Steps
@@ -198,6 +232,25 @@ class hexapod_kinematics:
             print('\tQ1 offset = 0x'+offset_q1+'|'+str(self.sec2rad(self.j_offs[i][0])))
             print('\tQ2 offset = 0x'+offset_q2+'|'+str(self.sec2rad(self.j_offs[i][1])))
             print('\tQ3 offset = 0x'+offset_q3+'|'+str(self.sec2rad(self.j_offs[i][2])))
+
+            self.axi_set_offset(i, int(offset_q1,16), int(offset_q2,16), int(offset_q3,16))
+        return True
+    
+    # Set read offsets
+    def set_init_position(self):
+        for i in range(6):
+            q1 = self.nc.dfloat2hfloat(self.sec2rad(self.i_pos[i][0]+self.j_offs[i][0])).lstrip('x')
+            q2 = self.nc.dfloat2hfloat(self.sec2rad(self.i_pos[i][1]+self.j_offs[i][1])).lstrip('x')
+            q3 = self.nc.dfloat2hfloat(self.sec2rad(self.i_pos[i][2]+self.j_offs[i][2])).lstrip('x')
+            
+            hexapod.axi_set_out_mux(i+1)
+            hexapod.axi_write_params_in(q1, q2, q3)
+            hexapod.axi_write_out_direct()
+            
+            print('Setting leg '+str(i)+' offset')
+            print('\tQ1 offset = 0x'+q1+'|'+str(self.sec2rad(self.i_pos[i][0]+self.j_offs[i][0])))
+            print('\tQ2 offset = 0x'+q2+'|'+str(self.sec2rad(self.i_pos[i][1]+self.j_offs[i][1])))
+            print('\tQ3 offset = 0x'+q3+'|'+str(self.sec2rad(self.i_pos[i][2]+self.j_offs[i][2])))
 
             self.axi_set_offset(i, int(offset_q1,16), int(offset_q2,16), int(offset_q3,16))
         return True
