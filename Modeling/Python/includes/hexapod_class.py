@@ -229,9 +229,9 @@ class hexapod_kinematics:
             offset_q2 = self.nc.dfloat2hfloat(self.sec2rad(self.j_offs[i][1])).lstrip('x')
             offset_q3 = self.nc.dfloat2hfloat(self.sec2rad(self.j_offs[i][2])).lstrip('x')
             print('Setting leg '+str(i)+' offset')
-            print('\tQ1 offset = 0x'+offset_q1+'|'+str(self.sec2rad(self.j_offs[i][0])))
-            print('\tQ2 offset = 0x'+offset_q2+'|'+str(self.sec2rad(self.j_offs[i][1])))
-            print('\tQ3 offset = 0x'+offset_q3+'|'+str(self.sec2rad(self.j_offs[i][2])))
+            print('\tQ1 offset = 0x'+offset_q1+' | '+str(self.sec2rad(self.j_offs[i][0])))
+            print('\tQ2 offset = 0x'+offset_q2+' | '+str(self.sec2rad(self.j_offs[i][1])))
+            print('\tQ3 offset = 0x'+offset_q3+' | '+str(self.sec2rad(self.j_offs[i][2])))
 
             self.axi_set_offset(i, int(offset_q1,16), int(offset_q2,16), int(offset_q3,16))
         return True
@@ -243,16 +243,16 @@ class hexapod_kinematics:
             q2 = self.nc.dfloat2hfloat(self.sec2rad(self.i_pos[i][1]+self.j_offs[i][1])).lstrip('x')
             q3 = self.nc.dfloat2hfloat(self.sec2rad(self.i_pos[i][2]+self.j_offs[i][2])).lstrip('x')
             
-            hexapod.axi_set_out_mux(i+1)
-            hexapod.axi_write_params_in(q1, q2, q3)
-            hexapod.axi_write_out_direct()
+            self.axi_set_out_mux(i+1)
+            self.axi_write_params_in(q1, q2, q3)
+            self.axi_write_out_direct()
             
-            print('Setting leg '+str(i)+' offset')
-            print('\tQ1 offset = 0x'+q1+'|'+str(self.sec2rad(self.i_pos[i][0]+self.j_offs[i][0])))
-            print('\tQ2 offset = 0x'+q2+'|'+str(self.sec2rad(self.i_pos[i][1]+self.j_offs[i][1])))
-            print('\tQ3 offset = 0x'+q3+'|'+str(self.sec2rad(self.i_pos[i][2]+self.j_offs[i][2])))
+            print('Setting leg '+str(i)+' direct output')
+            print('\tQ1 = 0x'+q1+' | '+str(self.sec2rad(self.i_pos[i][0]+self.j_offs[i][0])))
+            print('\tQ2 = 0x'+q2+' | '+str(self.sec2rad(self.i_pos[i][1]+self.j_offs[i][1])))
+            print('\tQ3 = 0x'+q3+' | '+str(self.sec2rad(self.i_pos[i][2]+self.j_offs[i][2])))
 
-            self.axi_set_offset(i, int(offset_q1,16), int(offset_q2,16), int(offset_q3,16))
+            self.axi_set_offset(i, q1, q2, q3)
         return True
     
     # Read offsets
