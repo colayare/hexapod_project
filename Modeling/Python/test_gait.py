@@ -93,7 +93,7 @@ while(1):
         elif ( opt.upper() == 'A,FALSE' ):
             leg_enable = np.array([False, False, False, False, False, False])
         else:
-            leg_enable[int(opt.split(',')[0])] = opt.split(',')[1] == 'True'
+            leg_enable[int(opt.split(',')[0])] = opt.split(',')[1].upper() == 'TRUE'
     elif( usr_opt.upper() == 'D' ):
         delay = input('Enter delay (ms) : ')
     elif( usr_opt.upper() == 'R' ):
