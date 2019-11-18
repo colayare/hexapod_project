@@ -12,10 +12,10 @@ set_property -dict { PACKAGE_PIN T16   IOSTANDARD LVCMOS33 } [get_ports { pwm_ou
 set_property -dict { PACKAGE_PIN R17   IOSTANDARD LVCMOS33 } [get_ports { pwm_out[11] }];
 set_property -dict { PACKAGE_PIN P18   IOSTANDARD LVCMOS33 } [get_ports { pwm_out[12] }];
 set_property -dict { PACKAGE_PIN N17   IOSTANDARD LVCMOS33 } [get_ports { pwm_out[13] }]; 
-set_property -dict { PACKAGE_PIN F19   IOSTANDARD LVCMOS33 } [get_ports { pwm_out[14] }];
-set_property -dict { PACKAGE_PIN F20   IOSTANDARD LVCMOS33 } [get_ports { pwm_out[15] }];
-set_property -dict { PACKAGE_PIN C20   IOSTANDARD LVCMOS33 } [get_ports { pwm_out[16] }]; 
-set_property -dict { PACKAGE_PIN B20   IOSTANDARD LVCMOS33 } [get_ports { pwm_out[17] }];
+set_property -dict { PACKAGE_PIN C20   IOSTANDARD LVCMOS33 } [get_ports { pwm_out[14] }];
+set_property -dict { PACKAGE_PIN B20   IOSTANDARD LVCMOS33 } [get_ports { pwm_out[15] }];
+set_property -dict { PACKAGE_PIN B19   IOSTANDARD LVCMOS33 } [get_ports { pwm_out[16] }]; 
+set_property -dict { PACKAGE_PIN A20   IOSTANDARD LVCMOS33 } [get_ports { pwm_out[17] }];
 
 #clk_fpga_0
 create_clock -name VCLK -period 10
