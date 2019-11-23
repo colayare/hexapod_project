@@ -131,7 +131,8 @@ while(1):
             if ( off_idx < 3 ):
                 off_val = nc.dfloat2hfloat(nc.sec2rad(float(usr_opt.split(',')[1].replace(' ',''))))
                 print('Setting Offset['+str(off_idx)+'] = '+off_val)
-                hexapod.axi_ip.axi_write(5+off_idx+int(opt_leg)*3, off_val)
+                #hexapod.axi_ip.axi_write(5+off_idx+int(opt_leg)*3, off_val)
+                hexapod.axi_set_offset(int(opt_leg), hexapod.j_offs[int(opt_leg)][0], hexapod.j_offs[int(opt_leg)][1], hexapod.j_offs[int(opt_leg)][2])
                 hexapod.j_offs[int(opt_leg)][off_idx] = float(usr_opt.split(',')[1].replace(' ',''))
             else:
                 print('Invalid joint index.')
@@ -146,6 +147,8 @@ while(1):
             if( usr_opt.split(',')[0][1:] == '2' ):
                 hexapod.i_pos[int(opt_leg)][int(usr_opt.split(',')[0][1:])] = float(new_angle)
                 sp_q3 = new_angle
+        elif ( usr_opt.upper() == 'SHOW' ):
+            hexapod.axi_ip.show_regs()
         elif ( usr_opt.upper() == 'SAVE OFFSET' ):
             hexapod.save_offsets()
         elif ( usr_opt.upper() == 'SAVE INIT' ):
