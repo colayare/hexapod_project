@@ -252,9 +252,9 @@ class hexapod_kinematics:
             [pwm1, pwm2, pwm3] = self.axi_get_pwm(int(i))
             
             print('Setting leg '+str(i)+' direct output')
-            print('\tQ1 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q1))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q1))+' | '+pwm1))
-            print('\tQ2 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q2))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q2))+' | '+pwm2))
-            print('\tQ3 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q3))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q3))+' | '+pwm3))
+            print('\tQ1 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q1))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q1))+' | '+str(pwm1)))
+            print('\tQ2 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q2))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q2))+' | '+str(pwm2)))
+            print('\tQ3 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q3))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q3))+' | '+str(pwm3)))
 
             self.axi_set_offset(i, q1, q2, q3)
         return True
