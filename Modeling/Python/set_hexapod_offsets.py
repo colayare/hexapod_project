@@ -85,6 +85,8 @@ while(1):
     print('Offset Q1 = '+str(off_q1))
     print('Offset Q2 = '+str(off_q2))
     print('Offset Q3 = '+str(off_q3))
+    
+    hexapod.axi_ip.show_regs()
     raw_input('Press enter...')
 
     while(1):

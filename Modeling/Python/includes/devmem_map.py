@@ -54,7 +54,7 @@ class ikinematics_mmap:
     def to_bytes(self, int_in):
         return struct.pack("<I", int_in)
     
-    def show_regs(self, from_address, to_address):
+    def show_regs(self, from_address=self.__base_address, to_address=0x40):
         for i in range (int(to_address-from_address)):
             address = from_address+i
             read_val = hex(self.to_int(self.axi_read(address)))
