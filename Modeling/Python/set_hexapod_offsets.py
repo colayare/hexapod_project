@@ -75,19 +75,19 @@ while(1):
     sp_q1 = str(hexapod.i_pos[int(opt_leg)][0])
     sp_q2 = str(hexapod.i_pos[int(opt_leg)][1])
     sp_q3 = str(hexapod.i_pos[int(opt_leg)][2])
+    off_q1 = hexapod.j_offs[int(opt_leg)][0]
+    off_q2 = hexapod.j_offs[int(opt_leg)][1]
+    off_q3 = hexapod.j_offs[int(opt_leg)][2]
     
     print('Q1 = '+sp_q1)
     print('Q2 = '+sp_q2)
     print('Q3 = '+sp_q3)
-    print('Offset Q1 = '+str(hexapod.j_offs[int(opt_leg)][0]))
-    print('Offset Q2 = '+str(hexapod.j_offs[int(opt_leg)][1]))
-    print('Offset Q3 = '+str(hexapod.j_offs[int(opt_leg)][2]))
+    print('Offset Q1 = '+str(off_q1))
+    print('Offset Q2 = '+str(off_q2))
+    print('Offset Q3 = '+str(off_q3))
     raw_input('Press enter...')
 
     while(1):
-        off_q1 = hexapod.j_offs[int(opt_leg)][0]
-        off_q2 = hexapod.j_offs[int(opt_leg)][1]
-        off_q3 = hexapod.j_offs[int(opt_leg)][2]
         sp_q1_p_offset_hex = nc.dfloat2hfloat(nc.sec2rad(float(sp_q1)+off_q1))
         sp_q2_p_offset_hex = nc.dfloat2hfloat(nc.sec2rad(float(sp_q2)+off_q2))
         sp_q3_p_offset_hex = nc.dfloat2hfloat(nc.sec2rad(float(sp_q3)+off_q3))

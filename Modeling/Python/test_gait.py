@@ -130,3 +130,5 @@ while(1):
                                 q1, q2, q3 = get_ik_out(hexapod)
                                 print("{:>10.0f}{:>10.0f}{:>10.4f}{:>10.4f}{:>10.4f}".format(s, j, q1, q2, q3))
                     tm.sleep(delay)
+    elif( usr_opt.upper() == 'EXIT' ):
+        exit()
