@@ -40,11 +40,12 @@ class hexapod_kinematics:
         off_file.close()
         if ( len(off_cont) < 6 ):
             print('Offsets size missmatch')
-        for i in range ( 6 ):
-            [off_0, off_1, off_2] = off_cont[i].split(',')
-            self.j_offs[i][0] = float(off_0)
-            self.j_offs[i][1] = float(off_1)
-            self.j_offs[i][2] = float(off_2)
+        else:
+            for i in range ( 6 ):
+                [off_0, off_1, off_2] = off_cont[i].split(',')
+                self.j_offs[i][0] = float(off_0)
+                self.j_offs[i][1] = float(off_1)
+                self.j_offs[i][2] = float(off_2)
         return True
     
     def import_init_pos(self):
@@ -56,11 +57,12 @@ class hexapod_kinematics:
         file.close()
         if ( len(file_cont) < 6 ):
             print('Offsets size missmatch')
-        for i in range ( 6 ):
-            [sp_q1, sp_q2, sp_q3] = file_cont[i].split(',')
-            self.i_pos[i][0] = float(sp_q1)
-            self.i_pos[i][1] = float(sp_q2)
-            self.i_pos[i][2] = float(sp_q3)
+        else:
+            for i in range ( 6 ):
+                [sp_q1, sp_q2, sp_q3] = file_cont[i].split(',')
+                self.i_pos[i][0] = float(sp_q1)
+                self.i_pos[i][1] = float(sp_q2)
+                self.i_pos[i][2] = float(sp_q3)
         return True
     
     ## Save Joints Offsets
