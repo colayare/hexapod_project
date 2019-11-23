@@ -1,9 +1,13 @@
 import sys
-sys.path.append('./includes')
 import numpy as np
 import math as mt
-from numeric_conversions import numeric_conversions as NUM_CONV
+#### Environment          
+pathname = os.path.dirname(sys.argv[0])   
+abs_path = os.path.abspath(pathname)
+print('Appending path'+ abs_path+'/includes')
+sys.path.append(abs_path+'/includes')
 from hexapod_class import hexapod_kinematics as hc
+from numeric_conversions import numeric_conversions as NUM_CONV
 
 #### Params Files
 joint_offsets_filename = "./params/joint_offset.params"
