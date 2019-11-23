@@ -250,9 +250,9 @@ class hexapod_kinematics:
             self.axi_write_out_direct()
             
             print('Setting leg '+str(i)+' direct output')
-            print('\tQ1 = 0x'+q1+' | '+str(self.sec2rad(self.i_pos[i][0]+self.j_offs[i][0]))+' | '+str(self.i_pos[i][0]+self.j_offs[i][0]))
-            print('\tQ2 = 0x'+q2+' | '+str(self.sec2rad(self.i_pos[i][1]+self.j_offs[i][1]))+' | '+str(self.i_pos[i][1]+self.j_offs[i][1]))
-            print('\tQ3 = 0x'+q3+' | '+str(self.sec2rad(self.i_pos[i][2]+self.j_offs[i][2]))+' | '+str(self.i_pos[i][2]+self.j_offs[i][2]))
+            print('\tQ1 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q1))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q1)) ))
+            print('\tQ2 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q2))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q2)) ))
+            print('\tQ3 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q3))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q3)) ))
 
             self.axi_set_offset(i, q1, q2, q3)
         return True
