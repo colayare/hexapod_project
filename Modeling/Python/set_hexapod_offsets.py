@@ -1,7 +1,7 @@
 import os
 import sys
 from math import floor as floor
-#### Environment          
+#### Append includes path          
 pathname = os.path.dirname(sys.argv[0])   
 abs_path = os.path.abspath(pathname)
 print('Appending path'+ abs_path+'/includes')

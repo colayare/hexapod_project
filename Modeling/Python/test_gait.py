@@ -3,7 +3,7 @@ import sys
 import time as tm
 from math import floor as floor
 import numpy as np
-#### Environment          
+#### Append includes path           
 pathname = os.path.dirname(sys.argv[0])   
 abs_path = os.path.abspath(pathname)
 print('Appending path'+ abs_path+'/includes')
