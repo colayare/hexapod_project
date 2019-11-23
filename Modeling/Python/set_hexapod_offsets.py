@@ -58,6 +58,8 @@ hexapod.set_default_offsets()
 hexapod.set_init_position()
 print('Joint offsets:')
 print(hexapod.j_offs)
+print('Initital Position')
+print(hexapod.i_pos)
 
 while(1):
     os.system('clear')
@@ -86,7 +88,6 @@ while(1):
     print('Offset Q2 = '+str(off_q2))
     print('Offset Q3 = '+str(off_q3))
     
-    hexapod.axi_ip.show_regs()
     raw_input('Press enter...')
 
     while(1):
@@ -105,6 +106,7 @@ while(1):
         
         os.system('clear')
         print_title('Configuring Leg '+opt_leg)
+        print(sp_q1_p_offset_hex, sp_q2_p_offset_hex, sp_q3_p_offset_hex)
         print('{:<12s}{:>10s}{:>12s}{:>12s}{:>10s}'.format('Angle','Rad','Sexa','Float hex','Fixed hex'))
         print('{:<12s}{:>10.4f}{:>12s}{:>12s}{:>10s}'.format('Q1',nc.sec2rad(float(sp_q1)),sp_q1,nc.dfloat2hfloat(nc.sec2rad(float(sp_q1))),nc.dfloat2hfix(nc.sec2rad(float(sp_q1)))))
         print('{:<12s}{:>10.4f}{:>12s}{:>12s}{:>10s}'.format('Q2',nc.sec2rad(float(sp_q2)),sp_q2,nc.dfloat2hfloat(nc.sec2rad(float(sp_q2))),nc.dfloat2hfix(nc.sec2rad(float(sp_q2)))))
@@ -133,7 +135,6 @@ while(1):
             if ( off_idx < 3 ):
                 off_val = nc.dfloat2hfloat(nc.sec2rad(float(usr_opt.split(',')[1].replace(' ',''))))
                 print('Setting Offset['+str(off_idx)+'] = '+off_val)
-                #hexapod.axi_ip.axi_write(5+off_idx+int(opt_leg)*3, off_val)
                 hexapod.axi_set_offset(int(opt_leg), hexapod.j_offs[int(opt_leg)][0], hexapod.j_offs[int(opt_leg)][1], hexapod.j_offs[int(opt_leg)][2])
                 hexapod.j_offs[int(opt_leg)][off_idx] = float(usr_opt.split(',')[1].replace(' ',''))
             else:
