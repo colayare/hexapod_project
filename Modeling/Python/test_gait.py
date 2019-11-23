@@ -43,9 +43,9 @@ def print_title(title, char='#'):
     return True
 
 #### Params Files
-joint_offsets_filename  = "./params/joint_offset.params"
-gait_steps_filename     = './params/gait_steps.params'
-init_position_filename  = './params/init_position.params'
+joint_offsets_filename  = abs_path+"/params/joint_offset.params"
+gait_steps_filename     = abs_path+'/params/gait_steps.params'
+init_position_filename  = abs_path+'/params/init_position.params'
 
 #### Numeric Conversions
 nc = NUM_CONV()

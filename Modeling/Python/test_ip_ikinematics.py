@@ -10,8 +10,8 @@ from hexapod_class import hexapod_kinematics as hc
 from numeric_conversions import numeric_conversions as NUM_CONV
 
 #### Params Files
-joint_offsets_filename = "./params/joint_offset.params"
-gait_steps_filename = './params/gait_steps.params'
+joint_offsets_filename = abs_path+"/params/joint_offset.params"
+gait_steps_filename = abs_path+'/params/gait_steps.params'
 
 #### Numeric Conversions
 nc = NUM_CONV()
