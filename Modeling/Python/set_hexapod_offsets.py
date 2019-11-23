@@ -55,6 +55,7 @@ hexapod.init_position_file = init_position_filename
 hexapod.import_init_pos()
 hexapod.import_offsets()
 hexapod.set_default_offsets()
+hexapod.set_init_position()
 print('Joint offsets:')
 print(hexapod.j_offs)
 
