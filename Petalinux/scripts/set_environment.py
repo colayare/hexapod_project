@@ -126,6 +126,7 @@ create_alias(aliases_src_file, "REPO_PULL", "git pull --depth=1 origin master --
 create_alias(aliases_src_file, "py", "python")
 create_alias(aliases_src_file, "SET_OFFSETS", "python $MODEL_PY_PATH/set_hexapod_offsets.py")
 create_alias(aliases_src_file, "TEST_GAIT", "python $MODEL_PY_PATH/test_gait.py")
+create_alias(aliases_src_file, "SET_INIT", "python $MODEL_PY_PATH/set_initial_position.py")
 
 get_profile     = os.popen("cat "+envar_src_file).read()[:-1]
 if ( "source "+aliases_src_file not in get_profile ):
