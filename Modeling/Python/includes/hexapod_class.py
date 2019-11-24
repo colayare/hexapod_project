@@ -245,6 +245,7 @@ class hexapod_kinematics:
             q2 = self.nc.dfloat2hfloat(self.sec2rad(self.i_pos[i][1]+self.j_offs[i][1])).lstrip('x')
             q3 = self.nc.dfloat2hfloat(self.sec2rad(self.i_pos[i][2]+self.j_offs[i][2])).lstrip('x')
             
+            self.config_leg_ctr("one_leg", i)
             self.axi_set_out_mux(i+1)
             self.axi_write_params_in(q1, q2, q3)
             self.axi_write_out_direct()

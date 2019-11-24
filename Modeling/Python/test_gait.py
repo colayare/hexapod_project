@@ -25,12 +25,16 @@ def gait(hexapod, leg, step):
     hexapod.axi_write_fifo()
     hexapod.axi_trigger_ikinematics()
 
-def get_ik_out(hexapod):
+def get_ik_out(hexapod, sexa=True):
     hexapod.axi_set_out_mux(0)
     [q1, q2, q3] = hexapod.axi_read_params()
     q1 = hexapod.nc.hfloat2dfloat(q1)
     q2 = hexapod.nc.hfloat2dfloat(q2)
     q3 = hexapod.nc.hfloat2dfloat(q3)
+    if ( sexa ):
+        q1 = hexapod.nc.rad2sec(q1)
+        q2 = hexapod.nc.rad2sec(q2)
+        q3 = hexapod.nc.rad2sec(q3)
     return q1, q2, q3
 
 def print_title(title, char='#'):
@@ -86,7 +90,9 @@ while(1):
     print('> '+str(display))
     print('(G) Select Gait. (0-3)')
     print('> '+str(gait_sel))
+    print('(I) Set initial position')
     print('(S) Start gait')
+    print('(EXIT) Exit')
     print(dash)
     usr_opt = raw_input('Enter option : ')
     
@@ -107,9 +113,11 @@ while(1):
     elif( usr_opt.upper() == 'G' ):
         gait_sel = input('Enter gait : ')
         hexapod.read_gait_steps(gait_sel)
+    elif( usr_opt.upper() == 'I' ):
+        hexapod.set_init_position()
     elif( usr_opt.upper() == 'S' ):
         if ( display ):
-            print("{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}".format('Step', 'leg', 'Q1', 'Q2', 'Q3'))
+            print("{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}".format('Step', 'leg', 'Q1', 'PWM1', 'Q2', 'PWM2', 'Q3', 'PWM3'))
         if ( gait_loops == 0 ):
             while(1):
                 for s in range (30):
@@ -118,7 +126,8 @@ while(1):
                             gait(hexapod, j, s+30*gait_sel)
                             if (display):
                                 q1, q2, q3 = get_ik_out(hexapod)
-                                print("{:>10.0f}{:>10.0f}{:>10.4f}{:>10.4f}{:>10.4f}".format(s, j, q1, q2, q3))
+                                [pwm1, pwm2, pwm3] = hexapod.axi_get_pwm(j)
+                                print("{:>10.0f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}".format(s, j, q1, pwm1, q2, pwm2, q3, pwm3))
                     tm.sleep(delay)
         elif ( gait_loops > 0):
             for i in range (gait_loops):
@@ -128,7 +137,8 @@ while(1):
                             gait(hexapod, j, s+30*gait_sel)
                             if (display):
                                 q1, q2, q3 = get_ik_out(hexapod)
-                                print("{:>10.0f}{:>10.0f}{:>10.4f}{:>10.4f}{:>10.4f}".format(s, j, q1, q2, q3))
+                                [pwm1, pwm2, pwm3] = hexapod.axi_get_pwm(j)
+                                print("{:>10.0f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}".format(s, j, q1, pwm1, q2, pwm2, q3, pwm3))
                     tm.sleep(delay)
     elif( usr_opt.upper() == 'EXIT' ):
         exit()
