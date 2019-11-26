@@ -225,21 +225,23 @@ class hexapod_kinematics:
         return True
     
     # Set read offsets
-    def set_default_offsets(self):
+    def set_default_offsets(self, print_out=False):
         for i in range(6):
             offset_q1 = self.nc.dfloat2hfloat(self.sec2rad(self.j_offs[i][0])).lstrip('x')
             offset_q2 = self.nc.dfloat2hfloat(self.sec2rad(self.j_offs[i][1])).lstrip('x')
             offset_q3 = self.nc.dfloat2hfloat(self.sec2rad(self.j_offs[i][2])).lstrip('x')
-            print('Setting leg '+str(i)+' offset')
-            print('\tQ1 offset = 0x'+offset_q1+' | '+str(self.sec2rad(self.j_offs[i][0])))
-            print('\tQ2 offset = 0x'+offset_q2+' | '+str(self.sec2rad(self.j_offs[i][1])))
-            print('\tQ3 offset = 0x'+offset_q3+' | '+str(self.sec2rad(self.j_offs[i][2])))
+            
+            if ( print_out ):
+                print('Setting leg '+str(i)+' offset')
+                print('\tQ1 offset = 0x'+offset_q1+' | '+str(self.sec2rad(self.j_offs[i][0])))
+                print('\tQ2 offset = 0x'+offset_q2+' | '+str(self.sec2rad(self.j_offs[i][1])))
+                print('\tQ3 offset = 0x'+offset_q3+' | '+str(self.sec2rad(self.j_offs[i][2])))
 
             self.axi_set_offset(i, int(offset_q1,16), int(offset_q2,16), int(offset_q3,16))
         return True
     
     # Set read offsets
-    def set_init_position(self):
+    def set_init_position(self, print_out=False):
         for i in range(6):
             q1 = self.nc.dfloat2hfloat(self.sec2rad(self.i_pos[i][0]+self.j_offs[i][0])).lstrip('x')
             q2 = self.nc.dfloat2hfloat(self.sec2rad(self.i_pos[i][1]+self.j_offs[i][1])).lstrip('x')
@@ -250,14 +252,14 @@ class hexapod_kinematics:
             self.axi_write_params_in(q1, q2, q3)
             self.axi_write_out_direct()
             
-            [pwm1, pwm2, pwm3] = self.axi_get_pwm(int(i))
-            
-            print('Setting leg '+str(i)+' direct output')
-            print('\tQ1 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q1))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q1)))+' | '+str(pwm1))
-            print('\tQ2 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q2))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q2)))+' | '+str(pwm2))
-            print('\tQ3 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q3))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q3)))+' | '+str(pwm3))
+            if ( print_out ):
+                [pwm1, pwm2, pwm3] = self.axi_get_pwm(int(i))
+                
+                print('Setting leg '+str(i)+' direct output')
+                print('\tQ1 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q1))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q1)))+' | '+str(pwm1))
+                print('\tQ2 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q2))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q2)))+' | '+str(pwm2))
+                print('\tQ3 = 0x'+q1+' | '+str(self.nc.hfloat2dfloat(q3))+' | '+str(self.rad2sec(self.nc.hfloat2dfloat(q3)))+' | '+str(pwm3))
 
-            self.axi_set_offset(i, q1, q2, q3)
         return True
     
     # Read offsets
