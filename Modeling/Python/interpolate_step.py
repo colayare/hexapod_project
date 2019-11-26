@@ -56,17 +56,19 @@ def step_interpolate(gait, points):
     gaits   = np.zeros(shape=(3,points))
     for i in range (3):
         inter = np.interp(lin_i, lines, gait[i])
-        gaits[i] = inter * 2
+        gaits[i] = inter
     return gaits
     
 #def save_gait():
     
 
 #### Code
-# Read reference gait
+points = 100
+gait_int = np.linspace(0, 30, points*4)
+
 for i in range (4):
     gaits = read_gait_steps(i, ref_path)
-    inter = step_interpolate(gaits, 100)
+    inter = step_interpolate(gaits, points)
     
     if ( PLOT_EN ):
         fig = plt.figure(figsize=plt.figaspect(0.5))
