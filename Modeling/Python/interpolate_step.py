@@ -31,8 +31,7 @@ from numeric_conversions import numeric_conversions as NUM_CONV
 # Params
 params_dir  = abs_path+"/params"
 # Reference steps
-ref_path    = params_dir+"/ref_gait.params"
-des_path    = params_dir+"/gait_steps.params"
+ref_path    = params_dir+"/gait_steps.params"
 
 #### Functions
 def read_gait_steps(gait, ref_path):
@@ -50,32 +49,57 @@ def read_gait_steps(gait, ref_path):
         gaits[i][2] = nc.hfloat2dfloat(gait_file_cont[2].split(",")[(gait*30)+i])
     return np.transpose(gaits)
 
-def step_interpolate(gait, points):
+def step_interpolate(gait, points, scale):
     lines = np.linspace(0, 30, 30)
     lin_i = np.linspace(0, 30, points)
     gaits   = np.zeros(shape=(3,points))
     for i in range (3):
         inter = np.interp(lin_i, lines, gait[i])
-        gaits[i] = inter
+        gaits[i] = inter * scale
     return gaits
-    
-#def save_gait():
-    
 
+def get_ikinematics(hexapod, gaits, points):
+    ik   = np.zeros(shape=(3,points))
+    for i in range (points):
+        [q1, q2, q3] = hexapod.iKinematics( gaits[0][i], gaits[1][i], gaits[2][i] )
+        ik[0][i] = hexapod.nc.rad2sec(q1)
+        ik[1][i] = hexapod.nc.rad2sec(q2)
+        ik[2][i] = hexapod.nc.rad2sec(q3)
+    return ik
+    
 #### Code
+hexapod = hc()
 points = 100
-gait_int = np.linspace(0, 30, points*4)
+scale  = 1.2
 
 for i in range (4):
     gaits = read_gait_steps(i, ref_path)
-    inter = step_interpolate(gaits, points)
+    inter = step_interpolate(gaits, points, scale)
+    
+    ik_i = get_ikinematics(hexapod, gaits, 30)
+    ik_o = get_ikinematics(hexapod, inter, points)
     
     if ( PLOT_EN ):
         fig = plt.figure(figsize=plt.figaspect(0.5))
-        ax = fig.add_subplot(1, 2, 1, projection='3d')
-        ax.plot(gaits[0], gaits[1], gaits[2], label='Reference', c='r')
-        ax = fig.add_subplot(1, 2, 2, projection='3d')
-        ax.plot(inter[0], inter[1], inter[2], label='Interpolated', c='b')
+        
+        ax = fig.add_subplot(2, 2, 1, projection='3d')
+        ax.plot(gaits[0], gaits[1], gaits[2], label='Reference', c='r', marker='o')
+        ax.legend()
+        
+        ax = fig.add_subplot(2, 2, 2, projection='3d')
+        ax.plot(inter[0], inter[1], inter[2], label='Interpolated', c='b', marker='o')
+        ax.legend()
+        
+        ax = fig.add_subplot(2, 2, 3)
+        ax.plot(ik_i[0], c='r', label='Q1')
+        ax.plot(ik_i[1], c='g', label='Q2')
+        ax.plot(ik_i[2], c='b', label='Q3')
+        ax.legend()
+        
+        ax = fig.add_subplot(2, 2, 4)
+        ax.plot(ik_o[0], label='Q1', c='r')
+        ax.plot(ik_o[1], label='Q2', c='g')
+        ax.plot(ik_o[2], label='Q3', c='b')
         ax.legend()
         
         plt.show()

@@ -112,6 +112,7 @@ else:
 create_variable(envar_src_file, "PROJ_PATH", git_dir)
 create_variable(envar_src_file, "MODEL_PY_PATH", git_dir+"/Modeling/Python")
 create_variable(envar_src_file, "MODEL_C_PATH", git_dir+"/Modeling/C")
+create_variable(envar_src_file, "STARTUP_SCRIPT", "/etc/init.d/mystartup")
 
 ################# SETTING UP ALIASES #################
 print_title("Setting up aliases")
@@ -138,7 +139,7 @@ startup_file = "mystartup"
 startup_exists  = os.path.isfile("/etc/init.d/"+startup_file)
 
 if( not startup_exists ):
-    print(">> Creating startup script file")
+    print(">> Creating startup script file : /etc/init.d/"+startup_file)
     os.system("echo \"#!/bin/bash\necho \"Custom startup script\"\" > /etc/init.d/"+startup_file)
     os.system("chmod 777 /etc/init.d/"+startup_file)
 

@@ -10,6 +10,9 @@ class hexapod_kinematics:
     joints  = np.zeros(shape=(6,3))
     j_offs  = np.zeros(shape=(6,3))
     gaits   = np.zeros(shape=(30,3))
+    gait    = 0
+    steps   = 30
+    scale   = 1
     l1 = 0.0275
     l2 = 0.0963
     l3 = 0.1051
@@ -100,22 +103,43 @@ class hexapod_kinematics:
         return True
     
     ## Import Gait Steps
-    def read_gait_steps(self, gait):
+    def read_gait_steps(self, gait, interp_points=30, scale=1):
         if ( self.gait_steps_file == '' or not os.path.exists(self.gait_steps_file) ):
             print('No gait steps file detected.')
             return None
         gait_file = open(self.gait_steps_file, 'r')
         gait_file_cont = gait_file.read().split('\n')[0:3]
         gait_file.close()
+        gaits   = np.zeros(shape=(30,3))
         for i in range(30):
-            self.gaits[i][0] = int(gait_file_cont[0].split(",")[(gait*30)+i], 16)
-            self.gaits[i][1] = int(gait_file_cont[1].split(",")[(gait*30)+i], 16)
-            self.gaits[i][2] = int(gait_file_cont[2].split(",")[(gait*30)+i], 16)
+            gaits[i][0] = self.nc.hfloat2dfloat(gait_file_cont[0].split(",")[(gait*30)+i])
+            gaits[i][1] = self.nc.hfloat2dfloat(gait_file_cont[1].split(",")[(gait*30)+i])
+            gaits[i][2] = self.nc.hfloat2dfloat(gait_file_cont[2].split(",")[(gait*30)+i])
+        
+        if ( interp_points > 30 ):
+            self.gait  = gait
+            self.scale = scale
+            self.steps = interp_points
+            self.gaits = self.step_interpolate(np.transpose(gaits), interp_points, scale)
+        else:
+            self.gait  = gait
+            self.scale = scale
+            self.steps = interp_points
+            self.gaits = gaits
         return True
     
     def gait_step(self, idx):
         x, y, z = self.gaits[idx]
-        return x, y, z
+        return self.nc.dfloat2hfloat(x), self.nc.dfloat2hfloat(y), self.nc.dfloat2hfloat(z)
+        
+    def step_interpolate(self, gait, points, scale):
+        lines = np.linspace(0, 30, 30)
+        lin_i = np.linspace(0, 30, points)
+        gaits   = np.zeros(shape=(3,points))
+        for i in range (3):
+            inter = np.interp(lin_i, lines, gait[i])
+            gaits[i] = inter * scale
+        return np.transpose(gaits)
     
     ## Kinematics Functions
     def dKinematics(self, q1, q2, q3):
@@ -126,10 +150,10 @@ class hexapod_kinematics:
     
     def iKinematics(self, xin, yin, zin):
         if ( type(xin) is str ):
-            x = nc.hfloat2dfloat(xin)
-            y = nc.hfloat2dfloat(yin)
-            z = nc.hfloat2dfloat(zin)
-        elif ( type(xin) is float ):
+            x = self.nc.hfloat2dfloat(xin)
+            y = self.nc.hfloat2dfloat(yin)
+            z = self.nc.hfloat2dfloat(zin)
+        else:
             x = xin
             y = yin
             z = zin
