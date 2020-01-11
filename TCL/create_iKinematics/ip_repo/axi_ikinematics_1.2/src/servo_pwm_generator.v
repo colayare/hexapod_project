@@ -34,6 +34,7 @@ module servo_pwm_generator
     input 					CLK,			// Clock signal
     //-- PWM Control --
     input					EN,
+    input					COMPLEMENT,
     input [C_PWM_SIZE-1:0]	PWM_IN,
     //-- PWM Output --
     output reg				PWM_OUT
@@ -162,7 +163,7 @@ always @(*)
 // Counters
 always @(posedge CLK)
 	if (nRST) begin
-		pwm_in				<= PWM_IN;
+		pwm_in				<= (COMPLEMENT) ? C_PWM_MAX_IN - PWM_IN : PWM_IN;
 		counter				<= counter_next;
 		pwm_step_counter	<= pwm_step_counter_next;
 		pwm_counter			<= pwm_counter_next;

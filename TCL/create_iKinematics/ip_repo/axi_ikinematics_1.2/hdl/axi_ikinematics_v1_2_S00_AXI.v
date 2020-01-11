@@ -50,6 +50,7 @@
 		// Users to add ports here
 		// 
 		output wire [C_PWM_SIZE*C_ROB_NLEGS*C_ROB_NJOINTS-1:0] O_JOINT_PWM,
+		output wire [C_ROB_NLEGS*C_ROB_NJOINTS-1:0] O_JOINT_PWM_COMPLEMENT_OUT,
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -138,7 +139,9 @@
 	//-- User Signals Definitions
 	//----------------------------------------------
 	//-- Leg counter signals
-	wire [C_JOI_CTR_SIZE-1:0]		lgc_leg_sel;
+	wire [C_JOI_CTR_SIZE-1:0]		lgc_leg_sel,
+									lgc_leg_in_sel;
+	wire [1:0]						lgc_ctr_mode;
 	wire							lgc_invalid;
 	reg								lgc_set;
 	//-- Floating-point to Fixed-point conversion signals
@@ -200,9 +203,9 @@
 									reg_ikn_q2_offset,
 									reg_ikn_q3_offset;
 	// Inverse Kinematics angles trimmed to 8 bit
-	wire [7:0]						ikn_q1_pwm,
-									ikn_q2_pwm,
-									ikn_q3_pwm;
+	wire [C_ROB_NLEGS*C_ROB_NJOINTS-1:0] pwm_out_complement;
+	//-- AXI READ OUTPUT Fixed to Float converter Multiplexer
+	wire [2:0]						f2f_mux_selector;
 	//-- End User Declarations --
 
 	// AXI4LITE signals
@@ -1108,7 +1111,6 @@
 		.VALID()
 		);
 	
-	//-- 
 	//-- Offset obtain& convert
 	// Floating-point to Fixed-point Converter Offset Q1
 	float_to_fixed_converter
@@ -1187,10 +1189,10 @@
 	) LEG_COUNTER (
 	.CLK(S_AXI_ACLK),
 	.nRST(S_AXI_ARESETN),
-	.CTR_MODE(slv_reg1[5:4]),
+	.CTR_MODE(lgc_ctr_mode),
 	.SET(lgc_set),
 	.TRIGGER(ikn_data_ready),
-	.LEG_IN_SELECT(slv_reg1[C_JOI_CTR_SIZE-1:0]),
+	.LEG_IN_SELECT(lgc_leg_in_sel),
 	.INVALID_SELECT(lgc_invalid),
 	.LEG_OUT_SELECT(lgc_leg_sel)
 	);
@@ -1237,7 +1239,19 @@
 	  		lgc_set <= S_AXI_WDATA[3];
 	  	else
 	  		lgc_set <= 1'b0;
-	  
+  	
+  	//-- Leg Counter Mode --
+  	assign lgc_ctr_mode = slv_reg1[5:4];
+  	
+  	//-- Leg Input Selection --
+  	assign lgc_leg_in_sel = slv_reg1[C_JOI_CTR_SIZE-1:0];
+  	
+  	//-- Fixed to Floating point conversor selector --
+  	assign f2f_mux_selector = slv_reg1[11:9];
+  	
+  	//-- Set PWM Output Complement -- 
+  	assign pwm_out_complement = slv_reg1[29:12];
+  	
 	//-- Inverse Kinematics Memory  Map Out -- 
 	always @( posedge S_AXI_ACLK )
 	if ( S_AXI_ARESETN == 1'b0 )
@@ -1273,6 +1287,9 @@
 			);
 		end
 	endgenerate
+	
+	//-- PWM Complement Output -- 
+	assign O_JOINT_PWM_COMPLEMENT_OUT = pwm_out_complement;
 	  
 	//-- Offset Selector --
 	always @(*)
@@ -1316,7 +1333,7 @@
 	
 	//-- Output Read Multiplexer
 	always @(*)
-		case ( slv_reg1[15:13] )
+		case ( f2f_mux_selector )
 			0 : begin
 				mux_flp_output_q1 = ikn_q1;
 				mux_flp_output_q2 = ikn_q2;
@@ -1365,7 +1382,7 @@
 	assign flp_output_q3_trigger = reg_output_direct | ikn_data_ready;
 	
 	//-- Configuration register read mode
-	assign reg_config_out = {slv_reg1[31:16], slv_reg1[15:13], fifo_full, fifo_empty, ikn_busy, lgc_invalid, lgc_leg_sel, slv_reg1[5:4], slv_reg1[C_JOI_CTR_SIZE], slv_reg1[C_JOI_CTR_SIZE-1:0]};
+	assign reg_config_out = {2'b11 , pwm_out_complement, f2f_mux_selector, lgc_leg_sel, lgc_ctr_mode, lgc_set, lgc_leg_in_sel};
 	
 	//-- Pipeline Reg Output
 	always @( posedge S_AXI_ACLK )

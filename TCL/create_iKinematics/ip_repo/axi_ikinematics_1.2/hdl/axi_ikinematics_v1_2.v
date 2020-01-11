@@ -83,6 +83,7 @@
 	//----------------------------------------------
 	// 8-bit PWM Value
 	wire [C_PWM_SIZE*C_ROB_NLEGS*C_ROB_NJOINTS-1:0]	o_joint_pwm;
+	wire [C_ROB_NLEGS*C_ROB_NJOINTS-1:0] o_joint_pwm_complement;
 	//-- User Declarations End --
 	
 // Instantiation of Axi Bus Interface S00_AXI
@@ -118,6 +119,7 @@
 	) axi_ikinematics_v1_2_S00_AXI_inst (
 		//-- User ports --
 		.O_JOINT_PWM(o_joint_pwm),
+		.O_JOINT_PWM_COMPLEMENT_OUT(o_joint_pwm_complement),
 		//-- End User Ports --
 		.S_AXI_ACLK(s00_axi_aclk),
 		.S_AXI_ARESETN(s00_axi_aresetn),
@@ -156,6 +158,7 @@
 			.CLK(s00_axi_aclk),			// Clock signal
 			//-- PWM Control --
 			.EN(1'b1),
+			.COMPLEMENT(o_joint_pwm_complement[i]),
 			.PWM_IN(o_joint_pwm[i*(C_PWM_SIZE)+:C_PWM_SIZE]),
 			//-- PWM Output --
 			.PWM_OUT(s00_pwm_out[i])
