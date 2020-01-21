@@ -9,6 +9,7 @@ class hexapod_kinematics:
     i_pos   = np.zeros(shape=(6,3))
     joints  = np.zeros(shape=(6,3))
     j_offs  = np.zeros(shape=(6,3))
+    i_inv_s = np.array([])
     gaits   = np.zeros(shape=(30,3))
     gait    = 0
     steps   = 30
@@ -37,7 +38,7 @@ class hexapod_kinematics:
     def import_offsets(self):
         if ( self.offsets_file == '' or not os.path.exists(self.offsets_file) ):
             print('No joint offsets file detected.')
-            return None
+            return False
         off_file = open(self.offsets_file, 'r')
         off_cont = off_file.read().split('\n')
         off_file.close()
@@ -54,7 +55,7 @@ class hexapod_kinematics:
     def import_init_pos(self):
         if ( self.init_position_file == '' or not os.path.exists(self.init_position_file) ):
             print('No joint offsets file detected.')
-            return None
+            return False
         file = open(self.init_position_file, 'r')
         file_cont = file.read().split('\n')
         file.close()
@@ -67,6 +68,20 @@ class hexapod_kinematics:
                 self.i_pos[i][1] = float(sp_q2)
                 self.i_pos[i][2] = float(sp_q3)
         return True
+        
+    def import_init_servo_invertion(self):
+        if ( self.init_servo_inv_file == '' or not os.path.exists(self.init_servo_inv_file) ):
+            print('No init servo inversion file detected.')
+            return False
+        file        = open(self.init_servo_inv_file, 'r')
+        file_cont   = file.read().split('\n')
+        file.close()
+        self.i_inv_s = np.array(file_cont)
+        inv_val     = int(''.join(file_cont[::-1]), 2) << 12
+        reg1        = int(self.axi_ip.axi_read(1), 16) & (0xFFFFFFFF ^ (0x3FFFF << 12))
+        set_val     = reg1 + inv_val
+        self.axi_ip.axi_write(1, set_val)
+        return None
     
     ## Save Joints Offsets
     def save_offsets(self):
@@ -90,7 +105,6 @@ class hexapod_kinematics:
         if ( self.init_position_file == '' or not os.path.exists(self.init_position_file) ):
             print('No initial positions file detected.')
             return None
-        
         init_cont = ''
         for i in range ( 6 ):
             for j in range ( 3 ):
@@ -100,6 +114,17 @@ class hexapod_kinematics:
         init_file = open(self.init_position_file, 'w+')
         init_file.write(init_cont)
         init_file.close()
+        return True
+        
+    ## Save Servo Inversion
+    def save_inversion(self):
+        if ( self.init_servo_inv_file == '' or not os.path.exists(self.init_servo_inv_file) ):
+            print('No init servo inversion file detected.')
+            return False
+        inv_cont = '\n'.join(self.i_inv_s)
+        inv_file = open(self.init_servo_inv_file, 'w+')
+        inv_file.write(inv_cont)
+        inv_file.close()
         return True
     
     ## Import Gait Steps
@@ -232,12 +257,22 @@ class hexapod_kinematics:
         self.axi_ip.axi_write(1, value)
         return True
     
+    # Set PWM Channel Inversion bit
+    def axi_set_pwm_inv(self, leg, val):
+        bit_sel = 12 + leg
+        reg1 = int(self.axi_ip.axi_read(1), 16) & (0xFFFFFFFF ^ (1 << bit_sel))
+        val = (val & 0x1) << bit_sel
+        set_val = val + reg1
+        self.axi_ip.axi_write(1, set_val)
+        return True
+    
     # Set output multiplexor
+    # f2f_mux_selector offset
     def axi_set_out_mux(self, selector):
-        mux_sel = (selector & 0x7) << 13
+        mux_sel = (selector & 0x7) << 9
         reg1 = int(self.axi_ip.axi_read(1), 16)
         
-        write_val = (reg1 & ~(0x7 << 13)) + mux_sel
+        write_val = (reg1 & ~(0x7 << 9)) + mux_sel
         self.axi_ip.axi_write(1, write_val)
         return True
     

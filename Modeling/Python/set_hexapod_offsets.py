@@ -39,6 +39,7 @@ def print_title(title, char='#'):
 joint_offsets_filename = abs_path+"/params/joint_offset.params"
 gait_steps_filename = abs_path+'/params/gait_steps.params'
 init_position_filename = abs_path+'/params/init_position.params'
+servo_inversion_filename = abs_path+'/params/init_servo_inv.params'
 
 #### Numeric Conversions
 nc = NUM_CONV()
@@ -52,8 +53,10 @@ hexapod.init_axi()
 hexapod.offsets_file = joint_offsets_filename
 hexapod.gait_steps_file = gait_steps_filename
 hexapod.init_position_file = init_position_filename
+hexapod.init_servo_inv_file = servo_inversion_filename
 hexapod.import_init_pos()
 hexapod.import_offsets()
+hexapod.import_init_servo_invertion()
 hexapod.set_default_offsets()
 hexapod.set_init_position()
 print('Joint offsets:')
@@ -104,6 +107,7 @@ while(1):
         [pwm1, pwm2, pwm3] = hexapod.axi_get_pwm(int(opt_leg))
         [fxp_q1, fxp_q2, fxp_q3] = axi_read_fxp_out_params(hexapod, int(opt_leg))
         
+        
         os.system('clear')
         print_title('Configuring Leg '+opt_leg)
         print('{:<12s}{:>10s}{:>12s}{:>12s}{:>10s}'.format('Angle','Rad','Sexa','Float hex','Fixed hex'))
@@ -125,6 +129,10 @@ while(1):
         print('{:<12s}{:>10s}{:>12s}'.format('PWM 1',str(pwm1),hex(pwm1)[2:].zfill(2)))
         print('{:<12s}{:>10s}{:>12s}'.format('PWM 2',str(pwm2),hex(pwm2)[2:].zfill(2)))
         print('{:<12s}{:>10s}{:>12s}'.format('PWM 3',str(pwm3),hex(pwm3)[2:].zfill(2)))        
+        print(dash)
+        print('{:<12s}{:>10s}'.format('INV 1',str(hexapod.i_inv_s[int(opt_leg) * 3])))
+        print('{:<12s}{:>10s}'.format('INV 2',str(hexapod.i_inv_s[int(opt_leg) * 3 + 1])))
+        print('{:<12s}{:>10s}'.format('INV 3',str(hexapod.i_inv_s[int(opt_leg) * 3 + 2])))
         
         usr_opt = raw_input('Enter option : ')
         if ( usr_opt == '\n' or usr_opt == '' ):
@@ -150,15 +158,23 @@ while(1):
             if( usr_opt.split(',')[0][1:] == '2' ):
                 hexapod.i_pos[int(opt_leg)][int(usr_opt.split(',')[0][1:])] = float(new_angle)
                 sp_q3 = new_angle
+        elif ( 'i' in usr_opt.split(',')[0] and ',' in usr_opt ):
+            inv_val = int(usr_opt.split(',')[1])
+            ser_idx = int(usr_opt.split(',')[0][1:]) + int(opt_leg) * 3
+            hexapod.i_inv_s[ser_idx] = str(inv_val)
+            hexapod.axi_set_pwm_inv(ser_idx, inv_val)
         elif ( usr_opt.upper() == 'SHOW' ):
             hexapod.axi_ip.show_regs()
         elif ( usr_opt.upper() == 'SAVE OFFSET' ):
             hexapod.save_offsets()
         elif ( usr_opt.upper() == 'SAVE INIT' ):
             hexapod.save_init_positions()
+        elif ( usr_opt.upper() == 'SAVE INVERTION' ):
+            hexapod.save_inversion()
         elif( usr_opt.upper() == 'SAVE' ):
             hexapod.save_offsets()
             hexapod.save_init_positions()
+            hexapod.save_inversion()
         elif( usr_opt.upper() == 'EXIT' ):
             exit()
         else:
