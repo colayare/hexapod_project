@@ -50,6 +50,7 @@ def print_title(title, char='#'):
 joint_offsets_filename  = abs_path+"/params/joint_offset.params"
 gait_steps_filename     = abs_path+'/params/gait_steps.params'
 init_position_filename  = abs_path+'/params/init_position.params'
+servo_inversion_filename = abs_path+'/params/init_servo_inv.params'
 
 #### Numeric Conversions
 nc = NUM_CONV()
@@ -65,6 +66,7 @@ hexapod.gait_steps_file = gait_steps_filename
 hexapod.init_position_file = init_position_filename
 hexapod.import_init_pos()
 hexapod.import_offsets()
+hexapod.import_init_servo_invertion()
 hexapod.set_default_offsets(print_out=True)
 hexapod.set_init_position(print_out=True)
 

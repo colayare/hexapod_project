@@ -177,5 +177,8 @@ while(1):
             hexapod.save_inversion()
         elif( usr_opt.upper() == 'EXIT' ):
             exit()
+        elif( usr_opt.upper() == 'HELP' ):
+            print('Options:\nSHOW : Print all register values\nSAVE OFFSET\nSAVE INIT: Save initial servo positions\nSAVE INVERSION: Save servo inversions\nSAVE: Save all\nEXIT')
+            raw_input()
         else:
             print('Unrecognized option. Press enter.')
