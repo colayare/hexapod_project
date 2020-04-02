@@ -3,6 +3,7 @@ import sys
 import time as tm
 from math import floor as floor
 import numpy as np
+
 #### Append includes path           
 pathname = os.path.dirname(sys.argv[0])   
 abs_path = os.path.abspath(pathname)
@@ -51,20 +52,21 @@ joint_offsets_filename  = abs_path+"/params/joint_offset.params"
 gait_steps_filename     = abs_path+'/params/gait_steps.params'
 init_position_filename  = abs_path+'/params/init_position.params'
 servo_inversion_filename = abs_path+'/params/init_servo_inv.params'
+axi_ip_logfile              = abs_path+'/axi.log'
 
 #### Numeric Conversions
 nc = NUM_CONV()
 
 #### Code
 ## Initialize Hexapod Class & Memory Map
-hexapod = hc()
-hexapod.init_axi()
+hexapod = hc(enable_ip_logs=True)
 
 ## Import Parameters
-hexapod.offsets_file = joint_offsets_filename
-hexapod.gait_steps_file = gait_steps_filename
-hexapod.init_position_file = init_position_filename
-hexapod.init_servo_inv_file = servo_inversion_filename
+hexapod.offsets_file_path            = joint_offsets_filename
+hexapod.gait_steps_file_path         = gait_steps_filename
+hexapod.init_position_file_path      = init_position_filename
+hexapod.init_servo_inv_file_path     = servo_inversion_filename
+hexapod.ip_logfile_path              = axi_ip_logfile
 hexapod.import_init_pos()
 hexapod.import_offsets()
 hexapod.import_init_servo_invertion()
@@ -118,7 +120,7 @@ while(1):
     elif( usr_opt.upper() == 'O' ):
         display = raw_input('Enable display : ').upper() == 'TRUE'
     elif ( usr_opt.upper() == 'A' ):
-            hexapod.axi_ip.show_regs()
+            hexapod.show_regs()
     elif( usr_opt.upper() == 'G' ):
         print('Enter gait, interpolation dots, scale : ')
         usr_in = raw_input('[0-3],[30-300],[1.0-2.0]\n')
@@ -148,4 +150,5 @@ while(1):
                                 print("{:>10.0f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}".format(step, j, q1, pwm1, q2, pwm2, q3, pwm3))
                     tm.sleep(delay)
     elif( usr_opt.upper() == 'EXIT' ):
+        hexapod.export_log()
         exit()
