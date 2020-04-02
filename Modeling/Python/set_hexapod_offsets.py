@@ -173,7 +173,7 @@ while(1):
             hexapod.i_inv_s[ser_idx] = str(inv_val)
             hexapod.axi_set_pwm_inv(ser_idx, inv_val)
         elif ( usr_opt.upper() == 'SHOW' ):
-            hexapod.show_regs()
+            hexapod.show_regs(end_address=0x28)
         elif ( usr_opt.upper() == 'SAVE OFFSET' ):
             hexapod.save_offsets()
         elif ( usr_opt.upper() == 'SAVE INIT' ):

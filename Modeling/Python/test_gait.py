@@ -120,7 +120,7 @@ while(1):
     elif( usr_opt.upper() == 'O' ):
         display = raw_input('Enable display : ').upper() == 'TRUE'
     elif ( usr_opt.upper() == 'A' ):
-            hexapod.show_regs()
+            hexapod.show_regs(end_address=0x28)
     elif( usr_opt.upper() == 'G' ):
         print('Enter gait, interpolation dots, scale : ')
         usr_in = raw_input('[0-3],[30-300],[1.0-2.0]\n')

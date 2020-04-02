@@ -78,7 +78,7 @@ class ikinematics_mmap(object):
         read_val_int = self.to_int(self.axi_map.read(self.__axi_word_size))
         read_val_hex = hex(read_val_int).rstrip("L")
         if ( self.gen_log_enable ):
-            self.__log_file += 'R['+hex(address)[2:].zfill(8)+'] = '+str(read_val_hex).zfill(8)+'\n'
+            self.__log_file += 'R['+hex(address)[2:].zfill(8)+'] = '+str(read_val_hex[2:]).rstrip("L").zfill(8)+'\n'
         return read_val_hex
     
     ## AXI Write
@@ -88,7 +88,7 @@ class ikinematics_mmap(object):
         self.set_ptr(address)
         self.axi_map.write(self.to_bytes(value))
         if ( self.gen_log_enable ):
-            self.__log_file += 'W['+hex(address)[2:].zfill(8)+'] = '+str(hex(value)[2:].zfill(8))+'\n'
+            self.__log_file += 'W['+hex(address)[2:].zfill(8)+'] = '+str(hex(value)[2:].rstrip("L").zfill(8))+'\n'
         return True
     
     #### Data Conversion Functions
@@ -101,12 +101,12 @@ class ikinematics_mmap(object):
         return struct.pack("<I", int_in)
     
     ## Display all slot registers 
-    def show_regs(self, from_address=0x40000000, to_address=0x40):
-        print('#'*20+'\nAXI +str(self)+ REGS :')
-        for i in range (int(to_address-from_address)):
-            address = from_address+i
+    def show_regs(self, start_address=0, end_address=0x1000):
+        print('#'*20+'\nAXI '+str(self)+' REGS :')
+        for i in range (int(end_address-start_address)):
+            address = self.__base_address + i * self.__axi_word_size
             read_val = hex(self.to_int(self.axi_read(address)))
-            print('R['+str(hex(i))+'] = '+str(hex(read_val)))
+            print('R['+str(hex(address)[2:].zfill(8))+'] = '+str(hex(read_val)[2:].zfill(8).rstrip("L")))
         return None
     
     #### Log Handling
