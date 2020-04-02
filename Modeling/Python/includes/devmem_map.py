@@ -106,7 +106,7 @@ class ikinematics_mmap(object):
     def show_regs(self, start_address=0, end_address=0x1000):
         print('#'*20+'\nAXI '+str(self)+' REGS :')
         for i in range (int(end_address-start_address)):
-            address = self.__base_address + i * self.__axi_word_size
+            address = i
             read_val = self.axi_read(address)
             print('R['+str(hex(address)[2:].zfill(8))+'] = '+str(hex(read_val)[2:].zfill(8)))
         return None
