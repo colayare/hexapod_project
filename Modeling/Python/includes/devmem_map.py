@@ -37,7 +37,7 @@ class ikinematics_mmap(object):
         self.__slot_size        = slot_size
         self.gen_log_enable     = gen_log_enable
         if ( self.gen_log_enable ):
-            print('AXI IP '+str(self)+' enable log.')
+            print('AXI IP '+str(self)+' > Enable log.')
         self.init_axi_map()
         return None
     
@@ -111,6 +111,7 @@ class ikinematics_mmap(object):
     #### Log Handling
     ## Export IP Transactions Log
     def export_log(self):
+        print('AXI IP '+str(self)+' > Exporting log to '+self.ip_logfile_path+'.')
         f = open(self.ip_logfile_path, "w")
         f.write(self.__log_file)
         f.close()
