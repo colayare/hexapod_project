@@ -42,7 +42,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     ## Import parameters
     def import_offsets(self):
         if ( self.offsets_file_path == '' or not os.path.exists(self.offsets_file_path) ):
-            print('No joint offsets file detected.')
+            print('HEXAPOD CLASS > No joint offsets file detected.\n>'+self.offsets_file_path)
             return False
         off_file = open(self.offsets_file_path, 'r')
         off_cont = off_file.read().split('\n')
@@ -60,7 +60,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     
     def import_init_pos(self):
         if ( self.init_position_file_path == '' or not os.path.exists(self.init_position_file_path) ):
-            print('No joint offsets file detected.')
+            print('HEXAPOD CLASS > No initial positions file detected.\n>'+self.init_position_file_path)
             return False
         file = open(self.init_position_file_path, 'r')
         file_cont = file.read().split('\n')
@@ -78,7 +78,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
         
     def import_init_servo_invertion(self):
         if ( self.init_servo_inv_file == '' or not os.path.exists(self.init_servo_inv_file) ):
-            print('No init servo inversion file detected.')
+            print('HEXAPOD CLASS > No init servo inversion file detected.n>'+self.init_servo_inv_file)
             return False
         file        = open(self.init_servo_inv_file, 'r')
         file_cont   = file.read().split('\n')[:-1]
@@ -94,9 +94,8 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     ## Save Joints Offsets
     def save_offsets(self):
         if ( self.offsets_file_path == '' or not os.path.exists(self.offsets_file_path) ):
-            print('No joint offsets file detected.')
+            print('HEXAPOD CLASS > No joint offsets file detected.\n>'+self.offsets_file_path)
             return None
-        
         off_cont = ''
         for i in range ( 6 ):
             for j in range ( 3 ):
@@ -111,7 +110,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     ## Save Joints Offsets
     def save_init_positions(self):
         if ( self.init_position_file_path == '' or not os.path.exists(self.init_position_file_path) ):
-            print('No initial positions file detected.')
+            print('HEXAPOD CLASS > No initial positions file detected.\n>'+self.init_position_file_path)
             return None
         init_cont = ''
         for i in range ( 6 ):
@@ -127,7 +126,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     ## Save Servo Inversion
     def save_inversion(self):
         if ( self.init_servo_inv_file == '' or not os.path.exists(self.init_servo_inv_file) ):
-            print('No init servo inversion file detected.')
+            print('HEXAPOD CLASS > No init servo inversion file detected.n>'+self.init_servo_inv_file)
             return False
         inv_cont = '\n'.join(self.i_inv_s)
         inv_file = open(self.init_servo_inv_file, 'w+')
@@ -138,7 +137,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     ## Import Gait Steps
     def read_gait_steps(self, gait, interp_points=30, scale=1):
         if ( self.gait_steps_file_path == '' or not os.path.exists(self.gait_steps_file_path) ):
-            print('No gait steps file detected.')
+            print('HEXAPOD CLASS > No gait steps file detected.\n>'+self.gait_steps_file_path)
             return None
         gait_file = open(self.gait_steps_file_path, 'r')
         gait_file_cont = gait_file.read().split('\n')[0:3]
