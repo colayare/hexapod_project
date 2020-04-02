@@ -11,6 +11,8 @@ class ikinematics_mmap(object):
     __base_address  = 0x40000000
     __slot_size     = 0x1000
     __axi_word_size = 4
+    ## AXI Memory Map
+    axi_map         = None
     ## Log File Handling
     gen_log_enable  = False
     ip_logfile_path = ''
@@ -105,8 +107,8 @@ class ikinematics_mmap(object):
         print('#'*20+'\nAXI '+str(self)+' REGS :')
         for i in range (int(end_address-start_address)):
             address = self.__base_address + i * self.__axi_word_size
-            read_val = hex(self.to_int(self.axi_read(address)))
-            print('R['+str(hex(address)[2:].zfill(8))+'] = '+str(hex(read_val)[2:].zfill(8).rstrip("L")))
+            read_val = self.axi_read(address)
+            print('R['+str(hex(address)[2:].zfill(8))+'] = '+str(hex(read_val)[2:].zfill(8)))
         return None
     
     #### Log Handling
