@@ -1,6 +1,7 @@
 import os
 import sys
 from math import floor as floor
+
 #### Append includes path          
 pathname = os.path.dirname(sys.argv[0])   
 abs_path = os.path.abspath(pathname)
@@ -47,18 +48,23 @@ nc = NUM_CONV()
 
 #### Code
 ## Initialize Hexapod Class & Memory Map
-hexapod = hc()
+hexapod = hc(enable_ip_logs=True)
 
 ## Import Parameters
-hexapod.offsets_file = joint_offsets_filename
-hexapod.gait_steps_file = gait_steps_filename
-hexapod.init_position_file = init_position_filename
+hexapod.offsets_file        = joint_offsets_filename
+hexapod.gait_steps_file     = gait_steps_filename
+hexapod.init_position_file  = init_position_filename
 hexapod.init_servo_inv_file = servo_inversion_filename
+## Initialize Parameters
 hexapod.import_init_pos()
 hexapod.import_offsets()
 hexapod.import_init_servo_invertion()
 hexapod.set_default_offsets()
 hexapod.set_init_position()
+
+###############################################################################
+#### Start Program
+###############################################################################
 print('Joint offsets:')
 print(hexapod.j_offs)
 print('Initital Position')

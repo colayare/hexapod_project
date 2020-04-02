@@ -34,8 +34,8 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     #### Methods
     ###########################################################################
     #### Constructor
-    def __init__(self):
-        super().__init__()
+    def __init__(self, enable_ip_logs=False):
+        super(hexapod_kinematics, self).__init__(gen_log_enable=enable_ip_logs)
         return None
     
     #### Functions
@@ -55,6 +55,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
                 self.j_offs[i][0] = float(off_0)
                 self.j_offs[i][1] = float(off_1)
                 self.j_offs[i][2] = float(off_2)
+        print('HEXAPOD CLASS > Import offsets successfuly : '+self.offsets_file_path)
         return True
     
     def import_init_pos(self):
@@ -72,6 +73,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
                 self.i_pos[i][0] = float(sp_q1)
                 self.i_pos[i][1] = float(sp_q2)
                 self.i_pos[i][2] = float(sp_q3)
+        print('HEXAPOD CLASS > Import initial possitions successfuly : '+self.init_position_file_path)
         return True
         
     def import_init_servo_invertion(self):
@@ -85,7 +87,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
         inv_val     = int(''.join(file_cont[::-1]), 2) << 12
         reg1        = int(self.axi_read(1), 16) & (0xFFFFFFFF ^ (0x3FFFF << 12))
         set_val     = reg1 + inv_val
-        print('Setting Servo inversion R1 :'+str(hex(set_val)))
+        print('HEXAPOD CLASS > Import servo inversions successfuly : '+self.init_servo_inv_file)
         self.axi_write(1, set_val)
         return None
     

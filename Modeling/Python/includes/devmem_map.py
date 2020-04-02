@@ -32,9 +32,10 @@ class ikinematics_mmap(object):
     #### Methods
     ###########################################################################
     ## Constructor
-    def __init__(self, base_address=0x40000000, slot_size=0x1000):
-        self.__base_address = base_address
-        self.__slot_size = slot_size
+    def __init__(self, base_address=0x40000000, slot_size=0x1000, gen_log_enable=False):
+        self.__base_address     = base_address
+        self.__slot_size        = slot_size
+        self.gen_log_enable     = gen_log_enable
         self.init_axi_map()
         return None
     
