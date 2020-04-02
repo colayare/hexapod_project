@@ -74,10 +74,12 @@ print(hexapod.i_pos)
 while(1):
     os.system('clear')
     print('---- Set Offsets ----')
-    opt_leg = raw_input('Select Leg [0-5]: ')
+    opt_leg = raw_input('Select Leg [0-5] : ')
     if ( not opt_leg.isdigit() ):
         print('Input is NaN.')
         exit()
+    elif( opt_leg.upper() == 'EXIT' ):
+        hexapod.export_log()
     else:
         if ( int(opt_leg) > 5 ):
             print('No leg selected.')

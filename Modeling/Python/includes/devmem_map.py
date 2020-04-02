@@ -111,7 +111,7 @@ class ikinematics_mmap(object):
     #### Log Handling
     ## Export IP Transactions Log
     def export_log(self):
-        f = open(ip_logfile_path, "w")
+        f = open(self.ip_logfile_path, "w")
         f.write(self.__log_file)
         f.close()
         return True
