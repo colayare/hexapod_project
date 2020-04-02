@@ -108,7 +108,7 @@ class ikinematics_mmap(object):
         for i in range (int(end_address-start_address)):
             address = i
             read_val = self.axi_read(address)
-            print('R['+str(hex(address)[2:].zfill(8))+'] = '+str(hex(read_val)[2:].zfill(8)))
+            print('R['+str(hex(address)[2:].zfill(8))+'] = '+str(read_val[2:].zfill(8)))
         return None
     
     #### Log Handling
