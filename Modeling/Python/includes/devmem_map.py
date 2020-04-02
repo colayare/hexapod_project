@@ -103,18 +103,20 @@ class ikinematics_mmap(object):
         return struct.pack("<I", int_in)
     
     ## Display all slot registers 
-    def show_regs(self, start_address=0, end_address=0x1000):
+    def show_regs(self, start_address=0, end_address=0x1000, autoskip=True):
         print('#'*20+'\nAXI '+str(self)+' REGS :')
         for i in range (int(end_address-start_address)):
             address = i
             read_val = self.axi_read(address)
             print('R['+str(hex(address)[2:].zfill(8))+'] = '+str(read_val[2:].zfill(8)))
+        if ( not autoskip ):
+            raw_input()
         return None
     
     #### Log Handling
     ## Export IP Transactions Log
     def export_log(self):
-        print('AXI IP '+str(self)+' > Exporting log to '+self.ip_logfile_path+'.')
+        print('AXI IP '+str(self)+' > Exporting log to '+self.ip_logfile_path)
         f = open(self.ip_logfile_path, "w")
         f.write(self.__log_file)
         f.close()
