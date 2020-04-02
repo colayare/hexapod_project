@@ -36,6 +36,8 @@ class ikinematics_mmap(object):
         self.__base_address     = base_address
         self.__slot_size        = slot_size
         self.gen_log_enable     = gen_log_enable
+        if ( self.gen_log_enable ):
+            print('AXI IP '+str(self)+' enable log.')
         self.init_axi_map()
         return None
     

@@ -183,6 +183,7 @@ while(1):
             hexapod.save_init_positions()
             hexapod.save_inversion()
         elif( usr_opt.upper() == 'EXIT' ):
+            hexapod.export_log()
             exit()
         elif( usr_opt.upper() == 'HELP' ):
             print('Options:\nSHOW : Print all register values\nSAVE OFFSET\nSAVE INIT: Save initial servo positions\nSAVE INVERSION: Save servo inversions\nSAVE: Save all\nEXIT')
