@@ -55,7 +55,7 @@ hexapod.offsets_file_path            = joint_offsets_filename
 hexapod.gait_steps_file_path         = gait_steps_filename
 hexapod.init_position_file_path      = init_position_filename
 hexapod.init_servo_inv_file_path     = servo_inversion_filename
-hexapod.axi_ip_log_file_path         = axi_ip_logfile
+hexapod.ip_logfile_path              = axi_ip_logfile
 ## Initialize Parameters
 hexapod.import_init_pos()
 hexapod.import_offsets()
