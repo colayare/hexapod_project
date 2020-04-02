@@ -5,7 +5,7 @@ from math import floor as floor
 #### Append includes path          
 pathname = os.path.dirname(sys.argv[0])   
 abs_path = os.path.abspath(pathname)
-print('Appending path'+ abs_path+'/includes')
+print('Appending path : '+ abs_path+'/includes')
 sys.path.append(abs_path+'/includes')
 from hexapod_class import hexapod_kinematics as hc
 from numeric_conversions import numeric_conversions as NUM_CONV
@@ -51,10 +51,11 @@ nc = NUM_CONV()
 hexapod = hc(enable_ip_logs=True)
 
 ## Import Parameters
-hexapod.offsets_file        = joint_offsets_filename
-hexapod.gait_steps_file     = gait_steps_filename
-hexapod.init_position_file  = init_position_filename
-hexapod.init_servo_inv_file = servo_inversion_filename
+hexapod.offsets_file_path            = joint_offsets_filename
+hexapod.gait_steps_file_path         = gait_steps_filename
+hexapod.init_position_file_path      = init_position_filename
+hexapod.init_servo_inv_file_path     = servo_inversion_filename
+hexapod.axi_ip_log_file_path         = axi_ip_logfile
 ## Initialize Parameters
 hexapod.import_init_pos()
 hexapod.import_offsets()

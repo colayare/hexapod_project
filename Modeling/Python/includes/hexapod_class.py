@@ -25,10 +25,11 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     l3 = 0.1051
     
     #### Parameters
-    init_position_file_path = ""
-    offsets_file_path       = ""
-    gait_steps_file_path    = ""
-    axi_ip_log_file_path    = ""
+    init_position_file_path     = ""
+    offsets_file_path           = ""
+    init_servo_inv_file_path    = ""
+    gait_steps_file_path        = ""
+    axi_ip_log_file_path        = ""
     
     ###########################################################################
     #### Methods
@@ -77,17 +78,17 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
         return True
         
     def import_init_servo_invertion(self):
-        if ( self.init_servo_inv_file == '' or not os.path.exists(self.init_servo_inv_file) ):
-            print('HEXAPOD CLASS > No init servo inversion file detected.n>'+self.init_servo_inv_file)
+        if ( self.init_servo_inv_file_path == '' or not os.path.exists(self.init_servo_inv_file_path) ):
+            print('HEXAPOD CLASS > No init servo inversion file detected.n>'+self.init_servo_inv_file_path)
             return False
-        file        = open(self.init_servo_inv_file, 'r')
+        file        = open(self.init_servo_inv_file_path, 'r')
         file_cont   = file.read().split('\n')[:-1]
         file.close()
         self.i_inv_s = np.array(file_cont)
         inv_val     = int(''.join(file_cont[::-1]), 2) << 12
         reg1        = int(self.axi_read(1), 16) & (0xFFFFFFFF ^ (0x3FFFF << 12))
         set_val     = reg1 + inv_val
-        print('HEXAPOD CLASS > Import servo inversions successfuly : '+self.init_servo_inv_file)
+        print('HEXAPOD CLASS > Import servo inversions successfuly : '+self.init_servo_inv_file_path)
         self.axi_write(1, set_val)
         return None
     
@@ -125,11 +126,11 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
         
     ## Save Servo Inversion
     def save_inversion(self):
-        if ( self.init_servo_inv_file == '' or not os.path.exists(self.init_servo_inv_file) ):
-            print('HEXAPOD CLASS > No init servo inversion file detected.n>'+self.init_servo_inv_file)
+        if ( self.init_servo_inv_file_path == '' or not os.path.exists(self.init_servo_inv_file_path) ):
+            print('HEXAPOD CLASS > No init servo inversion file detected.n>'+self.init_servo_inv_file_path)
             return False
         inv_cont = '\n'.join(self.i_inv_s)
-        inv_file = open(self.init_servo_inv_file, 'w+')
+        inv_file = open(self.init_servo_inv_file_path, 'w+')
         inv_file.write(inv_cont)
         inv_file.close()
         return True
