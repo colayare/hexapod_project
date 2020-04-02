@@ -64,6 +64,7 @@ hexapod.init_axi()
 hexapod.offsets_file = joint_offsets_filename
 hexapod.gait_steps_file = gait_steps_filename
 hexapod.init_position_file = init_position_filename
+hexapod.init_servo_inv_file = servo_inversion_filename
 hexapod.import_init_pos()
 hexapod.import_offsets()
 hexapod.import_init_servo_invertion()
@@ -94,7 +95,11 @@ while(1):
     print('> '+str(gait_sel))
     print('(I) Set initial position')
     print('(S) Start gait')
+    print('(A) Show all Registers')
     print('(EXIT) Exit')
+    print(dash)
+    print('Servo Inversion:')
+    print(hexapod.i_inv_s)
     print(dash)
     usr_opt = raw_input('Enter option : ')
     
@@ -112,6 +117,8 @@ while(1):
         gait_loops = int(input('Enter number of loops: '))
     elif( usr_opt.upper() == 'O' ):
         display = raw_input('Enable display : ').upper() == 'TRUE'
+    elif ( usr_opt.upper() == 'A' ):
+            hexapod.axi_ip.show_regs()
     elif( usr_opt.upper() == 'G' ):
         print('Enter gait, interpolation dots, scale : ')
         usr_in = raw_input('[0-3],[30-300],[1.0-2.0]\n')

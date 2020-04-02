@@ -16,9 +16,9 @@ dash = cols * '-'
 div  = cols * '#'
 
 def axi_read_fxp_out_params(hexapod, leg):
-    fxp_q1 = hexapod.axi_ip.axi_read(23+leg*3)
-    fxp_q2 = hexapod.axi_ip.axi_read(24+leg*3)
-    fxp_q3 = hexapod.axi_ip.axi_read(25+leg*3)
+    fxp_q1 = hexapod.axi_read(23+leg*3)
+    fxp_q2 = hexapod.axi_read(24+leg*3)
+    fxp_q3 = hexapod.axi_read(25+leg*3)
     return [fxp_q1, fxp_q2, fxp_q3]
 
 def fstr(float_num):
@@ -36,10 +36,11 @@ def print_title(title, char='#'):
     return True
 
 #### Params Files
-joint_offsets_filename = abs_path+"/params/joint_offset.params"
-gait_steps_filename = abs_path+'/params/gait_steps.params'
-init_position_filename = abs_path+'/params/init_position.params'
-servo_inversion_filename = abs_path+'/params/init_servo_inv.params'
+joint_offsets_filename      = abs_path+"/params/joint_offset.params"
+gait_steps_filename         = abs_path+'/params/gait_steps.params'
+init_position_filename      = abs_path+'/params/init_position.params'
+servo_inversion_filename    = abs_path+'/params/init_servo_inv.params'
+axi_ip_logfile              = abs_path+'/axi.log'
 
 #### Numeric Conversions
 nc = NUM_CONV()
@@ -47,7 +48,6 @@ nc = NUM_CONV()
 #### Code
 ## Initialize Hexapod Class & Memory Map
 hexapod = hc()
-hexapod.init_axi()
 
 ## Import Parameters
 hexapod.offsets_file = joint_offsets_filename
@@ -142,7 +142,7 @@ while(1):
             if ( off_idx < 3 ):
                 off_val = nc.dfloat2hfloat(nc.sec2rad(float(usr_opt.split(',')[1].replace(' ',''))))
                 print('Setting Offset['+str(off_idx)+'] = '+off_val)
-                hexapod.axi_ip.axi_write(5+int(opt_leg)*3, off_val)
+                hexapod.axi_write(5+int(opt_leg)*3, off_val)
                 hexapod.j_offs[int(opt_leg)][off_idx] = float(usr_opt.split(',')[1].replace(' ',''))
                 [off_q1, off_q2, off_q3] = hexapod.j_offs[int(opt_leg)]
             else:
@@ -164,7 +164,7 @@ while(1):
             hexapod.i_inv_s[ser_idx] = str(inv_val)
             hexapod.axi_set_pwm_inv(ser_idx, inv_val)
         elif ( usr_opt.upper() == 'SHOW' ):
-            hexapod.axi_ip.show_regs()
+            hexapod.show_regs()
         elif ( usr_opt.upper() == 'SAVE OFFSET' ):
             hexapod.save_offsets()
         elif ( usr_opt.upper() == 'SAVE INIT' ):
