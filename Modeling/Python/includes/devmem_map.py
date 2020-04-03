@@ -16,7 +16,7 @@ class ikinematics_mmap(object):
     ## Log File Handling
     gen_log_enable  = False
     ip_logfile_path = ''
-    __log_file      = ''
+    log_file      = ''
     
     @property
     def base_address(self):
@@ -42,7 +42,13 @@ class ikinematics_mmap(object):
             print('AXI IP '+str(self)+' > Enable log.')
         self.init_axi_map()
         return None
+        
+    #### Format ################################################################
+    #### Format to hex string
+    def int_to_hexstr(number):
+        return str(hex(number)[2:]).rstrip("L")
     
+    #### Set IP Parameters #####################################################
     ## Set AXI IP word size in bytes
     def set_axi_word_size(self, word_size):
         self.__axi_word_size = word_size
@@ -58,6 +64,7 @@ class ikinematics_mmap(object):
         self.__slot_size = slot_size
         return True
     
+    #### Memory Map ###########################################################
     ## Initialize AXI IP Memory Map
     def init_axi_map(self):
         fd = os.open("/dev/mem", os.O_RDWR|os.O_SYNC)
@@ -74,26 +81,89 @@ class ikinematics_mmap(object):
         self.axi_map.seek(axi_word*self.__axi_word_size)
         return True
     
-    ## AXI Read
+    #### AXI Read : Default AXI Read Operation
+    ## Inputs:
+    ## > address     : 32-bit int
+    ## Outputs:
+    ## > read value : 32-bit int
     def axi_read(self, address):
         self.set_ptr(address)
-        read_val_int = self.to_int(self.axi_map.read(self.__axi_word_size))
-        read_val_hex = hex(read_val_int).rstrip("L")
+        read_val = self.to_int(self.axi_map.read(self.__axi_word_size))
         if ( self.gen_log_enable ):
-            self.__log_file += 'R['+hex(address)[2:].zfill(8)+'] = '+str(read_val_hex[2:]).rstrip("L").zfill(8)+'\n'
-        return read_val_hex
+            self.log_file += 'R['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(read_val_hex)+'\n'
+        return read_val
     
-    ## AXI Write
+    #### AXI Read Hex : AXI Read with hex string return value
+    ## Inputs:
+    ## > address        : 32-bit int
+    ## Outputs:
+    ## > read value     : 32-bit hex string
+    def axi_hread(self, address):
+        self.set_ptr(address)
+        read_val_int = self.to_int(self.axi_map.read(self.__axi_word_size))
+        read_val_hex = hex(read_val_int)[2:].rstrip("L").zfill(8)
+        if ( self.gen_log_enable ):
+            self.log_file += 'R['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(read_val_hex)+'\n'
+        return read_val_hex
+        
+    #### AXI Read Mask : AXI Read Operation with output mask
+    ## Inputs:
+    ## > address     : 32-bit int
+    ## > mask        : 32-bit int
+    ## Outputs:
+    ## > read value : 32-bit int
+    def axi_read_mask(self, address, mask):
+        self.set_ptr(address)
+        read_val = self.to_int(self.axi_map.read(self.__axi_word_size)) & mask
+        if ( self.gen_log_enable ):
+            self.log_file += 'R['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(read_val)+','+self.int_to_hexstr(mask)+'\n'
+        return read_val
+    
+    #### AXI Write : Default AXI Write Operation
+    ## Inputs:
+    ## > address      : 32-bit int
+    ## > write value  : 32-bit int
+    ## Outputs:
+    ## > True
     def axi_write(self, address, value):
-        if ( type(value) is str ):
-            value = int(value, 16)
         self.set_ptr(address)
         self.axi_map.write(self.to_bytes(value))
         if ( self.gen_log_enable ):
-            self.__log_file += 'W['+hex(address)[2:].zfill(8)+'] = '+str(hex(value)[2:].rstrip("L").zfill(8))+'\n'
+            self.log_file += 'W['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(value)+'\n'
+        return True
+        
+    #### AXI Write : AXI Write Operation with hex string input
+    ## Inputs:
+    ## > address      : 32-bit int
+    ## > write value  : 32-bit hex string
+    ## Outputs:
+    ## > True
+    def axi_hwrite(self, address, value):
+        value = int(value, 16)
+        self.set_ptr(address)
+        self.axi_map.write(self.to_bytes(value))
+        if ( self.gen_log_enable ):
+            self.log_file += 'W['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(value)+'\n'
         return True
     
-    #### Data Conversion Functions
+    #### AXI Write Mask : AXI Write operation with mask
+    ## Inputs:
+    ## > address      : 32-bit int
+    ## > write value  : 32-bit int
+    ## > mask         : 32-bit int
+    ## Outputs:
+    ## > True
+    def axi_write_mask(self, address, value, mask):
+        self.set_ptr(address)
+        read_val  = self.to_int(self.axi_map.read(self.__axi_word_size))
+        write_val = (value & mask) + read_val & mask
+        self.set_ptr(address)
+        self.axi_map.write(self.to_bytes(write_val))
+        if ( self.gen_log_enable ):
+            self.log_file += 'WM['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(write_val)+','+self.int_to_hexstr(mask)+'\n'
+        return True
+    
+    #### Data Conversion Functions ############################################
     ## Bytes data type to Integer
     def to_int(self, bytes_in):
         return struct.unpack("<HH", bytes_in)[0]+(struct.unpack("<HH", bytes_in)[1]<<16)
@@ -102,6 +172,21 @@ class ikinematics_mmap(object):
     def to_bytes(self, int_in):
         return struct.pack("<I", int_in)
     
+    #### Log Handling ########################################################
+    ## Export IP Transactions Log
+    def export_log(self):
+        print('AXI IP '+str(self)+' > Exporting log to '+self.ip_logfile_path)
+        f = open(self.ip_logfile_path, "w")
+        f.write(self.log_file)
+        f.close()
+        return True
+    
+    ## Clean Log File
+    def clean_log(self):
+        self.log_file = ''
+        return True
+    
+    #### Aditional Functions ###################################################
     ## Display all slot registers 
     def show_regs(self, start_address=0, end_address=0x1000, autoskip=True):
         print('#'*20+'\nAXI '+str(self)+' REGS :')
@@ -112,17 +197,3 @@ class ikinematics_mmap(object):
         if ( not autoskip ):
             raw_input()
         return None
-    
-    #### Log Handling
-    ## Export IP Transactions Log
-    def export_log(self):
-        print('AXI IP '+str(self)+' > Exporting log to '+self.ip_logfile_path)
-        f = open(self.ip_logfile_path, "w")
-        f.write(self.__log_file)
-        f.close()
-        return True
-    
-    ## Clean Log File
-    def clean_log(self):
-        self.__log_file = ''
-        return True

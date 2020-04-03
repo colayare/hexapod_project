@@ -4,25 +4,30 @@ from devmem_map import ikinematics_mmap as ikinematics_mmap
 import math as mt
 import os
 
-###############################################################################
+################################################################################
+#### Hexapod Class Defines
+################################################################################
+class hexapod
+
+################################################################################
 #### Hexapod Class
-###############################################################################
+################################################################################
 class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
-    ###########################################################################
+    ############################################################################
     #### Properties
-    ###########################################################################
+    ############################################################################
     ## Kinematics Parameters
     i_pos   = np.zeros(shape=(6,3))
     joints  = np.zeros(shape=(6,3))
     j_offs  = np.zeros(shape=(6,3))
-    i_inv_s = np.array([])
+    i_inv_s = np.zeros(18).astype(int).astype(str)
     gaits   = np.zeros(shape=(30,3))
     gait    = 0
     steps   = 30
     scale   = 1
-    l1 = 0.0275
-    l2 = 0.0963
-    l3 = 0.1051
+    l1      = 0.0275
+    l2      = 0.0963
+    l3      = 0.1051
     
     #### Parameters
     init_position_file_path     = ""
@@ -31,15 +36,25 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     gait_steps_file_path        = ""
     axi_ip_log_file_path        = ""
     
-    ###########################################################################
+    ############################################################################
+    #### Defines
+    ############################################################################
+    R1_LEG_IN_SELCT             = 0x7
+    R1_SET_LEG_IN               = 0x8
+    R1_COUNTER_MODE             = 0x30
+    R1_LEG_OUTPUT               = 0xC0
+    R1_F2F_READ_MUX             = 0xE00
+    R1_PWM_INVERT               = 0x‭FFFFC0000‬
+    
+    ############################################################################
     #### Methods
-    ###########################################################################
+    ############################################################################
     #### Constructor
     def __init__(self, enable_ip_logs=False):
         super(hexapod_kinematics, self).__init__(gen_log_enable=enable_ip_logs)
         return None
     
-    #### Functions
+    #### Import & Export IP Params #############################################
     ## Import parameters
     def import_offsets(self):
         if ( self.offsets_file_path == '' or not os.path.exists(self.offsets_file_path) ):
@@ -161,6 +176,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
             self.gaits = gaits
         return True
     
+	#### Gaits Process 	########################################################
     def gait_step(self, idx):
         x, y, z = self.gaits[idx]
         return self.dfloat2hfloat(x), self.dfloat2hfloat(y), self.dfloat2hfloat(z)
@@ -174,6 +190,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
             gaits[i] = inter * scale
         return np.transpose(gaits)
     
+	#### Inverse Kinematics Functions ##########################################
     ## Kinematics Functions
     def dKinematics(self, q1, q2, q3):
         x = mt.cos(q1)*(self.l3*mt.cos(q2+q3) + self.l2*mt.cos(q2) + self.l1)
@@ -205,16 +222,22 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
         q2 = mt.atan2(G,mt.sqrt(1 - G**2)) - mt.atan2(mt.sin(q3),F+mt.cos(q3))
         return q1, q2, q3
     
-    ## Numeric functions
-    def rad2sec(self, rad):
-        return rad * 180 / mt.pi
-    
-    def sec2rad(self, sec):
-        return sec * mt.pi / 180
-    
-    #### Execution Functions
+    #### AXI IP Handling #######################################################
+	#### Configure Leg Control
+    ## Reg 1 : 
+    ## > [2:0] RW   = Leg input selector
+    ## > [3] T      = Set leg input trigger
+    ## Inputs
+    ## mode : str
+    ## > 'one_leg' : Keep leg pointer value
+    ## > 'mux_eg'  : Auto-increasses leg pointer
+    ## leg : 32-bit int
+    ## > 0-5 : Selects the output leg
     def config_leg_ctr(self, mode, leg):
-        leg_in = leg & 0x7
+        if ( self.gen_log_enable ):
+            self.log_file += 'config_leg_ctr:\n'
+        mask    = self.R1_LEG_IN_SELCT + self.R1_SET_LEG_IN + self.R1_COUNTER_MODE
+        leg_in  = leg & 0x7
         if ( mode == "one_leg" ):
             mode_in = 0x10
         elif ( mode == "mux_leg" ):
@@ -222,10 +245,22 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
         else:
             print("Invalid mode, selected leg multiplexion")
             mode_in = 0x0
-        self.axi_write(1, leg_in + 0x8 + mode_in)
+        self.axi_write_mask(1, leg_in + 0x8 + mode_in, mask)
         return True
     
-    # Write iKinematics Parameters on input FIFO
+    ## Set Leg configuration
+    def axi_set_leg_conf(self, conf, leg_select):
+        if ( self.gen_log_enable ):
+            self.log_file += 'axi_set_leg_conf:\n'
+        mask        = self.R1_LEG_IN_SELCT + self.R1_SET_LEG_IN + self.R1_COUNTER_MODE
+        reg1        = int(self.axi_read(1), 16)
+        set_val     = 8 + (leg_select & 0x7)
+        config      = (conf<<4) & 0x30
+        value       = set_val + config + reg1
+        self.axi_write_mask(1, value, mask)
+        return True
+    
+    ## Write iKinematics Parameters on input FIFO
     def axi_write_params_in(self, x_in, y_in, z_in):
         self.axi_write(2, x_in)
         self.axi_write(3, y_in)
@@ -238,50 +273,41 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
         z = self.axi_read(4)
         return [x, y, z]
     
-    # Write iKinematics parameters to input FIFO
+    ## Write iKinematics parameters to input FIFO
     def axi_write_fifo(self):
         self.axi_write(0, 1)
         self.axi_write(0, 0)
         return True
     
-    # Trigger iKinematics Calculation
+    ## Trigger iKinematics Calculation
     def axi_trigger_ikinematics(self):
         self.axi_write(0, 2)
         self.axi_write(0, 0)
         return True
     
-    # Write output directly without calculation
+    ## Write output directly without calculation
     def axi_write_out_direct(self):
         self.axi_write(0, 4)
         self.axi_write(0, 0)
         return True
     
-    # Set Leg configuration
-    def axi_set_leg_conf(self, conf, leg_select):
-        reg1 = int(self.axi_read(1), 16)
-        set_val = 8 + (leg_select & 0x7)
-        config = (conf<<4) & 0x30
-        value = set_val + config + reg1
-        self.axi_write(1, value)
+    ## Set PWM Channel Inversion bit
+    def axi_set_pwm_inv(self, pwm_idx, val):
+        if ( self.gen_log_enable ):
+            self.log_file += 'axi_set_pwm_inv:\n'
+        idx_mask    = 1 << (pwm_idx+12)
+        set_val     = val << (pwm_idx+12)
+        self.axi_write_mask(1, set_val, idx_mask)
         return True
     
-    # Set PWM Channel Inversion bit
-    def axi_set_pwm_inv(self, leg, val):
-        bit_sel = 12 + leg
-        reg1 = int(self.axi_read(1), 16) & (0xFFFFFFFF ^ (1 << bit_sel))
-        val = (val & 0x1) << bit_sel
-        set_val = val + reg1
-        self.axi_write(1, set_val)
-        return True
-    
-    # Set output multiplexor
-    # f2f_mux_selector offset
+    ## Set output multiplexor
+    ## f2f_mux_selector offset
     def axi_set_out_mux(self, selector):
-        mux_sel = (selector & 0x7) << 9
-        reg1 = int(self.axi_read(1), 16)
-        
-        write_val = (reg1 & ~(0x7 << 9)) + mux_sel
-        self.axi_write(1, write_val)
+        if ( self.gen_log_enable ):
+            self.log_file += 'axi_set_out_mux:\n'
+        mask        = self.R1_F2F_READ_MUX
+        mux_sel     = (selector & 0x7) << 9
+        self.axi_write_mask(1, mux_sel, mask)
         return True
     
     # Set hexapod offsets
