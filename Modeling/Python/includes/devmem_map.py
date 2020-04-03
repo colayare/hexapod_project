@@ -156,7 +156,7 @@ class ikinematics_mmap(object):
     def axi_write_mask(self, address, value, mask):
         self.set_ptr(address)
         read_val  = self.to_int(self.axi_map.read(self.__axi_word_size))
-        write_val = (value & mask) + read_val & mask
+        write_val = (value & mask) + (read_val & (mask ^ 0xFFFFFFFF))
         self.set_ptr(address)
         self.axi_map.write(self.to_bytes(write_val))
         if ( self.gen_log_enable ):
