@@ -46,7 +46,7 @@ class ikinematics_mmap(object):
     #### Format ################################################################
     #### Format to hex string
     def int_to_hexstr(self, number):
-        return str(hex(number)[2:]).rstrip("L")
+        return str(hex(number)[2:].zfill(8)).rstrip("L")
     
     #### Set IP Parameters #####################################################
     ## Set AXI IP word size in bytes
