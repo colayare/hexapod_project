@@ -28,7 +28,7 @@ def gait(hexapod, leg, step):
 
 def get_ik_out(hexapod, sexa=True):
     hexapod.axi_set_out_mux(0)
-    [q1, q2, q3] = hexapod.axi_read_params()
+    [q1, q2, q3] = hexapod.axi_hread_params()
     q1 = hexapod.hfloat2dfloat(q1)
     q2 = hexapod.hfloat2dfloat(q2)
     q3 = hexapod.hfloat2dfloat(q3)
