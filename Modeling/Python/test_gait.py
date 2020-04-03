@@ -29,13 +29,13 @@ def gait(hexapod, leg, step):
 def get_ik_out(hexapod, sexa=True):
     hexapod.axi_set_out_mux(0)
     [q1, q2, q3] = hexapod.axi_read_params()
-    q1 = hexapod.nc.hfloat2dfloat(q1)
-    q2 = hexapod.nc.hfloat2dfloat(q2)
-    q3 = hexapod.nc.hfloat2dfloat(q3)
+    q1 = hexapod.hfloat2dfloat(q1)
+    q2 = hexapod.hfloat2dfloat(q2)
+    q3 = hexapod.hfloat2dfloat(q3)
     if ( sexa ):
-        q1 = hexapod.nc.rad2sec(q1)
-        q2 = hexapod.nc.rad2sec(q2)
-        q3 = hexapod.nc.rad2sec(q3)
+        q1 = hexapod.rad2sec(q1)
+        q2 = hexapod.rad2sec(q2)
+        q3 = hexapod.rad2sec(q3)
     return q1, q2, q3
 
 def print_title(title, char='#'):
