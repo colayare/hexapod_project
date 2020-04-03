@@ -151,7 +151,7 @@ while(1):
             if ( off_idx < 3 ):
                 off_val = nc.dfloat2hfloat(nc.sec2rad(float(usr_opt.split(',')[1].replace(' ',''))))
                 print('Setting Offset['+str(off_idx)+'] = '+off_val)
-                hexapod.axi_write(5+int(opt_leg)*3, off_val)
+                hexapod.axi_hwrite(5+int(opt_leg)*3, off_val)
                 hexapod.j_offs[int(opt_leg)][off_idx] = float(usr_opt.split(',')[1].replace(' ',''))
                 [off_q1, off_q2, off_q3] = hexapod.j_offs[int(opt_leg)]
             else:
