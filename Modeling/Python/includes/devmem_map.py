@@ -45,7 +45,7 @@ class ikinematics_mmap(object):
         
     #### Format ################################################################
     #### Format to hex string
-    def int_to_hexstr(number):
+    def int_to_hexstr(self, number):
         return str(hex(number)[2:]).rstrip("L")
     
     #### Set IP Parameters #####################################################
