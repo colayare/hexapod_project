@@ -39,7 +39,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     R1_COUNTER_MODE             = 0x30
     R1_LEG_OUTPUT               = 0xC0
     R1_F2F_READ_MUX             = 0xE00
-    R1_PWM_INVERT               = 0x‭FFFFC0000‬
+    R1_PWM_INVERT               = 0xFFFFC0000
     
     ############################################################################
     #### Methods
