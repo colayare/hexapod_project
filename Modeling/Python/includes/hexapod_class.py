@@ -95,9 +95,11 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
         file_cont   = file.read().split('\n')[:-1]
         file.close()
         self.i_inv_s = np.array(file_cont)
-        inv_val     = int(''.join(file_cont[::-1]), 2) << 12
-        reg1        = int(self.axi_read(1), 16) & (0xFFFFFFFF ^ (0x3FFFF << 12))
-        set_val     = reg1 + inv_val
+        # inv_val     = int(''.join(file_cont[::-1]), 2) << 12
+        # reg1        = int(self.axi_read(1), 16) & (0xFFFFFFFF ^ (0x3FFFF << 12))
+        # set_val     = reg1 + inv_val
+        for i, val in enumerate(self.i_inv_s):
+            self.axi_set_pwm_inv(i, int(val))
         print('HEXAPOD CLASS > Import servo inversions successfuly : '+self.init_servo_inv_file_path)
         self.axi_write(1, set_val)
         return None
