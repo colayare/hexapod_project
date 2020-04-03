@@ -103,7 +103,7 @@ class ikinematics_mmap(object):
         read_val_int = self.to_int(self.axi_map.read(self.__axi_word_size))
         read_val_hex = hex(read_val_int)[2:].rstrip("L").zfill(8)
         if ( self.gen_log_enable ):
-            self.log_file += 'R['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(read_val_hex)+'\n'
+            self.log_file += 'R['+self.int_to_hexstr(address)+'] = '+read_val_hex+'\n'
         return read_val_hex
         
     #### AXI Read Mask : AXI Read Operation with output mask
