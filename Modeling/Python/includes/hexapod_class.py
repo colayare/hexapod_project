@@ -255,9 +255,14 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     
     ## Write iKinematics Parameters on input FIFO
     def axi_write_params_in(self, x_in, y_in, z_in):
-        self.axi_write(2, x_in)
-        self.axi_write(3, y_in)
-        self.axi_write(4, z_in)
+        if ( type(x_in) == str or type(y_in) is str or type(z_in) is str ):
+            self.axi_hwrite(2, x_in)
+            self.axi_hwrite(3, y_in)
+            self.axi_hwrite(4, z_in)
+        else:
+            self.axi_write(2, x_in)
+            self.axi_write(3, y_in)
+            self.axi_write(4, z_in)
         return True
     
     def axi_read_params(self):
