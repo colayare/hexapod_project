@@ -362,7 +362,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     
     # Get PWM values
     def axi_get_pwm(self, leg):
-        pwm1 = (int(self.axi_read(23+leg*3),16) & 0x3FC00) >> 10
-        pwm2 = (int(self.axi_read(24+leg*3),16) & 0x3FC00) >> 10
-        pwm3 = (int(self.axi_read(25+leg*3),16) & 0x3FC00) >> 10
+        pwm1 = (int(self.axi_hread(23+leg*3),16) & 0x3FC00) >> 10
+        pwm2 = (int(self.axi_hread(24+leg*3),16) & 0x3FC00) >> 10
+        pwm3 = (int(self.axi_hread(25+leg*3),16) & 0x3FC00) >> 10
         return [pwm1, pwm2, pwm3]
