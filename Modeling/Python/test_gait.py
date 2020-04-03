@@ -138,7 +138,7 @@ while(1):
     elif( usr_opt.upper() == 'I' ):
         hexapod.set_init_position()
     elif( usr_opt.upper() == 'L' ):
-        hexapod.enable_ip_logs = not hexapod.enable_ip_logs
+        hexapod.gen_log_enable = not hexapod.gen_log_enable
     elif( usr_opt.upper() == 'S' ):
         if ( display ):
             print("{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}".format('Step', 'leg', 'Q1', 'PWM1', 'Q2', 'PWM2', 'Q3', 'PWM3'))
