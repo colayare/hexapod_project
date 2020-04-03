@@ -98,6 +98,8 @@ while(1):
     print('(I) Set initial position')
     print('(S) Start gait')
     print('(A) Show all Registers')
+    print('(L) Enable/Disable AXI IP Log')
+    print('> '+str(hexapod.enable_ip_logs))
     print('(EXIT) Exit')
     print(dash)
     print('Servo Inversion:')
@@ -135,6 +137,8 @@ while(1):
                 hexapod.read_gait_steps(gait_sel, gait_interp, gait_scale)
     elif( usr_opt.upper() == 'I' ):
         hexapod.set_init_position()
+    elif( usr_opt.upper() == 'L' ):
+        hexapod.enable_ip_logs = not hexapod.enable_ip_logs
     elif( usr_opt.upper() == 'S' ):
         if ( display ):
             print("{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}".format('Step', 'leg', 'Q1', 'PWM1', 'Q2', 'PWM2', 'Q3', 'PWM3'))
