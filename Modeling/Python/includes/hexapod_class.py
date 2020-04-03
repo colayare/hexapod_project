@@ -270,6 +270,12 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
         y = self.axi_read(3)
         z = self.axi_read(4)
         return [x, y, z]
+        
+    def axi_hread_params(self):
+        x = self.axi_hread(2)
+        y = self.axi_hread(3)
+        z = self.axi_hread(4)
+        return [x, y, z]
     
     ## Write iKinematics parameters to input FIFO
     def axi_write_fifo(self):
@@ -358,6 +364,13 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
         off1 = self.axi_read(5+leg*3)
         off2 = self.axi_read(6+leg*3)
         off3 = self.axi_read(7+leg*3)
+        return [off1, off2, off3]
+    
+    # Read offsets
+    def axi_hread_offset(self, leg):
+        off1 = self.axi_hread(5+leg*3)
+        off2 = self.axi_hread(6+leg*3)
+        off3 = self.axi_hread(7+leg*3)
         return [off1, off2, off3]
     
     # Get PWM values

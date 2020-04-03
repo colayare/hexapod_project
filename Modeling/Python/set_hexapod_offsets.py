@@ -17,9 +17,9 @@ dash = cols * '-'
 div  = cols * '#'
 
 def axi_read_fxp_out_params(hexapod, leg):
-    fxp_q1 = hexapod.axi_read(23+leg*3)
-    fxp_q2 = hexapod.axi_read(24+leg*3)
-    fxp_q3 = hexapod.axi_read(25+leg*3)
+    fxp_q1 = hexapod.axi_hread(23+leg*3)
+    fxp_q2 = hexapod.axi_hread(24+leg*3)
+    fxp_q3 = hexapod.axi_hread(25+leg*3)
     return [fxp_q1, fxp_q2, fxp_q3]
 
 def fstr(float_num):
@@ -111,8 +111,8 @@ while(1):
         hexapod.axi_write_params_in(sp_q1_p_offset_hex, sp_q2_p_offset_hex, sp_q3_p_offset_hex)
         hexapod.axi_write_out_direct()
         
-        [offset_q1, offset_q2, offset_q3] = hexapod.axi_read_offset(int(opt_leg))
-        [q1, q2, q3] = hexapod.axi_read_params()
+        [offset_q1, offset_q2, offset_q3] = hexapod.axi_hread_offset(int(opt_leg))
+        [q1, q2, q3] = hexapod.axi_hread_params()
         [pwm1, pwm2, pwm3] = hexapod.axi_get_pwm(int(opt_leg))
         [fxp_q1, fxp_q2, fxp_q3] = axi_read_fxp_out_params(hexapod, int(opt_leg))
         
