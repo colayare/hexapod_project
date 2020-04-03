@@ -90,7 +90,7 @@ class ikinematics_mmap(object):
         self.set_ptr(address)
         read_val = self.to_int(self.axi_map.read(self.__axi_word_size))
         if ( self.gen_log_enable ):
-            self.log_file += 'R['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(read_val_hex)+'\n'
+            self.log_file += 'R['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(read_val)+'\n'
         return read_val
     
     #### AXI Read Hex : AXI Read with hex string return value
