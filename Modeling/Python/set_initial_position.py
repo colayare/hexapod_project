@@ -14,7 +14,6 @@ init_position_filename  = abs_path+'/params/init_position.params'
 #### Code
 ## Initialize Hexapod Class & Memory Map
 hexapod = hc()
-hexapod.init_axi()
 
 ## Import Parameters
 hexapod.offsets_file = joint_offsets_filename

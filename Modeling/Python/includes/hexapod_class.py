@@ -1,13 +1,14 @@
 import numpy as np
+from time import sleep as sleep
 from numeric_conversions import numeric_conversions as numeric_conversions
-from devmem_map import ikinematics_mmap as ikinematics_mmap
+from devmem_map import axi_ip_mmap as axi_ip_mmap
 import math as mt
 import os
 
 ################################################################################
 #### Hexapod Class
 ################################################################################
-class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
+class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     ############################################################################
     #### Properties
     ############################################################################
@@ -17,12 +18,14 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
     j_offs  = np.zeros(shape=(6,3))
     i_inv_s = np.zeros(18).astype(int).astype(str)
     gaits   = np.zeros(shape=(30,3))
+    bgaits  = np.zeros(shape=(30,3))
     gait    = 0
     steps   = 30
     scale   = 1
     l1      = 0.0275
     l2      = 0.0963
-    l3      = 0.1051
+    l3      = 0.1051                                    #
+    delay   = 0.001                                     # Delay in seconds
     
     #### Parameters
     init_position_file_path     = ""
@@ -151,39 +154,81 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
         gait_file = open(self.gait_steps_file_path, 'r')
         gait_file_cont = gait_file.read().split('\n')[0:3]
         gait_file.close()
-        gaits   = np.zeros(shape=(30,3))
+        gaits  = np.zeros(shape=(30,3))
+        bgaits = np.zeros(shape=(30,3)).astype(bytes)
         for i in range(30):
-            gaits[i][0] = self.hfloat2dfloat(gait_file_cont[0].split(",")[(gait*30)+i])
-            gaits[i][1] = self.hfloat2dfloat(gait_file_cont[1].split(",")[(gait*30)+i])
-            gaits[i][2] = self.hfloat2dfloat(gait_file_cont[2].split(",")[(gait*30)+i])
+            x_read = gait_file_cont[0].split(",")[(gait*30)+i].lstrip('0x')
+            y_read = gait_file_cont[1].split(",")[(gait*30)+i].lstrip('0x')
+            z_read = gait_file_cont[2].split(",")[(gait*30)+i].lstrip('0x')
+            gaits[i][0] = self.hfloat2dfloat(x_read)
+            gaits[i][1] = self.hfloat2dfloat(y_read)
+            gaits[i][2] = self.hfloat2dfloat(z_read)
+            bgaits[i][0]  = self.to_bytes(int(x_read, 16))
+            bgaits[i][1]  = self.to_bytes(int(y_read, 16))
+            bgaits[i][2]  = self.to_bytes(int(z_read, 16))
         
+        self.gait   = gait
+        self.scale  = scale
+        self.steps  = interp_points
+        self.bgaits = bgaits
+        self.gaits  = gaits
         if ( interp_points > 30 ):
-            self.gait  = gait
-            self.scale = scale
-            self.steps = interp_points
-            self.gaits = self.step_interpolate(np.transpose(gaits), interp_points, scale)
-        else:
-            self.gait  = gait
-            self.scale = scale
-            self.steps = interp_points
-            self.gaits = gaits
+            self.step_interpolate(np.transpose(gaits), interp_points, scale)
         return True
     
-	#### Gaits Process 	########################################################
+    #### Gaits Process #########################################################
     def gait_step(self, idx):
         x, y, z = self.gaits[idx]
         return self.dfloat2hfloat(x), self.dfloat2hfloat(y), self.dfloat2hfloat(z)
+    
+    def gait_bstep(self, idx):
+        x, y, z = self.bgaits[idx]
+        return x, y, z
+        
+    def run_fast_step(self, idx):
+        [x, y, z] = self.gait_bstep(idx)
+        self.set_ptr(2)
+        self.axi_map.write(x)
+        self.axi_map.write(y)
+        self.axi_map.write(z)
+        self.axi_write_fifo()
+        self.axi_trigger_ikinematics()
+        return None
+        
+    def run_fast_gait(self, start=0, end=0):
+        self.config_leg_ctr(1, 0)
+        if ( end > 0 ):
+            steps = end
+        else:
+            steps = self.steps
+        for i in range ( steps ):
+            for leg in range ( 6 ):
+                [x, y, z] = self.gait_bstep(i)
+                self.set_ptr(2)
+                self.axi_map.write(x)
+                self.axi_map.write(y)
+                self.axi_map.write(z)
+                self.axi_write_fifo()
+            sleep(self.delay)
+        return True
         
     def step_interpolate(self, gait, points, scale):
-        lines = np.linspace(0, 30, 30)
-        lin_i = np.linspace(0, 30, points)
+        lines   = np.linspace(0, 30, 30)
+        lin_i   = np.linspace(0, 30, points)
         gaits   = np.zeros(shape=(3,points))
+        bgaits  = np.zeros(shape=(3,points)).astype(bytes)
         for i in range (3):
             inter = np.interp(lin_i, lines, gait[i])
             gaits[i] = inter * scale
-        return np.transpose(gaits)
+            for j, step in enumerate(gaits[i]):
+                bgaits[i][j] = self.to_bytes(int(self.dfloat2hfloat(step), 16))
+        self.gaits  = np.transpose(gaits)
+        self.bgaits = np.transpose(bgaits)
+        self.steps  = points
+        self.scale  = scale
+        return True
     
-	#### Inverse Kinematics Functions ##########################################
+    #### Inverse Kinematics Functions ##########################################
     ## Kinematics Functions
     def dKinematics(self, q1, q2, q3):
         x = mt.cos(q1)*(self.l3*mt.cos(q2+q3) + self.l2*mt.cos(q2) + self.l1)
@@ -216,7 +261,7 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
         return q1, q2, q3
     
     #### AXI IP Handling #######################################################
-	#### Configure Leg Control
+    #### Configure Leg Control
     ## Reg 1 : 
     ## > [2:0] RW   = Leg input selector
     ## > [3] T      = Set leg input trigger
@@ -231,9 +276,9 @@ class hexapod_kinematics(ikinematics_mmap, numeric_conversions):
             self.log_file += 'config_leg_ctr:\n'
         mask    = self.R1_LEG_IN_SELCT + self.R1_SET_LEG_IN + self.R1_COUNTER_MODE
         leg_in  = leg & 0x7
-        if ( mode == "one_leg" ):
+        if ( mode == "one_leg" or mode == 0 ):
             mode_in = 0x10
-        elif ( mode == "mux_leg" ):
+        elif ( mode == "mux_leg" or mode == 1 ):
             mode_in = 0x0
         else:
             print("Invalid mode, selected leg multiplexion")

@@ -25,7 +25,8 @@ def gait(hexapod, leg, step):
     hexapod.axi_write_params_in(x, y, z)
     hexapod.axi_write_fifo()
     hexapod.axi_trigger_ikinematics()
-
+    return None
+    
 def get_ik_out(hexapod, sexa=True):
     hexapod.axi_set_out_mux(0)
     [q1, q2, q3] = hexapod.axi_hread_params()
@@ -87,8 +88,8 @@ while(1):
     print_title('Test iKinematics Gait')
     print('(E) Enable leg.')
     print('> '+str(leg_enable))
-    print('(D) Set Delay (ms).')
-    print('> '+str(delay))
+    print('(D) Set Delay (s).')
+    print('> '+str(hexapod.delay))
     print('(R) Set number of gait loops (0:infinite).')
     print('> '+str(gait_loops))
     print('(O) Print outputs. (True/False)')
@@ -97,6 +98,7 @@ while(1):
     print('> '+str(gait_sel))
     print('(I) Set initial position')
     print('(S) Start gait')
+    print('(F) Start gait in Fast Mode')
     print('(A) Show all Registers')
     print('(L) Enable/Disable AXI IP Log')
     print('> '+str(hexapod.gen_log_enable))
@@ -116,7 +118,7 @@ while(1):
         else:
             leg_enable[int(opt.split(',')[0])] = opt.split(',')[1].upper() == 'TRUE'
     elif( usr_opt.upper() == 'D' ):
-        delay = input('Enter delay (ms) : ')
+        hexapod.delay = input('Enter delay (s) : ')
     elif( usr_opt.upper() == 'R' ):
         gait_loops = int(input('Enter number of loops: '))
     elif( usr_opt.upper() == 'O' ):
@@ -139,6 +141,9 @@ while(1):
         hexapod.set_init_position()
     elif( usr_opt.upper() == 'L' ):
         hexapod.gen_log_enable = not hexapod.gen_log_enable
+    elif( usr_opt.upper() == 'F' ):
+        for i in range ( gait_loops ):
+            hexapod.run_fast_gait()
     elif( usr_opt.upper() == 'S' ):
         if ( display ):
             print("{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}".format('Step', 'leg', 'Q1', 'PWM1', 'Q2', 'PWM2', 'Q3', 'PWM3'))
@@ -152,7 +157,7 @@ while(1):
                                 q1, q2, q3 = get_ik_out(hexapod)
                                 [pwm1, pwm2, pwm3] = hexapod.axi_get_pwm(j)
                                 print("{:>10.0f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}".format(step, j, q1, pwm1, q2, pwm2, q3, pwm3))
-                    tm.sleep(delay)
+                    tm.sleep(hexapod.delay)
     elif( usr_opt.upper() == 'EXIT' ):
         hexapod.export_log()
         exit()

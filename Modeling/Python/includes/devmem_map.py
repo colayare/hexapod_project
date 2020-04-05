@@ -1,22 +1,22 @@
 import os, mmap, struct
 
-###############################################################################
+################################################################################
 #### Inverse Kinematics IP Memory Map
-###############################################################################
-class ikinematics_mmap(object):
-    ###########################################################################
+################################################################################
+class axi_ip_mmap(object):
+    ############################################################################
     #### Properties
-    ###########################################################################
+    ############################################################################
     ## AXI Parameters
-    __base_address  = 0x40000000
-    __slot_size     = 0x1000
-    __axi_word_size = 4
+    __base_address  = 0x40000000    # AXI IP Base Address
+    __slot_size     = 0x1000        # AXI Slot Size
+    __axi_word_size = 4             # AXI Word Size in bytes
     ## AXI Memory Map
-    axi_map         = None
+    axi_map         = None          # AXI Memory Map Pointer
     ## Log File Handling
-    gen_log_enable  = False
-    ip_logfile_path = ''
-    log_file      = ''
+    gen_log_enable  = False         # Enable log generation
+    ip_logfile_path = ''            # Log file Path
+    log_file        = ''            # Log file content
     
     @property
     def base_address(self):
@@ -30,9 +30,9 @@ class ikinematics_mmap(object):
     def word_size(self):
         return self.__axi_word_size
         
-    ###########################################################################
+    ############################################################################
     #### Methods
-    ###########################################################################
+    ############################################################################
     ## Constructor
     def __init__(self, base_address=0x40000000, slot_size=0x1000, gen_log_enable=False):
         self.__base_address     = base_address
@@ -64,7 +64,7 @@ class ikinematics_mmap(object):
         self.__slot_size = slot_size
         return True
     
-    #### Memory Map ###########################################################
+    #### Memory Map ############################################################
     ## Initialize AXI IP Memory Map
     def init_axi_map(self):
         fd = os.open("/dev/mem", os.O_RDWR|os.O_SYNC)
@@ -106,6 +106,14 @@ class ikinematics_mmap(object):
             self.log_file += 'R['+self.int_to_hexstr(address)+'] = '+read_val_hex+'\n'
         return read_val_hex
         
+    #### AXI Fast Read Hex : AXI Fast Read Operation, doesn't generate log
+    ## Inputs:
+    ## > address        : 32-bit int
+    ## Outputs:
+    ## > read value     : 32-bit int
+    def axi_fread(self):
+        return self.to_int(self.axi_map.read(self.__axi_word_size))
+        
     #### AXI Read Mask : AXI Read Operation with output mask
     ## Inputs:
     ## > address     : 32-bit int
@@ -146,6 +154,16 @@ class ikinematics_mmap(object):
             self.log_file += 'W['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(value)+'\n'
         return True
     
+    #### AXI Fast Write : AXI Fast Write Operation, does not generate log
+    ## Inputs:
+    ## > address      : 32-bit int
+    ## > write value  : 32-bit int
+    ## Outputs:
+    ## > True
+    def axi_fwrite(self, value):
+        self.axi_map.write(self.to_bytes(value))
+        return True
+    
     #### AXI Write Mask : AXI Write operation with mask
     ## Inputs:
     ## > address      : 32-bit int
@@ -163,7 +181,7 @@ class ikinematics_mmap(object):
             self.log_file += 'WM['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(write_val)+','+self.int_to_hexstr(mask)+'\n'
         return True
     
-    #### Data Conversion Functions ############################################
+    #### Data Conversion Functions #############################################
     ## Bytes data type to Integer
     def to_int(self, bytes_in):
         return struct.unpack("<HH", bytes_in)[0]+(struct.unpack("<HH", bytes_in)[1]<<16)
@@ -172,7 +190,7 @@ class ikinematics_mmap(object):
     def to_bytes(self, int_in):
         return struct.pack("<I", int_in)
     
-    #### Log Handling ########################################################
+    #### Log Handling ##########################################################
     ## Export IP Transactions Log
     def export_log(self):
         print('AXI IP '+str(self)+' > Exporting log to '+self.ip_logfile_path)
@@ -190,9 +208,9 @@ class ikinematics_mmap(object):
     ## Display all slot registers 
     def show_regs(self, start_address=0, end_address=0x1000, autoskip=True):
         print('#'*20+'\nAXI '+str(self)+' REGS :')
-        for i in range (int(end_address-start_address)):
+        for i in range (start_address, end_address+1):
             address = i
-            read_val = self.axi_read(address)
+            read_val = self.axi_hread(address)
             print('R['+str(hex(address)[2:].zfill(8))+'] = '+str(read_val[2:].zfill(8)))
         if ( not autoskip ):
             raw_input()
