@@ -31,18 +31,17 @@ hexapod.import_offsets()
 
 hexapod.read_gait_steps(0)
 
-
+hexapod.offset_x = 0.05
+hexapod.offset_y = 0.05
 
 
 for i in range(30):
     x, y, z = hexapod.gaits[i]
-    t1, t2, t3 = hexapod.iKinematics_t(x, y, z)
-    r1, r2, r3 = hexapod.iKinematics(x, y, z)
-    e1 = abs((t1-r1)/t1) * 100
-    e2 = abs((t2-r2)/t2) * 100
-    e3 = abs((t3-r3)/t3) * 100
-    d1 = abs(t1 - r1)
-    d2 = abs(t2 - r2)
-    d3 = abs(t3 - r3)
-#    print(e1, e2, e3)
-#    print(d1, d2, d3)
+    hexapod.set_step(0, [x, y, z])
+    hexapod.set_step(1, [x, y, z])
+    hexapod.set_step(2, [x, y, z])
+    hexapod.set_step(3, [x, y, z])
+    hexapod.set_step(4, [x, y, z])
+    hexapod.set_step(5, [x, y, z])
+
+hexapod.plot_gait()

@@ -5,8 +5,15 @@ from cordic_model import CORDIC as CORDIC
 from numeric_conversions import numeric_conversions as numeric_conversions
 from devmem_map import axi_ip_mmap as axi_ip_mmap
 import math as mt
-from math import atan2 as atan2
 import os
+try:
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.mplot3d import Axes3D
+    PLOT_EN = True
+except ImportError:
+    from mpl_toolkits.mplot3d import Axes3D
+    PLOT_EN = False
+    pass
 
 ###############################################################################
 #### Hexapod Class : Base AXI IP
@@ -394,6 +401,39 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
         pwm3 = (int(self.axi_hread(25+leg*3),16) & 0x3FC00) >> 10
         return [pwm1, pwm2, pwm3]
 
+###############################################################################
+#### Hexapod Leg Class : Container or locomotion
+###############################################################################
+class hexapod_leg(object):
+    __points    = 0
+    coordinates = np.array([0, 0, 0])
+    
+    @property
+    def steps(self):
+        return self.coordinates.shape[0]
+    
+    @property
+    def x_traject(self):
+        return self.coordinates[:,0]
+    
+    @property
+    def y_traject(self):
+        return self.coordinates[:,1]
+    
+    @property
+    def z_traject(self):
+        return self.coordinates[:,2]
+    
+    def append(self, value):
+        if ( self.__points > 0 ):
+            self.coordinates = np.vstack((self.coordinates, value))
+        else:
+            self.coordinates = value
+        self.__points += 1
+        
+    def clean(self):
+        self.coordinates = np.array([0, 0, 0])
+        self.__points = 0
 
 ###############################################################################
 #### Hexapod Class
@@ -403,7 +443,14 @@ class hexapod(hexapod_kinematics):
     #### Properties
     ###########################################################################
     ## Kinematics Parameters
+    __coord   = np.zeros(shape=(6,3))
     __joints  = np.zeros(shape=(6,3))         # Actual Joints Positions
+    __locom   = np.array([hexapod_leg(), 
+                          hexapod_leg(), 
+                          hexapod_leg(), 
+                          hexapod_leg(), 
+                          hexapod_leg(), 
+                          hexapod_leg()])
     
     ### Inerse Kinematics Parameters
     l1      = 0.0275
@@ -411,6 +458,10 @@ class hexapod(hexapod_kinematics):
     l3      = 0.1051
     ik      = 0.6072529
     ikh     = 3.763427734375
+    
+    #### Locomotion Parameters
+    offset_x = 0
+    offset_y = 0
     
     @property
     def Ca(self):
@@ -430,8 +481,19 @@ class hexapod(hexapod_kinematics):
     
     @joints.setter
     def joints(self, value):
-        print('trying to set', value)
-        pass
+        self.__joints = value
+    
+    @property
+    def coordinates(self):
+        return self.__coord
+    
+    @property
+    def locomotion(self):
+        return self.__locom
+    
+#    @coordinates.setter
+#    def coordinates(self, value):
+#        self.__coord = value
     
     ###########################################################################
     #### Methods
@@ -439,7 +501,7 @@ class hexapod(hexapod_kinematics):
     #### Constructor
     def __init__(self, invoke_axi_ip=True, enable_ip_logs=False):
         if ( invoke_axi_ip ):
-            super(hexapod_kinematics, self).__init__(gen_log_enable=enable_ip_logs)
+            super(hexapod, self).__init__(invoke_axi_ip=True, gen_log_enable=enable_ip_logs)
         return None
     
     #### Inverse Kinematics Functions #########################################
@@ -450,6 +512,7 @@ class hexapod(hexapod_kinematics):
         z = self.l3 * mt.sin(q2+q3) + self.l2*mt.sin(q2)
         return x, y, z
     
+    #### Theoretical Inverse Kinematics Calculation
     def iKinematics_t(self, xin, yin, zin):
         if ( type(xin) is str ):
             x = self.hfloat2dfloat(xin)
@@ -474,6 +537,7 @@ class hexapod(hexapod_kinematics):
         q2 = mt.atan2(G,mt.sqrt(1 - G**2)) - mt.atan2(mt.sin(q3),F+mt.cos(q3))
         return q1, q2, q3
     
+    #### CORDIC-based Inverse Kinematics calculation
     def iKinematics(self, xin, yin, zin):
         C1_CV = CORDIC('circular', 'vectorial', 0, 15)
         C2_HV = CORDIC('hyperbolic', 'vectorial', -1, 14)
@@ -508,3 +572,32 @@ class hexapod(hexapod_kinematics):
         Q2 = C9_CV.zo - C6_CV.zo
         Q3 = -C3_CV.zo
         return Q1, Q2, Q3
+    
+    #### Locomotion Functions #################################################
+    #### Set Leg Step
+    def set_step(self, leg, coordinates):
+        self.__coord[leg] = np.array(coordinates)
+        self.__locom[leg].append(coordinates)
+        return True
+    
+    #### Clean all Legs gait buffer
+    def step_clean(self):
+        for leg in self.__locom:
+            leg.clean()
+        return True
+    
+    ####
+    def plot_gait(self):
+#        fig = plt.figure()
+        fig = plt.figure(figsize=plt.figaspect(0.5))
+        for i in range ( 6 ):
+            loc = self.__locom[i]
+            ax = fig.add_subplot(3, 2, i+1, projection='3d')
+            ax.plot(loc.x_traject, loc.y_traject, loc.z_traject, c='r') # add label
+            ax.set_title('Leg '+str(i+1))
+            ax.set_xlabel('x (m)')
+            ax.set_ylabel('y (m)')
+            ax.set_zlabel('z (m)')
+#            ax.legend()
+        plt.show()
+        pass
