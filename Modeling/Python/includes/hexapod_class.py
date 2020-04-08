@@ -600,4 +600,17 @@ class hexapod(hexapod_kinematics):
             ax.set_zlabel('z (m)')
 #            ax.legend()
         plt.show()
-        pass
+        return True
+    
+    ####
+    def plot_kinematics(self):
+        fig = plt.figure(figsize=plt.figaspect(0.5))
+        for i in range ( 6 ):
+            loc = self.__locom[i]
+            ax = fig.add_subplot(3, 2, i+1)
+            ax.plot(loc.x_traject, label='x', c='r') # add label
+            ax.plot(loc.y_traject, label='y', c='g') # add label
+            ax.plot(loc.z_traject, label='z', c='b') # add label
+            ax.set_title('Leg '+str(i+1))
+            ax.legend()
+        plt.show()

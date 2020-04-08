@@ -47,4 +47,5 @@ for i in range(30):
     hexapod.set_step(4, [x, y, z])
     hexapod.set_step(5, [x, y, z])
 
-hexapod.plot_gait()
+hexapod.plot_kinematics()
+#hexapod.plot_gait()
