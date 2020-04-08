@@ -2,7 +2,7 @@ from ctypes import *
 import struct
 import math as mt
 
-class numeric_conversions:
+class numeric_conversions(object):
     ################
     ### Properties
     ################

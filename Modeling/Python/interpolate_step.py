@@ -24,7 +24,7 @@ pathname = os.path.dirname(sys.argv[0])
 abs_path = os.path.abspath(pathname)
 print('Appending path'+ abs_path+'/includes')
 sys.path.append(abs_path+'/includes')
-from hexapod_class import hexapod_kinematics as hc
+from hexapod_class import hexapod_kinematics as hexapod_kinematics
 from numeric_conversions import numeric_conversions as NUM_CONV
 
 #### Path sourcing
@@ -62,13 +62,13 @@ def get_ikinematics(hexapod, gaits, points):
     ik   = np.zeros(shape=(3,points))
     for i in range (points):
         [q1, q2, q3] = hexapod.iKinematics( gaits[0][i], gaits[1][i], gaits[2][i] )
-        ik[0][i] = hexapod.nc.rad2sec(q1)
-        ik[1][i] = hexapod.nc.rad2sec(q2)
-        ik[2][i] = hexapod.nc.rad2sec(q3)
+        ik[0][i] = hexapod.rad2sec(q1)
+        ik[1][i] = hexapod.rad2sec(q2)
+        ik[2][i] = hexapod.rad2sec(q3)
     return ik
     
 #### Code
-hexapod = hc()
+hexapod = hexapod_kinematics(invoke_axi_ip=False)
 points = 100
 scale  = 1.2
 

@@ -1,31 +1,30 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 from time import sleep as sleep
+from cordic_model import CORDIC as CORDIC
 from numeric_conversions import numeric_conversions as numeric_conversions
 from devmem_map import axi_ip_mmap as axi_ip_mmap
 import math as mt
+from math import atan2 as atan2
 import os
 
-################################################################################
-#### Hexapod Class
-################################################################################
+###############################################################################
+#### Hexapod Class : Base AXI IP
+###############################################################################
 class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
-    ############################################################################
+    ###########################################################################
     #### Properties
-    ############################################################################
+    ###########################################################################
     ## Kinematics Parameters
-    i_pos   = np.zeros(shape=(6,3))
-    joints  = np.zeros(shape=(6,3))
-    j_offs  = np.zeros(shape=(6,3))
+    i_pos   = np.zeros(shape=(6,3))         # Initial Joints Positions
+    j_offs  = np.zeros(shape=(6,3))         # Joints Offsets
     i_inv_s = np.zeros(18).astype(int).astype(str)
-    gaits   = np.zeros(shape=(30,3))
+    gaits   = np.zeros(shape=(30,3))        # Gaits
     bgaits  = np.zeros(shape=(30,3))
     gait    = 0
     steps   = 30
     scale   = 1
-    l1      = 0.0275
-    l2      = 0.0963
-    l3      = 0.1051                                    #
-    delay   = 0.001                                     # Delay in seconds
+    delay   = 0.001
     
     #### Parameters
     init_position_file_path     = ""
@@ -34,9 +33,9 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     gait_steps_file_path        = ""
     axi_ip_log_file_path        = ""
     
-    ############################################################################
-    #### Defines
-    ############################################################################
+    ###########################################################################
+    #### Memory Map Parameter
+    ###########################################################################
     R1_LEG_IN_SELCT             = 0x7
     R1_SET_LEG_IN               = 0x8
     R1_COUNTER_MODE             = 0x30
@@ -44,15 +43,16 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     R1_F2F_READ_MUX             = 0xE00
     R1_PWM_INVERT               = 0xFFFFC0000
     
-    ############################################################################
+    ###########################################################################
     #### Methods
-    ############################################################################
+    ###########################################################################
     #### Constructor
-    def __init__(self, enable_ip_logs=False):
-        super(hexapod_kinematics, self).__init__(gen_log_enable=enable_ip_logs)
+    def __init__(self, invoke_axi_ip=True, enable_ip_logs=False):
+        if ( invoke_axi_ip ):
+            super(hexapod_kinematics, self).__init__(gen_log_enable=enable_ip_logs)
         return None
     
-    #### Import & Export IP Params #############################################
+    #### Import & Export IP Params ############################################
     ## Import parameters
     def import_offsets(self):
         if ( self.offsets_file_path == '' or not os.path.exists(self.offsets_file_path) ):
@@ -95,7 +95,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
             print('HEXAPOD CLASS > No init servo inversion file detected.n>'+self.init_servo_inv_file_path)
             return False
         file        = open(self.init_servo_inv_file_path, 'r')
-        file_cont   = file.read().split('\n')[:-1]
+        file_cont   = file.read().rstrip('\n').split('\n')
         file.close()
         self.i_inv_s = np.array(file_cont)
         for i, val in enumerate(self.i_inv_s):
@@ -176,7 +176,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
             self.step_interpolate(np.transpose(gaits), interp_points, scale)
         return True
     
-    #### Gaits Process #########################################################
+    #### Gaits Process ########################################################
     def gait_step(self, idx):
         x, y, z = self.gaits[idx]
         return self.dfloat2hfloat(x), self.dfloat2hfloat(y), self.dfloat2hfloat(z)
@@ -196,12 +196,12 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
         return None
         
     def run_fast_gait(self, start=0, end=0):
-        self.config_leg_ctr(1, 0)
         if ( end > 0 ):
             steps = end
         else:
             steps = self.steps
         for i in range ( steps ):
+            self.config_leg_ctr(1, 0)
             for leg in range ( 6 ):
                 [x, y, z] = self.gait_bstep(i)
                 self.set_ptr(2)
@@ -209,6 +209,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
                 self.axi_map.write(y)
                 self.axi_map.write(z)
                 self.axi_write_fifo()
+            self.axi_trigger_ikinematics()
             sleep(self.delay)
         return True
         
@@ -228,39 +229,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
         self.scale  = scale
         return True
     
-    #### Inverse Kinematics Functions ##########################################
-    ## Kinematics Functions
-    def dKinematics(self, q1, q2, q3):
-        x = mt.cos(q1)*(self.l3*mt.cos(q2+q3) + self.l2*mt.cos(q2) + self.l1)
-        y = mt.sin(q1)*(self.l3*mt.cos(q2+q3) + self.l2*mt.cos(q2) + self.l1) 
-        z = self.l3 * mt.sin(q2+q3) + self.l2*mt.sin(q2)
-        return x, y, z
-    
-    def iKinematics(self, xin, yin, zin):
-        if ( type(xin) is str ):
-            x = self.hfloat2dfloat(xin)
-            y = self.hfloat2dfloat(yin)
-            z = self.hfloat2dfloat(zin)
-        else:
-            x = xin
-            y = yin
-            z = zin
-    
-        Ca = 1/(2*self.l2*self.l3)
-        F = self.l2/self.l3
-        S = self.l1**2 - self.l2**2 - self.l3**2    
-        r = mt.sqrt(x**2 + y**2)
-        A = 2*r*self.l1
-        C = r**2 + z**2 + S - A
-        D = C * Ca
-        B = mt.sqrt((r-self.l1)**2 + z**2)
-        G = z/B
-        q1 = mt.atan2(y,x)
-        q3 = - mt.atan2(mt.sqrt(1 - D**2),D)
-        q2 = mt.atan2(G,mt.sqrt(1 - G**2)) - mt.atan2(mt.sin(q3),F+mt.cos(q3))
-        return q1, q2, q3
-    
-    #### AXI IP Handling #######################################################
+    #### AXI IP Handling ######################################################
     #### Configure Leg Control
     ## Reg 1 : 
     ## > [2:0] RW   = Leg input selector
@@ -424,3 +393,118 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
         pwm2 = (int(self.axi_hread(24+leg*3),16) & 0x3FC00) >> 10
         pwm3 = (int(self.axi_hread(25+leg*3),16) & 0x3FC00) >> 10
         return [pwm1, pwm2, pwm3]
+
+
+###############################################################################
+#### Hexapod Class
+###############################################################################
+class hexapod(hexapod_kinematics):
+    ###########################################################################
+    #### Properties
+    ###########################################################################
+    ## Kinematics Parameters
+    __joints  = np.zeros(shape=(6,3))         # Actual Joints Positions
+    
+    ### Inerse Kinematics Parameters
+    l1      = 0.0275
+    l2      = 0.0963
+    l3      = 0.1051
+    ik      = 0.6072529
+    ikh     = 3.763427734375
+    
+    @property
+    def Ca(self):
+        return 1/(2*self.l2*self.l3)
+    
+    @property
+    def F(self):
+        return self.l2/self.l3
+    
+    @property
+    def S(self):
+        return self.l1**2 - self.l2**2 - self.l3**2
+    
+    @property
+    def joints(self):
+        return self.__joints
+    
+    @joints.setter
+    def joints(self, value):
+        print('trying to set', value)
+        pass
+    
+    ###########################################################################
+    #### Methods
+    ###########################################################################
+    #### Constructor
+    def __init__(self, invoke_axi_ip=True, enable_ip_logs=False):
+        if ( invoke_axi_ip ):
+            super(hexapod_kinematics, self).__init__(gen_log_enable=enable_ip_logs)
+        return None
+    
+    #### Inverse Kinematics Functions #########################################
+    ## Kinematics Functions
+    def dKinematics(self, q1, q2, q3):
+        x = mt.cos(q1)*(self.l3*mt.cos(q2+q3) + self.l2*mt.cos(q2) + self.l1)
+        y = mt.sin(q1)*(self.l3*mt.cos(q2+q3) + self.l2*mt.cos(q2) + self.l1) 
+        z = self.l3 * mt.sin(q2+q3) + self.l2*mt.sin(q2)
+        return x, y, z
+    
+    def iKinematics_t(self, xin, yin, zin):
+        if ( type(xin) is str ):
+            x = self.hfloat2dfloat(xin)
+            y = self.hfloat2dfloat(yin)
+            z = self.hfloat2dfloat(zin)
+        else:
+            x = xin
+            y = yin
+            z = zin
+    
+        Ca = 1/(2*self.l2*self.l3)
+        F = self.l2/self.l3
+        S = self.l1**2 - self.l2**2 - self.l3**2    
+        r = mt.sqrt(x**2 + y**2)
+        A = 2*r*self.l1
+        C = r**2 + z**2 + S - A
+        D = C * Ca
+        B = mt.sqrt((r-self.l1)**2 + z**2)
+        G = z/B
+        q1 = mt.atan2(y,x)
+        q3 = - mt.atan2(mt.sqrt(1 - D**2),D)
+        q2 = mt.atan2(G,mt.sqrt(1 - G**2)) - mt.atan2(mt.sin(q3),F+mt.cos(q3))
+        return q1, q2, q3
+    
+    def iKinematics(self, xin, yin, zin):
+        C1_CV = CORDIC('circular', 'vectorial', 0, 15)
+        C2_HV = CORDIC('hyperbolic', 'vectorial', -1, 14)
+#        C3_CV = CORDIC('circular', 'vectorial', -1, 14)
+        C3_CV = CORDIC('circular', 'vectorial', 0, 15)
+        C4_CV = CORDIC('circular', 'vectorial', 0, 15)
+        C5_CR = CORDIC('circular', 'rotational', 0, 15)
+        C6_CV = CORDIC('circular', 'vectorial', 0, 15)
+        C7_LV = CORDIC('linear', 'vectorial', 0, 15)
+        C8_HV = CORDIC('hyperbolic', 'vectorial', -1, 14)
+        C9_CV = CORDIC('circular', 'vectorial', 0, 15)
+        #### STAGE 1 ####
+        C1_CV.calculate(xin, yin, 0)
+        #### STAGE 2 ####
+        r = C1_CV.xo * self.ik
+        A = r * self.l1 * 2
+        D = self.Ca * ( r**2 + zin**2 + self.S - A )
+        #### STAGE 3 ####
+        C2_HV.calculate(1, D, 0)
+        C4_CV.calculate(r - self.l1, zin, 0)
+        #### STAGE 4 ####
+        C7_LV.calculate(C4_CV.xo * self.ik, zin, 0)
+        C3_CV.calculate(D, C2_HV.xo * self.ikh, 0)
+        #### STAGE 5 ####
+        C8_HV.calculate(1, C7_LV.zo, 0)
+        C5_CR.calculate(self.ik, 0, -C3_CV.zo)
+        #### STAGE 6 ####
+        C9_CV.calculate(C8_HV.xo * self.ikh, C7_LV.zo, 0)
+        C6_CV.calculate(D + self.F, C5_CR.yo, 0)
+        #### RESULTS ####
+        Q1 = C1_CV.zo
+        Q2 = C9_CV.zo - C6_CV.zo
+        Q3 = -C3_CV.zo
+        return Q1, Q2, Q3
