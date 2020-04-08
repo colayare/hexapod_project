@@ -31,8 +31,11 @@ hexapod.import_offsets()
 
 hexapod.read_gait_steps(0)
 
-hexapod.offset_x = 0.05
-hexapod.offset_y = 0.05
+offxet_x = 0.05
+offset_y = 0.05
+
+hexapod.offset_x = offxet_x
+hexapod.offset_y = offset_y
 
 
 for i in range(30):
