@@ -1,19 +1,12 @@
 # -*- coding: utf-8 -*-
 import numpy as np
+import mmap
 from time import sleep as sleep
 from cordic_model import CORDIC as CORDIC
 from numeric_conversions import numeric_conversions as numeric_conversions
 from devmem_map import axi_ip_mmap as axi_ip_mmap
 import math as mt
 import os
-try:
-    import matplotlib.pyplot as plt
-    from mpl_toolkits.mplot3d import Axes3D
-    PLOT_EN = True
-except ImportError:
-    from mpl_toolkits.mplot3d import Axes3D
-    PLOT_EN = False
-    pass
 
 ###############################################################################
 #### Hexapod Class : Base AXI IP
@@ -26,12 +19,12 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     i_pos   = np.zeros(shape=(6,3))         # Initial Joints Positions
     j_offs  = np.zeros(shape=(6,3))         # Joints Offsets
     i_inv_s = np.zeros(18).astype(int).astype(str)
-    gaits   = np.zeros(shape=(30,3))        # Gaits
+    gaits   = np.array([]).astype(bytes)                  # Gaits
     bgaits  = np.zeros(shape=(30,3))
     gait    = 0
     steps   = 30
     scale   = 1
-    delay   = 0.001
+    delay   = 0.008
     
     #### Parameters
     init_position_file_path     = ""
@@ -141,7 +134,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
         init_file.write(init_cont)
         init_file.close()
         return True
-        
+    
     ## Save Servo Inversion
     def save_inversion(self):
         if ( self.init_servo_inv_file_path == '' or not os.path.exists(self.init_servo_inv_file_path) ):
@@ -154,87 +147,48 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
         return True
     
     ## Import Gait Steps
-    def read_gait_steps(self, gait, interp_points=30, scale=1):
-        if ( self.gait_steps_file_path == '' or not os.path.exists(self.gait_steps_file_path) ):
-            print('HEXAPOD CLASS > No gait steps file detected.\n>'+self.gait_steps_file_path)
-            return None
-        gait_file = open(self.gait_steps_file_path, 'r')
-        gait_file_cont = gait_file.read().split('\n')[0:3]
-        gait_file.close()
-        gaits  = np.zeros(shape=(30,3))
-        bgaits = np.zeros(shape=(30,3)).astype(bytes)
-        for i in range(30):
-            x_read = gait_file_cont[0].split(",")[(gait*30)+i].lstrip('0x')
-            y_read = gait_file_cont[1].split(",")[(gait*30)+i].lstrip('0x')
-            z_read = gait_file_cont[2].split(",")[(gait*30)+i].lstrip('0x')
-            gaits[i][0] = self.hfloat2dfloat(x_read)
-            gaits[i][1] = self.hfloat2dfloat(y_read)
-            gaits[i][2] = self.hfloat2dfloat(z_read)
-            bgaits[i][0]  = self.to_bytes(int(x_read, 16))
-            bgaits[i][1]  = self.to_bytes(int(y_read, 16))
-            bgaits[i][2]  = self.to_bytes(int(z_read, 16))
-        
-        self.gait   = gait
-        self.scale  = scale
-        self.steps  = interp_points
-        self.bgaits = bgaits
-        self.gaits  = gaits
-        if ( interp_points > 30 ):
-            self.step_interpolate(np.transpose(gaits), interp_points, scale)
+    def read_gait_steps(self):
+        for leg in range ( 6 ):
+            file_path = self.gait_steps_file_path.replace('*', str(leg))
+            if ( file_path == '' or not os.path.exists(file_path) ):
+                print('HEXAPOD CLASS > No gait steps file detected.\n>'+file_path)
+                return None
+            f = open(file_path, 'r+b')
+            mm = mmap.mmap(f.fileno(), 0)
+            for i in range ( int(mm.size()/4) ):
+                self.gaits = np.append(self.gaits, mm.read(4))
+            f.close()
+            mm = None
         return True
     
-    #### Gaits Process ########################################################
-    def gait_step(self, idx):
-        x, y, z = self.gaits[idx]
-        return self.dfloat2hfloat(x), self.dfloat2hfloat(y), self.dfloat2hfloat(z)
-    
-    def gait_bstep(self, idx):
-        x, y, z = self.bgaits[idx]
-        return x, y, z
-        
-    def run_fast_step(self, idx):
-        [x, y, z] = self.gait_bstep(idx)
-        self.set_ptr(2)
-        self.axi_map.write(x)
-        self.axi_map.write(y)
-        self.axi_map.write(z)
-        self.axi_write_fifo()
-        self.axi_trigger_ikinematics()
-        return None
-        
-    def run_fast_gait(self, start=0, end=0):
-        if ( end > 0 ):
-            steps = end
-        else:
-            steps = self.steps
-        for i in range ( steps ):
+    #### Gaits Process ########################################################        
+    def run_fast_gait(self):
+        for step in range ( 2 ):
             self.config_leg_ctr(1, 0)
             for leg in range ( 6 ):
-                [x, y, z] = self.gait_bstep(i)
                 self.set_ptr(2)
-                self.axi_map.write(x)
-                self.axi_map.write(y)
-                self.axi_map.write(z)
+                for axi in range ( 3 ):
+                    self.axi_map.write(self.gaits[leg*90+step*3+axi])
                 self.axi_write_fifo()
             self.axi_trigger_ikinematics()
             sleep(self.delay)
         return True
         
-    def step_interpolate(self, gait, points, scale):
-        lines   = np.linspace(0, 30, 30)
-        lin_i   = np.linspace(0, 30, points)
-        gaits   = np.zeros(shape=(3,points))
-        bgaits  = np.zeros(shape=(3,points)).astype(bytes)
-        for i in range (3):
-            inter = np.interp(lin_i, lines, gait[i])
-            gaits[i] = inter * scale
-            for j, step in enumerate(gaits[i]):
-                bgaits[i][j] = self.to_bytes(int(self.dfloat2hfloat(step), 16))
-        self.gaits  = np.transpose(gaits)
-        self.bgaits = np.transpose(bgaits)
-        self.steps  = points
-        self.scale  = scale
-        return True
+#    def step_interpolate(self, gait, points, scale):
+#        lines   = np.linspace(0, 30, 30)
+#        lin_i   = np.linspace(0, 30, points)
+#        gaits   = np.zeros(shape=(3,points))
+#        bgaits  = np.zeros(shape=(3,points)).astype(bytes)
+#        for i in range (3):
+#            inter = np.interp(lin_i, lines, gait[i])
+#            gaits[i] = inter * scale
+#            for j, step in enumerate(gaits[i]):
+#                bgaits[i][j] = self.to_bytes(int(self.dfloat2hfloat(step), 16))
+#        self.gaits  = np.transpose(gaits)
+#        self.bgaits = np.transpose(bgaits)
+#        self.steps  = points
+#        self.scale  = scale
+#        return True
     
     #### AXI IP Handling ######################################################
     #### Configure Leg Control
@@ -400,217 +354,3 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
         pwm2 = (int(self.axi_hread(24+leg*3),16) & 0x3FC00) >> 10
         pwm3 = (int(self.axi_hread(25+leg*3),16) & 0x3FC00) >> 10
         return [pwm1, pwm2, pwm3]
-
-###############################################################################
-#### Hexapod Leg Class : Container or locomotion
-###############################################################################
-class hexapod_leg(object):
-    __points    = 0
-    coordinates = np.array([0, 0, 0])
-    
-    @property
-    def steps(self):
-        return self.coordinates.shape[0]
-    
-    @property
-    def x_traject(self):
-        return self.coordinates[:,0]
-    
-    @property
-    def y_traject(self):
-        return self.coordinates[:,1]
-    
-    @property
-    def z_traject(self):
-        return self.coordinates[:,2]
-    
-    def append(self, value):
-        if ( self.__points > 0 ):
-            self.coordinates = np.vstack((self.coordinates, value))
-        else:
-            self.coordinates = value
-        self.__points += 1
-        
-    def clean(self):
-        self.coordinates = np.array([0, 0, 0])
-        self.__points = 0
-
-###############################################################################
-#### Hexapod Class
-###############################################################################
-class hexapod(hexapod_kinematics):
-    ###########################################################################
-    #### Properties
-    ###########################################################################
-    ## Kinematics Parameters
-    __coord   = np.zeros(shape=(6,3))
-    __joints  = np.zeros(shape=(6,3))         # Actual Joints Positions
-    __locom   = np.array([hexapod_leg(), 
-                          hexapod_leg(), 
-                          hexapod_leg(), 
-                          hexapod_leg(), 
-                          hexapod_leg(), 
-                          hexapod_leg()])
-    
-    ### Inerse Kinematics Parameters
-    l1      = 0.0275
-    l2      = 0.0963
-    l3      = 0.1051
-    ik      = 0.6072529
-    ikh     = 3.763427734375
-    
-    #### Locomotion Parameters
-    offset_x = 0
-    offset_y = 0
-    
-    @property
-    def Ca(self):
-        return 1/(2*self.l2*self.l3)
-    
-    @property
-    def F(self):
-        return self.l2/self.l3
-    
-    @property
-    def S(self):
-        return self.l1**2 - self.l2**2 - self.l3**2
-    
-    @property
-    def joints(self):
-        return self.__joints
-    
-    @joints.setter
-    def joints(self, value):
-        self.__joints = value
-    
-    @property
-    def coordinates(self):
-        return self.__coord
-    
-    @property
-    def locomotion(self):
-        return self.__locom
-    
-#    @coordinates.setter
-#    def coordinates(self, value):
-#        self.__coord = value
-    
-    ###########################################################################
-    #### Methods
-    ###########################################################################
-    #### Constructor
-    def __init__(self, invoke_axi_ip=True, enable_ip_logs=False):
-        if ( invoke_axi_ip ):
-            super(hexapod, self).__init__(invoke_axi_ip=True, gen_log_enable=enable_ip_logs)
-        return None
-    
-    #### Inverse Kinematics Functions #########################################
-    ## Kinematics Functions
-    def dKinematics(self, q1, q2, q3):
-        x = mt.cos(q1)*(self.l3*mt.cos(q2+q3) + self.l2*mt.cos(q2) + self.l1)
-        y = mt.sin(q1)*(self.l3*mt.cos(q2+q3) + self.l2*mt.cos(q2) + self.l1) 
-        z = self.l3 * mt.sin(q2+q3) + self.l2*mt.sin(q2)
-        return x, y, z
-    
-    #### Theoretical Inverse Kinematics Calculation
-    def iKinematics_t(self, xin, yin, zin):
-        if ( type(xin) is str ):
-            x = self.hfloat2dfloat(xin)
-            y = self.hfloat2dfloat(yin)
-            z = self.hfloat2dfloat(zin)
-        else:
-            x = xin
-            y = yin
-            z = zin
-    
-        Ca = 1/(2*self.l2*self.l3)
-        F = self.l2/self.l3
-        S = self.l1**2 - self.l2**2 - self.l3**2    
-        r = mt.sqrt(x**2 + y**2)
-        A = 2*r*self.l1
-        C = r**2 + z**2 + S - A
-        D = C * Ca
-        B = mt.sqrt((r-self.l1)**2 + z**2)
-        G = z/B
-        q1 = mt.atan2(y,x)
-        q3 = - mt.atan2(mt.sqrt(1 - D**2),D)
-        q2 = mt.atan2(G,mt.sqrt(1 - G**2)) - mt.atan2(mt.sin(q3),F+mt.cos(q3))
-        return q1, q2, q3
-    
-    #### CORDIC-based Inverse Kinematics calculation
-    def iKinematics(self, xin, yin, zin):
-        C1_CV = CORDIC('circular', 'vectorial', 0, 15)
-        C2_HV = CORDIC('hyperbolic', 'vectorial', -1, 14)
-#        C3_CV = CORDIC('circular', 'vectorial', -1, 14)
-        C3_CV = CORDIC('circular', 'vectorial', 0, 15)
-        C4_CV = CORDIC('circular', 'vectorial', 0, 15)
-        C5_CR = CORDIC('circular', 'rotational', 0, 15)
-        C6_CV = CORDIC('circular', 'vectorial', 0, 15)
-        C7_LV = CORDIC('linear', 'vectorial', 0, 15)
-        C8_HV = CORDIC('hyperbolic', 'vectorial', -1, 14)
-        C9_CV = CORDIC('circular', 'vectorial', 0, 15)
-        #### STAGE 1 ####
-        C1_CV.calculate(xin, yin, 0)
-        #### STAGE 2 ####
-        r = C1_CV.xo * self.ik
-        A = r * self.l1 * 2
-        D = self.Ca * ( r**2 + zin**2 + self.S - A )
-        #### STAGE 3 ####
-        C2_HV.calculate(1, D, 0)
-        C4_CV.calculate(r - self.l1, zin, 0)
-        #### STAGE 4 ####
-        C7_LV.calculate(C4_CV.xo * self.ik, zin, 0)
-        C3_CV.calculate(D, C2_HV.xo * self.ikh, 0)
-        #### STAGE 5 ####
-        C8_HV.calculate(1, C7_LV.zo, 0)
-        C5_CR.calculate(self.ik, 0, -C3_CV.zo)
-        #### STAGE 6 ####
-        C9_CV.calculate(C8_HV.xo * self.ikh, C7_LV.zo, 0)
-        C6_CV.calculate(D + self.F, C5_CR.yo, 0)
-        #### RESULTS ####
-        Q1 = C1_CV.zo
-        Q2 = C9_CV.zo - C6_CV.zo
-        Q3 = -C3_CV.zo
-        return Q1, Q2, Q3
-    
-    #### Locomotion Functions #################################################
-    #### Set Leg Step
-    def set_step(self, leg, coordinates):
-        self.__coord[leg] = np.array(coordinates)
-        self.__locom[leg].append(coordinates)
-        return True
-    
-    #### Clean all Legs gait buffer
-    def step_clean(self):
-        for leg in self.__locom:
-            leg.clean()
-        return True
-    
-    ####
-    def plot_gait(self):
-#        fig = plt.figure()
-        fig = plt.figure(figsize=plt.figaspect(0.5))
-        for i in range ( 6 ):
-            loc = self.__locom[i]
-            ax = fig.add_subplot(3, 2, i+1, projection='3d')
-            ax.plot(loc.x_traject, loc.y_traject, loc.z_traject, c='r') # add label
-            ax.set_title('Leg '+str(i+1))
-            ax.set_xlabel('x (m)')
-            ax.set_ylabel('y (m)')
-            ax.set_zlabel('z (m)')
-#            ax.legend()
-        plt.show()
-        return True
-    
-    ####
-    def plot_kinematics(self):
-        fig = plt.figure(figsize=plt.figaspect(0.5))
-        for i in range ( 6 ):
-            loc = self.__locom[i]
-            ax = fig.add_subplot(3, 2, i+1)
-            ax.plot(loc.x_traject, label='x', c='r') # add label
-            ax.plot(loc.y_traject, label='y', c='g') # add label
-            ax.plot(loc.z_traject, label='z', c='b') # add label
-            ax.set_title('Leg '+str(i+1))
-            ax.legend()
-        plt.show()
