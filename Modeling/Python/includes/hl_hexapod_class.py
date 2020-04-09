@@ -121,25 +121,19 @@ class hexapod(hexapod_kinematics):
         return self.__fgait
     
     def get_fstep(self, leg, step):
-        x_axi = self.hfloat2dfloat(hex(self.to_int(self.gaits[leg*90+step*3+0]))[2:])
-        y_axi = self.hfloat2dfloat(hex(self.to_int(self.gaits[leg*90+step*3+1]))[2:])
-        z_axi = self.hfloat2dfloat(hex(self.to_int(self.gaits[leg*90+step*3+2]))[2:])
+        x_axi = self.hfloat2dfloat(hex(self.to_int(self.gait[leg*self.step_size*3+step*3+0]))[2:])
+        y_axi = self.hfloat2dfloat(hex(self.to_int(self.gait[leg*self.step_size*3+step*3+1]))[2:])
+        z_axi = self.hfloat2dfloat(hex(self.to_int(self.gait[leg*self.step_size*3+step*3+2]))[2:])
         
         dstep = [x_axi, y_axi, z_axi]
         return dstep
     
     def get_fgait(self):
         for i, leg in enumerate(self.__fgait):
-            for step in range ( int(self.gaits.size/(6*3)) ):
+            for step in range ( int(self.gait.size/(6*3)) ):
                 leg.append(self.get_fstep(i, step))
         return True
                 
-            
-    
-#    @coordinates.setter
-#    def coordinates(self, value):
-#        self.__coord = value
-    
     ###########################################################################
     #### Methods
     ###########################################################################

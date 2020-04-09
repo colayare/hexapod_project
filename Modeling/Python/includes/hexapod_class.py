@@ -19,12 +19,15 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     i_pos   = np.zeros(shape=(6,3))         # Initial Joints Positions
     j_offs  = np.zeros(shape=(6,3))         # Joints Offsets
     i_inv_s = np.zeros(18).astype(int).astype(str)
-    gaits   = np.array([]).astype(bytes)                  # Gaits
+    gait    = np.array([]).astype(bytes)                  # Gaits
     bgaits  = np.zeros(shape=(30,3))
-    gait    = 0
     steps   = 30
-    scale   = 1
     delay   = 0.008
+    
+    #### Properties
+    @property
+    def step_size(self):
+        return int(self.gait.size/6/3)
     
     #### Parameters
     init_position_file_path     = ""
@@ -156,19 +159,19 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
             f = open(file_path, 'r+b')
             mm = mmap.mmap(f.fileno(), 0)
             for i in range ( int(mm.size()/4) ):
-                self.gaits = np.append(self.gaits, mm.read(4))
+                self.gait = np.append(self.gait, mm.read(4))
             f.close()
             mm = None
         return True
     
     #### Gaits Process ########################################################        
     def run_fast_gait(self):
-        for step in range ( 2 ):
+        for step in range ( self.step_size ):
             self.config_leg_ctr(1, 0)
             for leg in range ( 6 ):
                 self.set_ptr(2)
                 for axi in range ( 3 ):
-                    self.axi_map.write(self.gaits[leg*90+step*3+axi])
+                    self.axi_map.write(self.gait[leg*self.step_size*3+step*3+axi])
                 self.axi_write_fifo()
             self.axi_trigger_ikinematics()
             sleep(self.delay)
@@ -184,7 +187,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
 #            gaits[i] = inter * scale
 #            for j, step in enumerate(gaits[i]):
 #                bgaits[i][j] = self.to_bytes(int(self.dfloat2hfloat(step), 16))
-#        self.gaits  = np.transpose(gaits)
+#        self.gait  = np.transpose(gaits)
 #        self.bgaits = np.transpose(bgaits)
 #        self.steps  = points
 #        self.scale  = scale
