@@ -50,8 +50,8 @@ def print_title(title, char='#'):
     return True
 
 #### Params Files
-joint_offsets_filename  = abs_path+"/params/joint_offset.params"
-gait_steps_filename     = abs_path+'/params/gait_steps.params'
+joint_offsets_filename  = abs_path+'/params/joint_offset.params'
+gait_steps_filename     = abs_path+'/params/tripod_gait_leg*.mmap'
 init_position_filename  = abs_path+'/params/init_position.params'
 servo_inversion_filename = abs_path+'/params/init_servo_inv.params'
 axi_ip_logfile              = abs_path+'/axi.log'
@@ -143,7 +143,7 @@ while(1):
         for i in range ( gait_loops ):
             hexapod.run_fast_gait()
     elif( usr_opt.upper() == 'S' ):
-        print("{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}".format('Step', 'leg', 'Q1', 'PWM1', 'Q2', 'PWM2', 'Q3', 'PWM3'))
+        print("{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}".format('Loop', 'Step', 'leg', 'Q1', 'PWM1', 'Q2', 'PWM2', 'Q3', 'PWM3'))
         if ( gait_loops > 0):
             for i in range (gait_loops):
                 for step in range (hexapod.step_size):
@@ -152,7 +152,7 @@ while(1):
                             gait(hexapod, leg, step)
                             q1, q2, q3 = get_ik_out(hexapod)
                             [pwm1, pwm2, pwm3] = hexapod.axi_get_pwm(leg)
-                            print("{:>10.0f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}".format(step, step, q1, pwm1, q2, pwm2, q3, pwm3))
+                            print("{:>10s}{:>10.0f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}".format(str(i), step, leg, q1, pwm1, q2, pwm2, q3, pwm3))
                     tm.sleep(hexapod.delay)
     elif( usr_opt.upper() == 'EXIT' ):
         hexapod.export_log()
