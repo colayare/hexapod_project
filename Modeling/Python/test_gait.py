@@ -146,12 +146,12 @@ while(1):
         print("{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}{:>10s}".format('Step', 'leg', 'Q1', 'PWM1', 'Q2', 'PWM2', 'Q3', 'PWM3'))
         if ( gait_loops > 0):
             for i in range (gait_loops):
-                for step in range (hexapod.steps):
-                    for j in range (6):
-                        if ( leg_enable[j] ):
-                            gait(hexapod, j, step+hexapod.steps*hexapod.gait)
+                for step in range (hexapod.step_size):
+                    for leg in range (6):
+                        if ( leg_enable[leg] ):
+                            gait(hexapod, leg, step)
                             q1, q2, q3 = get_ik_out(hexapod)
-                            [pwm1, pwm2, pwm3] = hexapod.axi_get_pwm(j)
+                            [pwm1, pwm2, pwm3] = hexapod.axi_get_pwm(leg)
                             print("{:>10.0f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}".format(step, j, q1, pwm1, q2, pwm2, q3, pwm3))
                     tm.sleep(hexapod.delay)
     elif( usr_opt.upper() == 'EXIT' ):
