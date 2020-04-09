@@ -152,7 +152,7 @@ while(1):
                             gait(hexapod, leg, step)
                             q1, q2, q3 = get_ik_out(hexapod)
                             [pwm1, pwm2, pwm3] = hexapod.axi_get_pwm(leg)
-                            print("{:>10.0f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}".format(step, j, q1, pwm1, q2, pwm2, q3, pwm3))
+                            print("{:>10.0f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}{:>10.4f}{:>10.0f}".format(step, step, q1, pwm1, q2, pwm2, q3, pwm3))
                     tm.sleep(hexapod.delay)
     elif( usr_opt.upper() == 'EXIT' ):
         hexapod.export_log()
