@@ -44,82 +44,49 @@ oy  = 5     #y offset
 S   = 10     #y stride length
 sx  = 4     #x stride length
 
+p1=np.array([0,0,0],np.float32);
+p2=np.array([0,0,0],np.float32);
+p3=np.array([0,0,0],np.float32);
+p4=np.array([0,0,0],np.float32);
+p5=np.array([0,0,0],np.float32);
+p6=np.array([0,0,0],np.float32);
+
 ## Run Gait
 for k in range ( iterations ):
     for j in range(int(S/res)):
         i=res*j;
         if (i<=S/4):
-            X1e=12.38;
-            Y1e=i-oy;
-            Z1e=-10.51;
-            X2e=12.38;
-            Y2e=-i-oy ;
-            Z2e=-(pow(Y2e+oy,2)*64/(S**2)+6.51);
-            X3e=12.38;
-            Y3e=-i;
-            Z3e=-(pow(Y3e,2)*64/(S**2)+6.51);
-            X4e=12.38;
-            Y4e=i;
-            Z4e=-10.51;
-            X5e=12.38;
-            Y5e=i+oy;
-            Z5e=-10.51;
-            X6e=12.38;
-            Y6e=-i+oy; 
-            Z6e=-(pow(Y6e-oy,2)*64/(S**2)+6.51);
+            p1[0]=12.38;    p1[1]=i-oy;     p1[2]=-10.51;
+            p2[0]=12.38;    p2[1]=-i-oy;    p2[2]=-(pow(p2[1]+oy,2)*64/(S**2)+6.51);
+            p3[0]=12.38;    p3[1]=-i;       p3[2]=-(pow(p3[1],2)*64/(S**2)+6.51);
+            p4[0]=12.38;    p4[1]=i;        p4[2]=-10.51;
+            p5[0]=12.38;    p5[1]=i+oy;     p5[2]=-10.51;
+            p6[0]=12.38;    p6[1]=-i+oy;    p6[2]=-(pow(p6[1]-oy,2)*64/(S**2)+6.51);
             
         if (i>S/4 and i<=3*S/4):
-            X1e=12.38;
-            Y1e=S/2-i-oy;
-            Z1e=-(pow(Y1e+oy,2)*64/(S**2)+6.51);
-            X2e=12.38;
-            Y2e=i-S/2-oy;
-            Z2e=-10.51;
-            X3e=12.38;
-            Y3e=i-S/2;
-            Z3e=-10.51;
-            X4e=12.38;
-            Y4e=S/2-i ;
-            Z4e=-(pow(Y4e,2)*64/(S**2)+6.51);
-            X5e=12.38;
-            Y5e=S/2-i+oy;  
-            Z5e=-(pow(Y5e-oy,2)*64/(S**2)+6.51);
-            X6e=12.38;
-            Y6e=i-S/2+oy;
-            Z6e=-10.51;
+            p1[0]=12.38;    p1[1]=S/2-i-oy; p1[2]=-(pow(p1[1]+oy,2)*64/(S**2)+6.51);
+            p2[0]=12.38;    p2[1]=i-S/2-oy; p2[2]=-10.51;
+            p3[0]=12.38;    p3[1]=i-S/2;    p3[2]=-10.51;
+            p4[0]=12.38;    p4[1]=S/2-i ;   p4[2]=-(pow(p4[1],2)*64/(S**2)+6.51);
+            p5[0]=12.38;    p5[1]=S/2-i+oy; p5[2]=-(pow(p5[1]-oy,2)*64/(S**2)+6.51);
+            p6[0]=12.38;    p6[1]=i-S/2+oy; p6[2]=-10.51;
      
         if (i>3*S/4 and i<=S):
-            X1e=12.38;
-            Y1e=i-S-oy;
-            Z1e=-10.51;
-            X2e=12.38;
-            Y2e=S-i-oy;
-            Z2e=-(pow(Y2e+oy,2)*64/(S**2)+6.51);
-            X3e=12.38;
-            Y3e=S-i;
-            Z3e=-(pow(Y3e,2)*64/(S**2)+6.51);
-            X4e=12.38;
-            Y4e=i-S;
-            Z4e=-10.51
-            X5e=12.38;
-            Y5e=i-S+oy;
-            Z5e=-10.51; 
-            X6e=12.38;
-            Y6e=S-i+oy; 
-            Z6e=-(pow(Y6e-oy,2)*64/(S**2)+6.51);
+            p1[0]=12.38;    p1[1]=i-S-oy;   p1[2]=-10.51;
+            p2[0]=12.38;    p2[1]=S-i-oy;   p2[2]=-(pow(p2[1]+oy,2)*64/(S**2)+6.51);
+            p3[0]=12.38;    p3[1]=S-i;      p3[2]=-(pow(p3[1],2)*64/(S**2)+6.51);
+            p4[0]=12.38;    p4[1]=i-S;      p4[2]=-10.51;
+            p5[0]=12.38;    p5[1]=i-S+oy;   p5[2]=-10.51; 
+            p6[0]=12.38;    p6[1]=S-i+oy;   p6[2]=-(pow(p6[1]-oy,2)*64/(S**2)+6.51);
         
-        X1e=X1e/100; Y1e=Y1e/100; Z1e=Z1e/100;
-        X2e=X2e/100; Y2e=Y2e/100; Z2e=Z2e/100;
-        X3e=X3e/100; Y3e=Y3e/100; Z3e=Z3e/100;
-        X4e=X4e/100; Y4e=Y4e/100; Z4e=Z4e/100;
-        X5e=X5e/100; Y5e=Y5e/100; Z5e=Z5e/100;
-        X6e=X6e/100; Y6e=Y6e/100; Z6e=Z6e/100;
-        hexapod.joints[0] = [X1e, Y1e, Z1e]
-        hexapod.joints[1] = [X2e, Y2e, Z2e]
-        hexapod.joints[2] = [X3e, Y3e, Z3e]
-        hexapod.joints[3] = [X4e, Y4e, Z4e]
-        hexapod.joints[4] = [X5e, Y5e, Z5e]
-        hexapod.joints[5] = [X6e, Y6e, Z6e]
+        p1 /=100; p2 /=100; p3 /=100; p4 /=100; p5 /=100; p6 /=100;
+        
+        hexapod.set_step(0, p1)
+        hexapod.set_step(1, p2)
+        hexapod.set_step(2, p3)
+        hexapod.set_step(3, p4)
+        hexapod.set_step(4, p5)
+        hexapod.set_step(5, p6)
         hexapod.set_step()
         hexapod.step_delay()
 
