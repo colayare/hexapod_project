@@ -51,7 +51,6 @@ for k in range ( iterations ):
     for j in range(int(S/res)):
         i=res*j;
         if(walk==1):
-            
             if (i<=S/4):
                 X1e=12.38;  Y1e=i-oy;           Z1e=-10.51;
                 X2e=12.38;  Y2e=-i-oy;          Z2e=-(pow(Y2e+oy,2)*64/(S**2)+6.51);
@@ -144,13 +143,15 @@ for k in range ( iterations ):
                 X6e=12.38;  Y6e=6*(3*S/5-i)+oy; Z6e=-(pow(Y6e+6*(-3*S/5+7*S/12)-oy,2)*16/(S**2)+6.51);
             if (i>2*S/3 and  i<=S):
                 X6e=12.38;  Y6e=-6*(S-i)/5+oy;  Z6e=-10.51;
+        else:
+            
             
         X1e=X1e/100; Y1e=Y1e/100; Z1e=Z1e/100;
-        X2e=X1e/100; Y2e=Y2e/100; Z2e=Z2e/100;
-        X3e=X1e/100; Y3e=Y3e/100; Z3e=Z3e/100;
-        X4e=X1e/100; Y4e=Y4e/100; Z4e=Z4e/100;
-        X5e=X1e/100; Y5e=Y5e/100; Z5e=Z5e/100;
-        X6e=X1e/100; Y6e=Y6e/100; Z6e=Z6e/100;
+        X2e=X2e/100; Y2e=Y2e/100; Z2e=Z2e/100;
+        X3e=X3e/100; Y3e=Y3e/100; Z3e=Z3e/100;
+        X4e=X4e/100; Y4e=Y4e/100; Z4e=Z4e/100;
+        X5e=X5e/100; Y5e=Y5e/100; Z5e=Z5e/100;
+        X6e=X6e/100; Y6e=Y6e/100; Z6e=Z6e/100;
         hexapod.joints[0] = [X1e, Y1e, Z1e]
         hexapod.joints[1] = [X2e, Y2e, Z2e]
         hexapod.joints[2] = [X3e, Y3e, Z3e]
