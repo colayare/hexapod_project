@@ -81,12 +81,12 @@ for k in range ( iterations ):
         
         p1 /=100; p2 /=100; p3 /=100; p4 /=100; p5 /=100; p6 /=100;
         
-        hexapod.set_step(0, p1)
-        hexapod.set_step(1, p2)
-        hexapod.set_step(2, p3)
-        hexapod.set_step(3, p4)
-        hexapod.set_step(4, p5)
-        hexapod.set_step(5, p6)
+        hexapod.joints[0] = p1
+        hexapod.joints[1] = p2
+        hexapod.joints[2] = p3
+        hexapod.joints[3] = p4
+        hexapod.joints[4] = p5
+        hexapod.joints[5] = p6
         hexapod.set_step()
         hexapod.step_delay()
 
