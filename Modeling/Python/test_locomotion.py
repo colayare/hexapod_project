@@ -19,7 +19,7 @@ hexapod = hexapod(invoke_axi_ip=True)
 ## Import Parameters
 hexapod.offsets_file_path            = abs_path+'/params/joint_offset.params'
 hexapod.init_position_file_path      = abs_path+'/params/init_position.params'
-servo_inversion_filename             = abs_path+'/params/init_servo_inv.params'
+hexapod.init_servo_inv_file_path     = abs_path+'/params/init_servo_inv.params'
 
 ## Initialize Parameters
 hexapod.import_init_pos()
@@ -29,7 +29,7 @@ hexapod.set_default_offsets(print_out=False)
 hexapod.set_init_position(print_out=False)
 
 ## Set Delay
-hexapod.delay = 0.008
+hexapod.delay = 0.01
 
 ###############################################################################
 #### Locomotion
@@ -41,11 +41,11 @@ iterations = input('Number of gaits : ')
 res = 0.1   #iteration resolution
 ox  = 5     #x offset
 oy  = 5     #y offset 
-S   = 5     #y stride length
+S   = 10     #y stride length
 sx  = 4     #x stride length
 
 ## Run Gait
-for i in range ( iterations ):
+for k in range ( iterations ):
     for j in range(int(S/res)):
         i=res*j;
         if (i<=S/4):
