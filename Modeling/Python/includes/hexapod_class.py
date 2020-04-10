@@ -180,8 +180,8 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     def set_step(self):
         self.config_leg_ctr(1, 0)
         for leg in self.joints:
+            self.set_ptr(2)
             for axis in leg:
-                self.set_ptr(2)
                 self.axi_map.write( self.to_bytes(int(self.dfloat2hfloat(axis), 16))  )
             self.axi_write_fifo()
         self.axi_trigger_ikinematics()

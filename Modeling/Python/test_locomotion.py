@@ -37,7 +37,7 @@ iterations = input()
 res = 0.1   #iteration resolution
 ox  = 5     #x offset
 oy  = 5     #y offset 
-S   = 30    #y stride length
+S   = 5     #y stride length
 sx  = 4     #x stride length
 
 ## Run Gait
