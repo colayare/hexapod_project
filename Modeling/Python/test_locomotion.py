@@ -144,7 +144,8 @@ for k in range ( iterations ):
             if (i>2*S/3 and  i<=S):
                 X6e=12.38;  Y6e=-6*(S-i)/5+oy;  Z6e=-10.51;
         else:
-            
+            print('Wrong wal selected')
+            exit()
             
         X1e=X1e/100; Y1e=Y1e/100; Z1e=Z1e/100;
         X2e=X2e/100; Y2e=Y2e/100; Z2e=Z2e/100;
