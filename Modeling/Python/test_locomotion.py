@@ -17,8 +17,8 @@ from hexapod_class import hexapod_kinematics as hexapod
 hexapod = hexapod(invoke_axi_ip=True)
 
 ## Import Parameters
-hexapod.offsets_file_path            = abs_path+'/../params/joint_offset.params'
-hexapod.init_position_file_path      = abs_path+'/../params/init_position.params'
+hexapod.offsets_file_path            = abs_path+'/params/joint_offset.params'
+hexapod.init_position_file_path      = abs_path+'/params/init_position.params'
 
 ## Initialize Parameters
 hexapod.import_init_pos()
