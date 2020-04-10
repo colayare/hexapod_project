@@ -62,7 +62,7 @@ class hexapod(hexapod_kinematics):
     ###########################################################################
     ## Kinematics Parameters
     __coord   = np.zeros(shape=(6,3))
-    __joints  = np.zeros(shape=(6,3))         # Actual Joints Positions
+#    __joints  = np.zeros(shape=(6,3))         # Actual Joints Positions
     __locom   = np.array([hexapod_leg(), 
                           hexapod_leg(), 
                           hexapod_leg(), 
@@ -100,13 +100,13 @@ class hexapod(hexapod_kinematics):
     def S(self):
         return self.l1**2 - self.l2**2 - self.l3**2
     
-    @property
-    def joints(self):
-        return self.__joints
+#    @property
+#    def joints(self):
+#        return self.__joints
     
-    @joints.setter
-    def joints(self, value):
-        self.__joints = value
+#    @joints.setter
+#    def joints(self, value):
+#        self.__joints = value
     
     @property
     def coordinates(self):
