@@ -36,15 +36,21 @@ hexapod.delay = 0.01
 ###############################################################################
 ## Number of gait iterations
 iterations = input('Number of gaits : ')
+## Select Walk
+walk = input('Seleccionar caminata : \n> 1 : Tripod\n> 2 : Quadruped\n> 3 : Pentapod\n> 4 : X\n')
+if ( walk < 1 and walk > 3 ):
+    print('Invalid walk')
+    exit()
 
 ## Locomotion Parameters
+S_V = [10, 6.9, 7, 0]
 res = 0.1   #iteration resolution
 ox  = 5     #x offset
-oy  = 5     #y offset 
-S   = 10     #y stride length
+oy  = 5     #y offset
+S   = S_V[walk-1]     #y stride length
 sx  = 4     #x stride length
 
-walk = input('Seleccionar caminata : ')
+print('S = '+str(S))
 
 ## Run Gait
 for k in range ( iterations ):
