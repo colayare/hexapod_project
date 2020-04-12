@@ -58,6 +58,7 @@ class CORDIC(COEFF):
 #    __coeff_ptr_offset = 1
     negative_iterations = 0
     positive_iterations = 16
+    expanded    = False
     operator    = 'circular'
     mode        = 'rotation'
     __input     = np.array([0, 0, 0])
@@ -93,7 +94,8 @@ class CORDIC(COEFF):
         else:
             return 2**(-i)
     
-    def __init__(self, operator, mode, negative_iterations, positive_iterations):
+    def __init__(self, operator, mode, negative_iterations, positive_iterations, expanded=False):
+        self.expanded            = expanded
         self.negative_iterations = negative_iterations
         self.positive_iterations = positive_iterations
         self.operator = operator
@@ -134,3 +136,8 @@ class CORDIC(COEFF):
             xr, yr, zr = xn, yn, zn
         self.__output = xn, yn, zn
         return xn, yn, zn
+
+#a = 0.03
+#b = 0
+#C3_CV = CORDIC('circular', 'vectorial', -1, 14, expanded=True)
+#C3_CV.calculate()

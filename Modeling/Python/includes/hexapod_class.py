@@ -19,7 +19,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     i_pos   = np.zeros(shape=(6,3))         # Initial Joints Positions
     j_offs  = np.zeros(shape=(6,3))         # Joints Offsets
     i_inv_s = np.zeros(18).astype(int).astype(str)
-    joints  = np.zeros(shape=(6,3))
+    joints  = np.zeros(shape=(6,3)).astype(np.float32)
     gait    = np.array([]).astype(bytes)                  # Gaits
     bgaits  = np.zeros(shape=(30,3))
     delay   = 0.008
@@ -185,6 +185,20 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
                 self.axi_map.write( self.to_bytes(int(self.dfloat2hfloat(axis), 16))  )
             self.axi_write_fifo()
         self.axi_trigger_ikinematics()
+        return None
+    
+    def set_step_debug(self):
+        self.config_leg_ctr(1, 0)
+        for i, leg in enumerate(self.joints):
+            self.set_ptr(2)
+            for axis in leg:
+                self.axi_map.write( self.to_bytes(int(self.dfloat2hfloat(axis), 16))  )
+            self.axi_write_fifo()
+            self.axi_trigger_ikinematics()
+            self.axi_set_out_mux(0)
+            [q1, q2, q3] = self.axi_hread_params()
+            print(leg)
+            print(self.rad2sec(self.hfloat2dfloat(q1)), self.rad2sec(self.hfloat2dfloat(q2)), self.rad2sec(self.hfloat2dfloat(q3)) )
         return None
     
     def step_delay(self):

@@ -77,6 +77,13 @@ class hexapod(hexapod_kinematics):
                           hexapod_leg(), 
                           hexapod_leg()])
     
+    __joints  = np.array([hexapod_leg(), 
+                          hexapod_leg(), 
+                          hexapod_leg(), 
+                          hexapod_leg(), 
+                          hexapod_leg(), 
+                          hexapod_leg()])
+    
     ### Inerse Kinematics Parameters
     l1      = 0.0275
     l2      = 0.0963
@@ -177,11 +184,12 @@ class hexapod(hexapod_kinematics):
         return q1, q2, q3
     
     #### CORDIC-based Inverse Kinematics calculation
-    def iKinematics(self, xin, yin, zin):
+    def iKinematics(self, coordinates):
+        [xin, yin, zin] = coordinates
         C1_CV = CORDIC('circular', 'vectorial', 0, 15)
         C2_HV = CORDIC('hyperbolic', 'vectorial', -1, 14)
-#        C3_CV = CORDIC('circular', 'vectorial', -1, 14)
-        C3_CV = CORDIC('circular', 'vectorial', 0, 15)
+#        C3_CV = CORDIC('circular', 'vectorial', 0, 15)
+        C3_CV = CORDIC('circular', 'vectorial', -1, 14) #1.7
         C4_CV = CORDIC('circular', 'vectorial', 0, 15)
         C5_CR = CORDIC('circular', 'rotational', 0, 15)
         C6_CV = CORDIC('circular', 'vectorial', 0, 15)
@@ -217,6 +225,11 @@ class hexapod(hexapod_kinematics):
     def set_step(self, leg, coordinates):
         self.__coord[leg] = np.array(coordinates)
         self.__locom[leg].append(coordinates)
+        self.__joints[leg].append(self.iKinematics(coordinates))
+#        if ( leg == 2 ):
+#            print(coordinates)
+#            print(self.iKinematics(coordinates))
+#            print()
         return True
     
     #### Clean all Legs gait buffer
@@ -250,6 +263,18 @@ class hexapod(hexapod_kinematics):
             ax.plot(loc.x_traject, label='x', c='r') # add label
             ax.plot(loc.y_traject, label='y', c='g') # add label
             ax.plot(loc.z_traject, label='z', c='b') # add label
+            ax.set_title('Leg '+str(i+1))
+            ax.legend()
+        plt.show()
+        
+    def plot_ikinematics(self):
+        fig = plt.figure(figsize=plt.figaspect(0.5))
+        for i in range ( 6 ):
+            loc = self.__joints[i]
+            ax = fig.add_subplot(3, 2, i+1)
+            ax.plot(loc.x_traject, label='Q1', c='r') # add label
+            ax.plot(loc.y_traject, label='Q2', c='g') # add label
+            ax.plot(loc.z_traject, label='Q3', c='b') # add label
             ax.set_title('Leg '+str(i+1))
             ax.legend()
         plt.show()
