@@ -195,10 +195,11 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
                 self.axi_map.write( self.to_bytes(int(self.dfloat2hfloat(axis), 16))  )
             self.axi_write_fifo()
             self.axi_trigger_ikinematics()
-            self.axi_set_out_mux(0)
-            [q1, q2, q3] = self.axi_hread_params()
-            print(leg)
-            print(self.rad2sec(self.hfloat2dfloat(q1)), self.rad2sec(self.hfloat2dfloat(q2)), self.rad2sec(self.hfloat2dfloat(q3)) )
+            if ( leg == 1 ):
+                self.axi_set_out_mux(0)
+                [q1, q2, q3] = self.axi_hread_params()
+                print(leg)
+                print(self.rad2sec(self.hfloat2dfloat(q1)), self.rad2sec(self.hfloat2dfloat(q2)), self.rad2sec(self.hfloat2dfloat(q3)) )
         return None
     
     def step_delay(self):

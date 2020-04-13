@@ -35,10 +35,10 @@ hexapod.set_init_position(print_out=False)
 hexapod.delay = 0.01
 
 
-S   = float(input('Insert S val = ')) #10        #y stride length
-res = float(input('Insert res = '))         #0.1       #iteration resolution
+S   = float(input('Insert S val = '))   #10        #y stride length
+res = float(input('Insert res = '))     #0.1       #iteration resolution
 xo  = 12.38     #x offset
-yo  = float(5)         #y offset
+yo  = 5.0       #y offset
 zo  = -10.51    #z offset
 
 angle = input('Insert alpha : ')
@@ -46,6 +46,14 @@ alf = angle*pi/180;
 
 ## Selección de caminata
 walk = input('Insert Walk : ')
+
+## Inicialization
+x1, y1, z1 = 0.0, 0.0, 0.0
+x2, y2, z2 = 0.0, 0.0, 0.0
+x3, y3, z3 = 0.0, 0.0, 0.0
+x4, y4, z4 = 0.0, 0.0, 0.0
+x5, y5, z5 = 0.0, 0.0, 0.0
+x6, y6, z6 = 0.0, 0.0, 0.0
 
 ###############################################################################
 #### Traslational Locomotion
@@ -75,11 +83,11 @@ for k in range (n_gaits):
             ## Segunda Etapa: S/2<i<=S
             if i>S/2 and i<=S:
                 x1=xo+(S-i)*sin(-alf);          y1=yo+(S-i)*cos(-alf);          z1=zo;
-                x2=xo+(i-S/2)*sin(alf);         y2=yo+(i-S/2)*cos(alf);         z2=-(8*(i-3*S/4)**2/S-zo-S/2);
-                x3=xo+(i-3*S/4)*sin(-alf);      y3=0+(i-3*S/4)*cos(-alf);       z3=-(8*(i-3*S/4)**2/S-zo-S/2);
+                x2=xo+(i-S/2)*sin(alf);         y2=yo+(i-S/2)*cos(alf);         z2=-((8*((i-(3*S/4))**2)/S)-zo-(S/2));
+                x3=xo+(i-3*S/4)*sin(-alf);      y3=0+(i-3*S/4)*cos(-alf);       z3=-((8*((i-3*S/4)**2)/S)-zo-(S/2));
                 x4=xo+(3*S/4-i)*sin(-alf);      y4=0+(3*S/4-i)*cos(-alf);       z4=zo;
                 x5=xo-(i-S)*sin(-alf);          y5=-yo-(i-S)*cos(-alf);         z5=zo;
-                x6=xo+(i-S/2)*sin(alf);         y6=-yo+(i-S/2)*cos(alf);        z6=-(8*(i-3*S/4)**2/S-zo-S/2);
+                x6=xo+(i-S/2)*sin(alf);         y6=-yo+(i-S/2)*cos(alf);        z6=-((8*((i-3*S/4)**2)/S)-zo-(S/2));
                 
         elif (walk==2):
             ## Primera Etapa: 0<i<=S/3 
@@ -91,28 +99,28 @@ for k in range (n_gaits):
                 x5=xo-0.75*i*sin(-alf);         y5=-yo-0.75*i*cos(-alf);        z5=zo;
                 x6=xo-0.75*i*sin(alf);          y6=-yo-0.75*i*cos(alf);         z6=zo;
             if S!=0:
-                  z1=-(8*(1.5*i-S/4)**2/S-zo-S/2);
-                  z4=-(8*(1.5*i-S/4)**2/S-zo-S/2);
+                  z1=-((8*((1.5*i-S/4)**2)/S)-zo-(S/2));
+                  z4=-((8*((1.5*i-S/4)**2)/S)-zo-(S/2));
             else:
-                  z1=zo+S/2;
-                  z4=zo+S/2;
+                  z1=zo+(S/2);
+                  z4=zo+(S/2);
            
             ## Segunda Etapa: S/3<i<=2S/3
             if i>S/3 and i<=2*S/3:
                 x1=xo+0.75*(S-i)*sin(-alf);     y1=yo+0.75*(S-i)*cos(-alf);     z1=zo;
                 x2=xo-0.75*i*sin(alf);          y2=yo-0.75*i*cos(alf);          z2=zo;
-                x3=xo+(1.5*i-0.75*S)*sin(-alf); y3=0+(1.5*i-0.75*S)*cos(-alf);  z3=-(8*(1.5*i-0.75*S)**2/S-zo-S/2);
+                x3=xo+(1.5*i-0.75*S)*sin(-alf); y3=0+(1.5*i-0.75*S)*cos(-alf);  z3=-((8*((1.5*i-0.75*S)**2)/S)-zo-(S/2));
                 x4=xo+0.75*(S-i)*sin(alf);      y4=0+0.75*(S-i)*cos(alf);       z4=zo;
                 x5=xo-0.75*i*sin(-alf);         y5=-yo-0.75*i*cos(-alf);        z5=zo;
-                x6=xo+(1.5*i-0.75*S)*sin(alf);  y6=-yo+(1.5*i-0.75*S)*cos(alf); z6=-(8*(1.5*i-0.75*S)**2/S-zo-S/2);
+                x6=xo+(1.5*i-0.75*S)*sin(alf);  y6=-yo+(1.5*i-0.75*S)*cos(alf); z6=-((8*((1.5*i-0.75*S)**2)/S)-zo-(S/2));
                 
             ## Tercera Etapa: 2S/3<i<=S
             if i>2*S/3 and i<=S:
                 x1=xo+0.75*(S-i)*sin(-alf);     y1=yo+0.75*(S-i)*cos(-alf);     z1=zo;
-                x2=xo+1.5*(i-S)*sin(alf);       y2=yo+1.5*(i-S)*cos(alf);       z2=-(8*(1.5*(i-S)+S/4)**2/S-zo-S/2);
+                x2=xo+1.5*(i-S)*sin(alf);       y2=yo+1.5*(i-S)*cos(alf);       z2=-((8*((1.5*(i-S)+(S/4))**2)/S)-zo-(S/2));
                 x3=xo+0.75*(S-i)*sin(-alf);     y3=0+0.75*(S-i)*cos(-alf);      z3=zo;
                 x4=xo+0.75*(S-i)*sin(alf);      y4=0+0.75*(S-i)*cos(alf);       z4=zo;
-                x5=xo+1.5*(i-S)*sin(-alf);      y5=-yo+1.5*(i-S)*cos(-alf);     z5=-(8*(1.5*(i-S)+S/4)**2/S-zo-S/2);
+                x5=xo+1.5*(i-S)*sin(-alf);      y5=-yo+1.5*(i-S)*cos(-alf);     z5=-((8*((1.5*(i-S)+(S/4))**2)/S)-zo-(S/2));
                 x6=xo+0.75*(S-i)*sin(alf);      y6=-yo+0.75*(S-i)*cos(alf);     z6=zo;
     
         elif (walk==3):
@@ -120,9 +128,9 @@ for k in range (n_gaits):
             ## Primera Etapa: 0<i<=S/2
             if i<=S/4:
                 x1=xo+2*i*sin(-alf);            y1=yo+2*i*cos(-alf);
-                x3=xo-2/3*i*sin(-alf);          y3=0-2/3*i*cos(-alf);           z3=zo;
-                x4=xo-2/3*i*sin(alf);           y4=0-2/3*i*cos(alf);            z4=zo;
-                x6=xo+2*i*sin(alf);             y6=-yo+2*i*cos(alf);             
+                x3=xo-(2*i/3)*sin(-alf);        y3=0-(2*i/3)*cos(-alf);           z3=zo;
+                x4=xo-(2*i/3)*sin(alf);         y4=0-(2*i/3)*cos(alf);            z4=zo;
+                x6=xo+2*i*sin(alf);             y6=-yo+2*i*cos(alf);   
             if S!=0:
                 z1=-(8*(2*i-S/4)**2/S-zo-S/2);
                 z6=-(8*(2*i-S/4)**2/S-zo-S/2);
@@ -130,29 +138,29 @@ for k in range (n_gaits):
                 z1=zo+S/2;
                 z6=zo+S/2;
             if i<=S/2:
-                x2=xo-2/3*i*sin(alf);           y2=yo-2/3*i*cos(alf);           z2=zo;
-                x5=xo-2/3*i*sin(-alf);          y5=-yo-2/3*i*cos(-alf);         z5=zo;
+                x2=xo-(2*i/3)*sin(alf);         y2=yo-(2*i/3)*cos(alf);           z2=zo;
+                x5=xo-(2*i/3)*sin(-alf);        y5=-yo-(2*i/3)*cos(-alf);         z5=zo;
     
             ## Segunda Etapa: S/4<i<=3S/4
             if i>S/4 and i<=3*S/4:
-                x1=xo+2/3*(S-i)*sin(-alf);      y1=yo+2/3*(S-i)*cos(-alf);      z1=zo;
-                x3=xo-2/3*i*sin(-alf);          y3=0-2/3*i*cos(-alf);           z3=zo;
-                x6=xo+2/3*(S-i)*sin(alf);       y6=-yo+2/3*(S-i)*cos(alf);      z6=zo;
+                x1=xo+(2*(S-i)/3)*sin(-alf);      y1=yo+(2*(S-i)/3)*cos(-alf);      z1=zo;
+                x3=xo-(2*i/3)*sin(-alf);          y3=0-(2*i/3)*cos(-alf);           z3=zo;
+                x6=xo+(2*(S-i)/3)*sin(alf);       y6=-yo+(2*(S-i)/3)*cos(alf);      z6=zo;
             if i>S/2 and i<=3*S/4:
-                x2=xo+(2*i-4/3*S)*sin(alf);     y2=yo+(2*i-4/3*S)*cos(alf);     z2=-(8*(2*i-4/3*S+S/12)**2/S-zo-S/2);
-                x5=xo+(2*i-4/3*S)*sin(-alf);    y5=-yo+(2*i-4/3*S)*cos(-alf);   z5=-(8*(2*i-4/3*S+S/12)**2/S-zo-S/2);
+                x2=xo+(2*i-(4*S/3))*sin(alf);     y2=yo+(2*i-(4*S/3))*cos(alf);     z2=-(8*(2*i-(4*S/3)+S/12)**2/S-zo-S/2);
+                x5=xo+(2*i-(4*S/3))*sin(-alf);    y5=-yo+(2*i-(4*S/3))*cos(-alf);   z5=-(8*(2*i-(4*S/3)+S/12)**2/S-zo-S/2);
             if i>S/4 and i<=S/2:
-                x4=xo+2*(i-S/3)*sin(alf);       y4=0+2*(i-S/3)*cos(alf);        z4=-(8*(2*(i-S/3)-S/12)**2/S-zo-S/2);       
+                x4=xo+2*(i-S/3)*sin(alf);         y4=0+2*(i-S/3)*cos(alf);          z4=-(8*(2*(i-S/3)-S/12)**2/S-zo-S/2);       
             
             ## Tercera Etapa: S/2<i<=S
             if i>3*S/4 and i<=S:
-                x1=xo+2/3*(S-i)*sin(-alf);      y1=yo+2/3*(S-i)*cos(-alf);      z1=zo;
-                x2=xo+2/3*(S-i)*sin(alf);       y2=yo+2/3*(S-i)*cos(alf);       z2=zo;
-                x3=xo+2*(i-S)*sin(-alf);        y3=0+2*(i-S)*cos(-alf);         z3=-(8*(2*(i-S)+S/4)**2/S-zo-S/2);
-                x5=xo+2/3*(S-i)*sin(-alf);      y5=-yo+2/3*(S-i)*cos(-alf);     z5=zo;
-                x6=xo+2/3*(S-i)*sin(alf);       y6=-yo+2/3*(S-i)*cos(alf);      z6=zo;
+                x1=xo+(2*(S-i)/3)*sin(-alf);      y1=yo+(2*(S-i)/3)*cos(-alf);      z1=zo;
+                x2=xo+(2*(S-i)/3)*sin(alf);       y2=yo+(2*(S-i)/3)*cos(alf);       z2=zo;
+                x3=xo+2*(i-S)*sin(-alf);          y3=0+2*(i-S)*cos(-alf);           z3=-(8*(2*(i-S)+S/4)**2/S-zo-S/2);
+                x5=xo+(2*(S-i)/3)*sin(-alf);      y5=-yo+(2*(S-i)/3)*cos(-alf);     z5=zo;
+                x6=xo+(2*(S-i)/3)*sin(alf);       y6=-yo+(2*(S-i)/3)*cos(alf);      z6=zo;
             if i>S/2 and i<=S:
-                x4=xo+2/3*(S-i)*sin(alf);       y4=0+2/3*(S-i)*cos(alf);        z4=zo;
+                x4=xo+(2*(S-i)/3)*sin(alf);       y4=0+(2*(S-i)/3)*cos(alf);        z4=zo;
         
         elif (walk==4):
             ## Primera Etapa: 0<i<=S/3
@@ -185,9 +193,9 @@ for k in range (n_gaits):
                 x2=xo+3*(i-S)*sin(alf);         y2=yo+3*(i-S)*cos(alf);         z2=-(8*(3*(i-S)+S/4)**2/S-zo-S/2);
             ## Segunda Etapa: S/6<i<=S/3
             if i>S/6 and i<=S/3:
-                x3=xo+(3*i-0.6*S)*sin(-alf);    y3=0+(3*i-0.6*S)*cos(-alf);     z3=-(8*((3*i-0.6*S)-3/20*S)**2/S-zo-S/2);
+                x3=xo+(3*i-0.6*S)*sin(-alf);    y3=0+(3*i-0.6*S)*cos(-alf);     z3=-(8*((3*i-0.6*S)-3*S/20)**2/S-zo-S/2);
             if i>2*S/3 and i<=5*S/6:
-                x4=xo+(3*i-2.4*S)*sin(alf);     y4=0+(3*i-2.4*S)*cos(alf);      z4=-(8*((3*i-2.4*S)+3/20*S)**2/S-zo-S/2);
+                x4=xo+(3*i-2.4*S)*sin(alf);     y4=0+(3*i-2.4*S)*cos(alf);      z4=-(8*((3*i-2.4*S)+3*S/20)**2/S-zo-S/2);
             ## Segunda Etapa: S/6<i<=S
             if i>S/6 and i<=S:
                 x5=xo+0.6*(S-i)*sin(-alf);      y5=-yo+0.6*(S-i)*cos(-alf);     z5=zo;
