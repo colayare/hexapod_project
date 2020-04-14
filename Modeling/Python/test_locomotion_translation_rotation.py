@@ -13,7 +13,7 @@ pathname = os.path.dirname(sys.argv[0])
 abs_path = os.path.abspath(pathname)
 print('Appending path'+ abs_path+'/includes')
 sys.path.append(abs_path+'/includes')
-from hexapod_class import hexapod_kinematics as hexapod
+from hexapod_locomotion_class import hexapod_locomotion as hexapod
 
 ###############################################################################
 #### Hexapod Configuration
@@ -36,12 +36,12 @@ hexapod.set_init_position(print_out=False)
 ## Set Delay
 hexapod.delay = 0.01
 
-
-S   = input('Insert S = ') #8.0
-res = input('Insert res = ') #0.1
-xo  = 12.38     #x offset
-yo  = 5.0
-zo  = -10.51    #z offset
+## Set Locomotion Parameters
+hexapod.S       = float(input('Insert S = '))
+hexapod.res     = float(input('Insert res = '))
+hexapod.xo      = 12.38
+hexapod.yo      = 5.0
+hexapod.zo      = -10.51
 
 angles = [-89.999, -80.0, -70.0, -60.0, -50.0, -40.0, -30.0, -20.0, -10.0, 0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 89.999]
 
@@ -75,12 +75,12 @@ for d in range ( 2 ):
         alf = angle*pi/180;
         
         for k in range (n_gaits):
-            for j in range(int(S/res)+1):
+            for j in range(int(hexapod.S/hexapod.res)+1):
                 
                 if ( direction ):
                     cnt = j
                 else:
-                    cnt = int(S/res) - 1 - j
+                    cnt = int(hexapod.S/hexapod.res) - 1 - j
                 
                 hexapod.step(cnt, walk, alf)
                 hexapod.set_step()

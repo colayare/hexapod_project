@@ -99,7 +99,7 @@ while(1):
     print('(F) Start gait in Fast Mode')
     print('(A) Show all Registers')
     print('(L) Enable/Disable AXI IP Log')
-    print('> '+str(hexapod.gen_log_enable))
+    print('> '+str(hexapod.enable_ip_logs))
     print('(EXIT) Exit')
     print(dash)
     print('Servo Inversion:')

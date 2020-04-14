@@ -18,9 +18,9 @@ from hexapod_debug_class import hexapod_debug as hexapod
 hexapod = hexapod(invoke_axi_ip=True)
 
 ## Import Parameters
-hexapod.offsets_file_path            = abs_path+'/params/joint_offset.params'
-hexapod.init_position_file_path      = abs_path+'/params/init_position.params'
-hexapod.init_servo_inv_file_path     = abs_path+'/params/init_servo_inv.params'
+hexapod.offsets_file_path            = abs_path+'/../params/joint_offset.params'
+hexapod.init_position_file_path      = abs_path+'/../params/init_position.params'
+hexapod.init_servo_inv_file_path     = abs_path+'/../params/init_servo_inv.params'
 
 ## Initialize Parameters
 hexapod.import_init_pos()
@@ -33,14 +33,14 @@ hexapod.set_init_position(print_out=False)
 hexapod.delay = 0.01
 
 ## Set Locomotion Parameters
-hexapod.S       = 7.0
-hexapod.res     = 0.07
+hexapod.S       = float(input('Insert S = '))
+hexapod.res     = float(input('Insert res = '))
 hexapod.xo      = 12.38
 hexapod.yo      = 5.0
 hexapod.zo      = -10.51
 
 ## Step angle
-angle = 0
+angle = float(input('Insert Angle(sexa) = '))
 alf = angle * pi / 180
 
 ## Gait
@@ -50,9 +50,10 @@ walk = 1
 #### Traslational Locomotion
 ###############################################################################
 n_gaits = 2
+
+raw_input('Press Enter to start.')
 for k in range (n_gaits):
     for j in range(int(hexapod.S/hexapod.res)+1):
-        print(j)
         hexapod.step(j, walk, alf)
         hexapod.set_step_debug()
         hexapod.step_delay()
