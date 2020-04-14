@@ -52,7 +52,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     #### Constructor
     def __init__(self, invoke_axi_ip=True, enable_ip_logs=False):
         if ( invoke_axi_ip ):
-            super(hexapod_kinematics, self).__init__(gen_log_enable=enable_ip_logs)
+            super(hexapod_kinematics, self).__init__(enable_ip_logs=enable_ip_logs)
         return None
     
     #### Import & Export IP Params ############################################
@@ -187,7 +187,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
         self.axi_trigger_ikinematics()
         return None
     
-    def set_step_debug(self):
+    def set_step_debug_leg(self, leg_selector=0):
         self.config_leg_ctr(1, 0)
         for i, leg in enumerate(self.joints):
             self.set_ptr(2)
@@ -195,11 +195,11 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
                 self.axi_map.write( self.to_bytes(int(self.dfloat2hfloat(axis), 16))  )
             self.axi_write_fifo()
             self.axi_trigger_ikinematics()
-            if ( leg == 1 ):
+            if ( i == leg_selector ):
                 self.axi_set_out_mux(0)
                 [q1, q2, q3] = self.axi_hread_params()
                 print(leg)
-                print(self.rad2sec(self.hfloat2dfloat(q1)), self.rad2sec(self.hfloat2dfloat(q2)), self.rad2sec(self.hfloat2dfloat(q3)) )
+                print(self.hfloat2dfloat(q1), self.hfloat2dfloat(q2), self.hfloat2dfloat(q3) )
         return None
     
     def step_delay(self):
@@ -233,7 +233,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     ## leg : 32-bit int
     ## > 0-5 : Selects the output leg
     def config_leg_ctr(self, mode, leg):
-        if ( self.gen_log_enable ):
+        if ( self.enable_ip_logs ):
             self.log_file += 'config_leg_ctr:\n'
         mask    = self.R1_LEG_IN_SELCT + self.R1_SET_LEG_IN + self.R1_COUNTER_MODE
         leg_in  = leg & 0x7
@@ -249,7 +249,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     
     ## Set Leg configuration
     def axi_set_leg_conf(self, conf, leg_select):
-        if ( self.gen_log_enable ):
+        if ( self.enable_ip_logs ):
             self.log_file += 'axi_set_leg_conf:\n'
         mask        = self.R1_LEG_IN_SELCT + self.R1_SET_LEG_IN + self.R1_COUNTER_MODE
         reg1        = int(self.axi_read(1), 16)
@@ -303,7 +303,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     
     ## Set PWM Channel Inversion bit
     def axi_set_pwm_inv(self, pwm_idx, val):
-        if ( self.gen_log_enable ):
+        if ( self.enable_ip_logs ):
             self.log_file += 'axi_set_pwm_inv:\n'
         idx_mask    = 1 << (pwm_idx+12)
         set_val     = val << (pwm_idx+12)
@@ -313,7 +313,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     ## Set output multiplexor
     ## f2f_mux_selector offset
     def axi_set_out_mux(self, selector):
-        if ( self.gen_log_enable ):
+        if ( self.enable_ip_logs ):
             self.log_file += 'axi_set_out_mux:\n'
         mask        = self.R1_F2F_READ_MUX
         mux_sel     = (selector & 0x7) << 9

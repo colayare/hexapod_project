@@ -14,7 +14,7 @@ class axi_ip_mmap(object):
     ## AXI Memory Map
     axi_map         = None          # AXI Memory Map Pointer
     ## Log File Handling
-    gen_log_enable  = False         # Enable log generation
+    enable_ip_logs  = False         # Enable log generation
     ip_logfile_path = ''            # Log file Path
     log_file        = ''            # Log file content
     
@@ -34,11 +34,12 @@ class axi_ip_mmap(object):
     #### Methods
     ############################################################################
     ## Constructor
-    def __init__(self, base_address=0x40000000, slot_size=0x1000, gen_log_enable=False):
+    def __init__(self, base_address=0x40000000, slot_size=0x1000, enable_ip_logs=False):
+        super(axi_ip_mmap, self).__init__()
         self.__base_address     = base_address
         self.__slot_size        = slot_size
-        self.gen_log_enable     = gen_log_enable
-        if ( self.gen_log_enable ):
+        self.enable_ip_logs     = enable_ip_logs
+        if ( self.enable_ip_logs ):
             print('AXI IP '+str(self)+' > Enable log.')
         self.init_axi_map()
         return None
@@ -89,7 +90,7 @@ class axi_ip_mmap(object):
     def axi_read(self, address):
         self.set_ptr(address)
         read_val = self.to_int(self.axi_map.read(self.__axi_word_size))
-        if ( self.gen_log_enable ):
+        if ( self.enable_ip_logs ):
             self.log_file += 'R['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(read_val)+'\n'
         return read_val
     
@@ -102,7 +103,7 @@ class axi_ip_mmap(object):
         self.set_ptr(address)
         read_val_int = self.to_int(self.axi_map.read(self.__axi_word_size))
         read_val_hex = hex(read_val_int)[2:].rstrip("L").zfill(8)
-        if ( self.gen_log_enable ):
+        if ( self.enable_ip_logs ):
             self.log_file += 'R['+self.int_to_hexstr(address)+'] = '+read_val_hex+'\n'
         return read_val_hex
         
@@ -123,7 +124,7 @@ class axi_ip_mmap(object):
     def axi_read_mask(self, address, mask):
         self.set_ptr(address)
         read_val = self.to_int(self.axi_map.read(self.__axi_word_size)) & mask
-        if ( self.gen_log_enable ):
+        if ( self.enable_ip_logs ):
             self.log_file += 'R['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(read_val)+','+self.int_to_hexstr(mask)+'\n'
         return read_val
     
@@ -136,7 +137,7 @@ class axi_ip_mmap(object):
     def axi_write(self, address, value):
         self.set_ptr(address)
         self.axi_map.write(self.to_bytes(value))
-        if ( self.gen_log_enable ):
+        if ( self.enable_ip_logs ):
             self.log_file += 'W['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(value)+'\n'
         return True
         
@@ -150,7 +151,7 @@ class axi_ip_mmap(object):
         value = int(value, 16)
         self.set_ptr(address)
         self.axi_map.write(self.to_bytes(value))
-        if ( self.gen_log_enable ):
+        if ( self.enable_ip_logs ):
             self.log_file += 'W['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(value)+'\n'
         return True
     
@@ -177,7 +178,7 @@ class axi_ip_mmap(object):
         write_val = (value & mask) + (read_val & (mask ^ 0xFFFFFFFF))
         self.set_ptr(address)
         self.axi_map.write(self.to_bytes(write_val))
-        if ( self.gen_log_enable ):
+        if ( self.enable_ip_logs ):
             self.log_file += 'WM['+self.int_to_hexstr(address)+'] = '+self.int_to_hexstr(write_val)+','+self.int_to_hexstr(mask)+'\n'
         return True
     

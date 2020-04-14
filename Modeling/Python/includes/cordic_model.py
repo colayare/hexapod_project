@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Apr  6 22:03:10 2020
-
-@author: Roy
-"""
-
 import numpy as np
 from numeric_conversions import numeric_conversions as numeric_conversions
 

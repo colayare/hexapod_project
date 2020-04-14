@@ -12,7 +12,6 @@ try:
     from mpl_toolkits.mplot3d import Axes3D
     PLOT_EN = True
 except ImportError:
-    from mpl_toolkits.mplot3d import Axes3D
     PLOT_EN = False
     pass
 
