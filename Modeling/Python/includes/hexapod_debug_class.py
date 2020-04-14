@@ -80,7 +80,7 @@ class hexapod_debug(hexapod_locomotion):
         file = open(log_file_path, 'w+')
         file.write(cont)
         file.close()
-        return cont
+        return cont.rstrip('\n')
     
     def export_joints_log(self, log_file_path):
         cont = ''
@@ -91,4 +91,4 @@ class hexapod_debug(hexapod_locomotion):
         file = open(log_file_path, 'w+')
         file.write(cont)
         file.close()
-        return cont
+        return cont.rstrip('\n')

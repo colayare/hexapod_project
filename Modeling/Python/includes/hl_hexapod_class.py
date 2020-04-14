@@ -16,6 +16,7 @@ except ImportError:
     pass
 
 from hexapod_class import *
+from hexapod_locomotion_class import *
 
 ###############################################################################
 #### Hexapod Leg Class : Container or locomotion
@@ -55,13 +56,12 @@ class hexapod_leg(numeric_conversions):
 #### Hexapod Class for High Level Processing :
 #### This class object is not intended for run in Petalinux
 ###############################################################################
-class hexapod(hexapod_kinematics):
+class hexapod(hexapod_locomotion):
     ###########################################################################
     #### Properties
     ###########################################################################
     ## Kinematics Parameters
     __coord   = np.zeros(shape=(6,3))
-#    __joints  = np.zeros(shape=(6,3))         # Actual Joints Positions
     __locom   = np.array([hexapod_leg(), 
                           hexapod_leg(), 
                           hexapod_leg(), 
@@ -95,24 +95,16 @@ class hexapod(hexapod_kinematics):
     offset_y = 0
     
     @property
-    def Ca(self):
+    def param_Ca(self):
         return 1/(2*self.l2*self.l3)
     
     @property
-    def F(self):
+    def param_F(self):
         return self.l2/self.l3
     
     @property
-    def S(self):
+    def param_S(self):
         return self.l1**2 - self.l2**2 - self.l3**2
-    
-#    @property
-#    def joints(self):
-#        return self.__joints
-    
-#    @joints.setter
-#    def joints(self, value):
-#        self.__joints = value
     
     @property
     def coordinates(self):
@@ -200,7 +192,7 @@ class hexapod(hexapod_kinematics):
         #### STAGE 2 ####
         r = C1_CV.xo * self.ik
         A = r * self.l1 * 2
-        D = self.Ca * ( r**2 + zin**2 + self.S - A )
+        D = self.param_Ca * ( r**2 + zin**2 + self.param_S - A )
         #### STAGE 3 ####
         C2_HV.calculate(1, D, 0)
         C4_CV.calculate(r - self.l1, zin, 0)
@@ -212,7 +204,7 @@ class hexapod(hexapod_kinematics):
         C5_CR.calculate(self.ik, 0, -C3_CV.zo)
         #### STAGE 6 ####
         C9_CV.calculate(C8_HV.xo * self.ikh, C7_LV.zo, 0)
-        C6_CV.calculate(D + self.F, C5_CR.yo, 0)
+        C6_CV.calculate(D + self.param_F, C5_CR.yo, 0)
         #### RESULTS ####
         Q1 = C1_CV.zo
         Q2 = C9_CV.zo - C6_CV.zo
@@ -225,11 +217,13 @@ class hexapod(hexapod_kinematics):
         self.__coord[leg] = np.array(coordinates)
         self.__locom[leg].append(coordinates)
         self.__joints[leg].append(self.iKinematics(coordinates))
-#        if ( leg == 2 ):
-#            print(coordinates)
-#            print(self.iKinematics(coordinates))
-#            print()
         return True
+    
+    #### Get Hexapod Info
+    def get_step(self):
+        for i, joints in enumerate(self.joints):
+            self.set_step(i, joints)
+        return None
     
     #### Clean all Legs gait buffer
     def step_clean(self):
@@ -239,7 +233,6 @@ class hexapod(hexapod_kinematics):
     
     ####
     def plot_gait(self):
-#        fig = plt.figure()
         fig = plt.figure(figsize=plt.figaspect(0.5))
         for i in range ( 6 ):
             loc = self.__locom[i]
@@ -266,6 +259,7 @@ class hexapod(hexapod_kinematics):
             ax.legend()
         plt.show()
         
+    ####
     def plot_ikinematics(self):
         fig = plt.figure(figsize=plt.figaspect(0.5))
         for i in range ( 6 ):
@@ -277,3 +271,4 @@ class hexapod(hexapod_kinematics):
             ax.set_title('Leg '+str(i+1))
             ax.legend()
         plt.show()
+        
