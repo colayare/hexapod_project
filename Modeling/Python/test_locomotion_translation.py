@@ -80,7 +80,7 @@ for d in range ( 2 ):
                 if ( direction ):
                     cnt = j
                 else:
-                    cnt = int(hexapod.S/hexapod.res) - j
+                    cnt = int(hexapod.S/hexapod.res) - 1 - j
                 
                 hexapod.step(cnt, walk, alf)
                 hexapod.set_step()
