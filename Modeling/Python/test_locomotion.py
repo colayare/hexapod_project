@@ -45,7 +45,7 @@ angle           = float(input('Insert Angle(sexa) = '))
 alf             = angle * pi / 180
 
 ## Gait
-walk            = 1
+walk            = input('Insert Walk [1-4] = ')
 
 ###############################################################################
 #### Traslational Locomotion
