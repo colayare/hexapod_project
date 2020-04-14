@@ -73,9 +73,9 @@ class hexapod_debug(hexapod_locomotion):
     ##### Reporting Methods ###################################################
     def export_gait_log(self, log_file_path):
         cont = ''
-        for leg in self.collected_coord:
+        for i, leg in enumerate(self.collected_coord):
             for step in leg.coordinates:
-                cont += str(step[0])+','+str(step[1])+','+str(step[2])+'\n'
+                cont += str(i)+','+str(step[0])+','+str(step[1])+','+str(step[2])+'\n'
         cont.rstrip('\n')
         file = open(log_file_path, 'w+')
         file.write(cont)
@@ -84,9 +84,9 @@ class hexapod_debug(hexapod_locomotion):
     
     def export_joints_log(self, log_file_path):
         cont = ''
-        for leg in self.collected_joints:
+        for i, leg in enumerate(self.collected_joints):
             for step in leg.coordinates:
-                cont += str(step[0])+','+str(step[1])+','+str(step[2])+'\n'
+                cont += str(i)+','+str(step[0])+','+str(step[1])+','+str(step[2])+'\n'
         cont.rstrip('\n')
         file = open(log_file_path, 'w+')
         file.write(cont)

@@ -50,7 +50,7 @@ walk = 1
 ###############################################################################
 #### Traslational Locomotion
 ###############################################################################
-n_gaits = 2
+n_gaits = input('Insert number of gaits : ')
 for k in range (n_gaits):
     for j in range(int(hexapod.S/hexapod.res)+1):
         hexapod.step(j, walk, alf)
