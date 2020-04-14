@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
 import os, sys
-from time import sleep as sleep
-from math import sin as sin
-from math import cos as cos
 from math import pi  as pi
 
 ###############################################################################
@@ -11,9 +7,9 @@ from math import pi  as pi
 ###############################################################################
 pathname = os.path.dirname(sys.argv[0])   
 abs_path = os.path.abspath(pathname)
-print('Appending path'+ abs_path+'/includes')
-sys.path.append(abs_path+'/includes')
-from hexapod_locomotion_class import hexapod_locomotion as hexapod
+print('Appending path'+ abs_path+'/../includes')
+sys.path.append(abs_path+'/../includes')
+from hexapod_debug_class import hexapod_debug as hexapod
 
 ###############################################################################
 #### Hexapod Configuration
@@ -37,51 +33,38 @@ hexapod.set_init_position(print_out=False)
 hexapod.delay = 0.01
 
 ## Set Locomotion Parameters
-hexapod.S       = float(input('Insert S = '))
-hexapod.res     = float(input('Insert res = '))
+hexapod.S       = 7.0
+hexapod.res     = 0.07
 hexapod.xo      = 12.38
 hexapod.yo      = 5.0
 hexapod.zo      = -10.51
 
-angles = [-89.999, -80.0, -70.0, -60.0, -50.0, -40.0, -30.0, -20.0, -10.0, 0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 89.999]
+## Step angle
+angle_start = -90.0 * pi / 180.0
 
-
-## Selección de caminata
-walk = input('Insert Walk : ')
-
-## Number of gaits
-n_gaits = input('Number of gaits : ')
-
-## Inicialization
-x1, y1, z1 = 0.0, 0.0, 0.0
-x2, y2, z2 = 0.0, 0.0, 0.0
-x3, y3, z3 = 0.0, 0.0, 0.0
-x4, y4, z4 = 0.0, 0.0, 0.0
-x5, y5, z5 = 0.0, 0.0, 0.0
-x6, y6, z6 = 0.0, 0.0, 0.0
-
-direction = True
+## Walks set
+walks = [1, 2, 3, 4]
 
 ###############################################################################
 #### Traslational Locomotion
 ###############################################################################
-for d in range ( 2 ):
-    if ( d == 1 ):
-        direction = False
-    
-    for angle in angles:
-        
-        print('Angle = '+str(angle))
-        alf = angle*pi/180;
-        
-        for k in range (n_gaits):
+for i, walk in enumerate(walks):
+    print('--- WALK START : '+str(i)+' ---')
+    for i in range(18):
+        alf = angle_start + ((i*10) * pi / 180.0)
+        print('ANGLE:',str(alf))
+        for gait in range (2):
             for j in range(int(hexapod.S/hexapod.res)+1):
-                
-                if ( direction ):
-                    cnt = j
-                else:
-                    cnt = int(hexapod.S/hexapod.res) - 1 - j
-                
-                hexapod.step(cnt, walk, alf)
-                hexapod.set_step()
+                hexapod.step(j, walk, alf)
+                hexapod.set_step_debug()
                 hexapod.step_delay()
+        print('--- Kinematics Input START ---')
+        print(hexapod.gait_log())
+        print('--- Kinematics Input END ---')
+        print('--- Kinematics output START ---')
+        print(hexapod.joints_log())
+        print('--- Kinematics output END ---')
+        hexapod.clean_debug()
+        print('--- WALK END : '+str(i)+' ---')
+
+hexapod.set_init_position(print_out=False)

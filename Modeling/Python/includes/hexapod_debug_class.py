@@ -69,26 +69,39 @@ class hexapod_debug(hexapod_locomotion):
             self.collected_joints[i].append([q1, q2, q3])
             self.collected_coord[i].append(leg)
         return True
+        
+    def clean_debug(self):
+        for index in self.collected_coord:
+            index.clean()
+        for index in self.collected_joints:
+            index.clean()
+        return True
     
     ##### Reporting Methods ###################################################
-    def export_gait_log(self, log_file_path):
+    def gait_log(self):
         cont = ''
         for i, leg in enumerate(self.collected_coord):
             for step in leg.coordinates:
                 cont += str(i)+','+str(step[0])+','+str(step[1])+','+str(step[2])+'\n'
         cont.rstrip('\n')
-        file = open(log_file_path, 'w+')
-        file.write(cont)
-        file.close()
-        return cont.rstrip('\n')
+        return cont
     
-    def export_joints_log(self, log_file_path):
+    def joints_log(self):
         cont = ''
         for i, leg in enumerate(self.collected_joints):
             for step in leg.coordinates:
                 cont += str(i)+','+str(step[0])+','+str(step[1])+','+str(step[2])+'\n'
         cont.rstrip('\n')
+        return cont
+    
+    def export_gait_log(self, log_file_path):
         file = open(log_file_path, 'w+')
-        file.write(cont)
+        file.write(self.gait_log)
         file.close()
-        return cont.rstrip('\n')
+        return True
+    
+    def export_joints_log(self, log_file_path):
+        file = open(log_file_path, 'w+')
+        file.write(self.joints_log)
+        file.close()
+        return True

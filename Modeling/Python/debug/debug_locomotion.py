@@ -60,8 +60,8 @@ for k in range (n_gaits):
 
 hexapod.set_init_position(print_out=False)
 print('--- Kinematics Input START ---')
-print(hexapod.export_gait_log('coordinates.log'))
+print(hexapod.gait_log())
 print('--- Kinematics Input END ---')
 print('--- Kinematics output START ---')
-print(hexapod.export_joints_log('joints.log'))
+print(hexapod.joints_log())
 print('--- Kinematics output END ---')
