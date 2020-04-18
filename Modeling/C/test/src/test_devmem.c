@@ -10,7 +10,7 @@
 #include <sys/types.h>
 #include <sys/mman.h>
 //--
-#include <reg_map.h>
+#include "reg_map.h"
 
 //-- Testing access to iKinematics IP register map
 int main() {

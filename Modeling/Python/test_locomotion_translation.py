@@ -45,20 +45,11 @@ hexapod.zo      = -10.51
 
 angles = [-89.999, -80.0, -70.0, -60.0, -50.0, -40.0, -30.0, -20.0, -10.0, 0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 89.999]
 
-
 ## Selección de caminata
 walk = input('Insert Walk : ')
 
 ## Number of gaits
 n_gaits = input('Number of gaits : ')
-
-## Inicialization
-x1, y1, z1 = 0.0, 0.0, 0.0
-x2, y2, z2 = 0.0, 0.0, 0.0
-x3, y3, z3 = 0.0, 0.0, 0.0
-x4, y4, z4 = 0.0, 0.0, 0.0
-x5, y5, z5 = 0.0, 0.0, 0.0
-x6, y6, z6 = 0.0, 0.0, 0.0
 
 direction = True
 
