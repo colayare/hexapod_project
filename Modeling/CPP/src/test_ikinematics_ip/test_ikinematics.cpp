@@ -2,9 +2,9 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/mman.h>
-#include "axi_ip_globals.h"
-#include "data_types.h"
-#include "ikinematics_ip.h"
+#include "axi_ip_globals.hpp"
+#include "data_types.hpp"
+#include "ikinematics_ip.hpp"
 
 using namespace std;
 

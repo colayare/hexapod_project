@@ -1,15 +1,15 @@
 # Includes Directory
-IDIR=${MODEL_CPP_PATH}/includes/globals
-PDIR=${MODEL_CPP_PATH}/includes/params
-SDIR=${MODEL_CPP_PATH}/src
-@echo "Append Includes dir $(IDIR)"
-@echo "Append Sources dir $(SDIR)"
-@echo "Append Params dir $(PDIR)"
-
-
+IDIR=$(MODEL_CPP_PATH)/includes/globals
+PDIR=$(MODEL_CPP_PATH)/includes/params
+SDIR=$(MODEL_CPP_PATH)/src/test_ikinematics_ip
 # Execution directory set as Outputs Directory
-@echo "Set ${PWD}/outputs as Output Directory"
-ODIR=${PWD}/outputs
+ODIR=$(PWD)/outputs
+$(info ===============================)
+$(info Append Includes dir $(IDIR))
+$(info Append Sources dir $(SDIR))
+$(info Append Params dir $(PDIR))
+$(info Set $(PWD)/outputs as Output Directory)
+$(info ===============================)
 
 # 
 CC=g++
@@ -26,10 +26,10 @@ PARAMS  = $(patsubst %,$(PDIR)/%,$(_PARAMS))
 _TEST_IKINEMATICS_OBJ = test_ikinematics.o
 TEST_IKINEMATICS_OBJ    = $(patsubst %,$(ODIR)/%,$(_TEST_IKINEMATICS_OBJ))
 
-$(ODIR)/%.o: $(SDIR)/%.$(EXT) $(DEPS) $(PARAMS)
+$(ODIR)/%.o: $(SDIR)/%.cpp $(DEPS) $(PARAMS)
 	$(CC) -Wall -c -o $@ $< $(CFLAGS)
 
 test_ikinematics: $(TEST_IKINEMATICS_OBJ)
-    @echo "Compile $(ODIR)/$@ "
-    $(CC) -Wall -o $(ODIR)/$@ $^ $(CFLAGS)
+	@echo "Compile $(ODIR)/$@ "
+	$(CC) -Wall -o $(ODIR)/$@ $^ $(CFLAGS)
     

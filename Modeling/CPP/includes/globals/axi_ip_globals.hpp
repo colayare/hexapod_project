@@ -6,7 +6,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/mman.h>
-#include "data_types.h"
+#include "data_types.hpp"
 
 //==============================================================================
 // AXI IP Global Class
