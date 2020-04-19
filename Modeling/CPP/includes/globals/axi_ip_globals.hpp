@@ -2,24 +2,28 @@
 #define __AXI_IP_GLOBALS__
 //==============================================================================
 // Includes
+#include<iostream>
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/mman.h>
-#include "data_types.hpp"
+#include <stdint.h>
+#include <string>
+
+using namespace std;
 
 //==============================================================================
 // AXI IP Global Class
 class ip_context {
     //==== Members  ============================================================
     public:
-        int32_t &*axi_mmap_ptr( int32_t );
+        //int32_t &*axi_mmap_ptr( int32_t );
         int32_t &axi_mmap_size( int32_t );
         int32_t &axi_base_address( int32_t );
         int32_t &axi_word_size( int32_t );
         
-    protected:
-        string  ip_name;            //== AXI IP NAME
+    // protected:
+        // string  ip_name;            //== AXI IP NAME
     
     private:
         int32_t *_axi_mmap_ptr;      //== AXI IP Memory Map Pointer
@@ -28,22 +32,20 @@ class ip_context {
         int32_t _axi_word_size;      //== AXI IP Memory Map Word Size
     
     //==== Method Prototypes ===================================================
-    //== Init AXI IP Memory Map
-    extern int32_t init_axi_mmap_ptr(int32_t axi_mmap_size, int32_t axi_base_address, int32_t axi_word_size);
-    //== IP Context Class Members Access
-    extern int32_t get_base_address();
-    extern int32_t get_mmap_size();
-    extern int32_t get_word_size();
-    extern int32_t *get_mmap_ptr();
-    //== AXI IP Operations
-    extern int32_t axi_read(int32_t read_address);
-    extern int32_t axi_read_mask(int32_t read_address, int32_t mask);
-    extern int32_t axi_write(int32_t write_address, int32_t value);
-    extern int32_t axi_write_mask(int32_t write_address, int32_t value, int32_t mask);
-    extern int32_t axi_bit_set(int32_t address, int32_t bit_mask);
-    extern int32_t axi_bit_clr(int32_t address, int32_t bit_mask);
-    extern int32_t axi_show_regs(int32_t start_address, int32_t end_address);
-}
+    public:
+        //== Init AXI IP Memory Map
+        int32_t init_axi_mmap_ptr(int32_t axi_mmap_size, int32_t axi_base_address, int32_t axi_word_size);
+        //== Get Private Members Functions
+        int32_t *get_mmap_ptr();
+        //== AXI IP Operations
+        int32_t axi_read(int32_t read_address);
+        int32_t axi_read_mask(int32_t read_address, int32_t mask);
+        int32_t axi_write(int32_t write_address, int32_t value);
+        void    axi_write_mask(int32_t write_address, int32_t value, int32_t mask);
+        void    axi_bit_set(int32_t address, int32_t bit_mask);
+        void    axi_bit_clr(int32_t address, int32_t bit_mask);
+        void    axi_show_regs(int32_t start_address, int32_t end_address);
+};
 
 //==== Method Defines ==========================================================
 //== Init AXI IP Memory Map
@@ -76,7 +78,8 @@ int32_t ip_context::init_axi_mmap_ptr(int32_t axi_mmap_size, int32_t axi_base_ad
     
     return 1;
 }
-
+//== Get Memory Map Pointer
+int32_t *ip_context::get_mmap_ptr() { return this->_axi_mmap_ptr; }
 //== AXI IP Read
 int32_t ip_context::axi_read(int32_t read_address) {
     return *(this->_axi_mmap_ptr+read_address);
@@ -95,25 +98,24 @@ void ip_context::axi_write_mask(int32_t write_address, int32_t value, int32_t ma
     int32_t register_value;
     register_value = *(this->_axi_mmap_ptr+write_address) & ~mask;
     *(this->_axi_mmap_ptr+write_address) = register_value + (value & mask);
-    return 1;
 }
 //== AXI IP Bit Set
 void ip_context::axi_bit_set(int32_t address, int32_t bit_mask) {
     int32_t register_value;
-    register_value = *(this->_axi_mmap_ptr+write_address) & ~bit_mask;
-    *(this->_axi_mmap_ptr+write_address) = register_value + bit_mask;
+    register_value = *(this->_axi_mmap_ptr+address) & ~bit_mask;
+    *(this->_axi_mmap_ptr+address) = register_value + bit_mask;
 }
 //== AXI IP Bit Clear
 void ip_context::axi_bit_clr(int32_t address, int32_t bit_mask) {
     int32_t register_value;
-    register_value = *(this->_axi_mmap_ptr+write_address) & ~bit_mask;
-    *(this->_axi_mmap_ptr+write_address) = register_value;
+    register_value = *(this->_axi_mmap_ptr+address) & ~bit_mask;
+    *(this->_axi_mmap_ptr+address) = register_value;
 }
 //== AXI IP Show Registers
 void ip_context::axi_show_regs(int32_t start_address, int32_t end_address) {
     //TODO: Check counter i word size access
     for (int32_t i=0;i<(end_address-start_address);i++) {
-        cout << "REG[" << i << "]\t= " << *(this->_axi_mmap_ptr+i) << endl;
+        cout << "REG[" << i << "]\t= " << hex << *(this->_axi_mmap_ptr+i) << endl;
     }
 }
 
