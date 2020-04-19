@@ -1,6 +1,27 @@
 #ifndef __HEXAPOD_PARAMS__
 #define __HEXAPOD_PARAMS__
 
+//==== Hexapod Joints Initial Position
+#define HEXAPOD_INIT_POS_00 0.0
+#define HEXAPOD_INIT_POS_01 0.0
+#define HEXAPOD_INIT_POS_02 -90.0
+#define HEXAPOD_INIT_POS_03 0.0
+#define HEXAPOD_INIT_POS_04 0.0
+#define HEXAPOD_INIT_POS_05 -90.0
+#define HEXAPOD_INIT_POS_06 0.0
+#define HEXAPOD_INIT_POS_07 0.0
+#define HEXAPOD_INIT_POS_08 -90.0
+#define HEXAPOD_INIT_POS_09 0.0
+#define HEXAPOD_INIT_POS_10 0.0
+#define HEXAPOD_INIT_POS_11 -90.0
+#define HEXAPOD_INIT_POS_12 0.0
+#define HEXAPOD_INIT_POS_13 0.0
+#define HEXAPOD_INIT_POS_14 -90.0
+#define HEXAPOD_INIT_POS_15 0.0
+#define HEXAPOD_INIT_POS_16 0.0
+#define HEXAPOD_INIT_POS_17 -90.0
+
+//==== Hexapod Joints Digital Offset
 #define HEXAPOD_JOINT_OFFSET_00    90.0
 #define HEXAPOD_JOINT_OFFSET_01    90.0
 #define HEXAPOD_JOINT_OFFSET_02    180.0
@@ -19,5 +40,8 @@
 #define HEXAPOD_JOINT_OFFSET_15    90.0
 #define HEXAPOD_JOINT_OFFSET_16    90.0
 #define HEXAPOD_JOINT_OFFSET_17    180.0
+
+//== Hexapod Servo Invertion
+
 
 #endif // __HEXAPOD_PARAMS__

@@ -9,6 +9,7 @@
 #include <sys/mman.h>
 #include <stdint.h>
 #include <string>
+#include "global_defines.hpp"
 
 using namespace std;
 
@@ -40,7 +41,7 @@ class ip_context {
         //== AXI IP Operations
         int32_t axi_read(int32_t read_address);
         int32_t axi_read_mask(int32_t read_address, int32_t mask);
-        int32_t axi_write(int32_t write_address, int32_t value);
+        void    axi_write(int32_t write_address, int32_t value);
         void    axi_write_mask(int32_t write_address, int32_t value, int32_t mask);
         void    axi_bit_set(int32_t address, int32_t bit_mask);
         void    axi_bit_clr(int32_t address, int32_t bit_mask);
@@ -82,33 +83,55 @@ int32_t ip_context::init_axi_mmap_ptr(int32_t axi_mmap_size, int32_t axi_base_ad
 int32_t *ip_context::get_mmap_ptr() { return this->_axi_mmap_ptr; }
 //== AXI IP Read
 int32_t ip_context::axi_read(int32_t read_address) {
+    #ifdef __IP_LOG
+    int32_t val_print = *(this->_axi_mmap_ptr+read_address);
+    cout << "R[" << read_address << "] = " << hex << val_print << endl;
+    #endif
     return *(this->_axi_mmap_ptr+read_address);
 }
 //== AXI IP Read with mask
 int32_t ip_context::axi_read_mask(int32_t read_address, int32_t mask) {
+    #ifdef __IP_LOG
+    int32_t val_print = *(this->_axi_mmap_ptr+read_address) & mask;
+    cout << "RM[" << read_address << "," << mask << "] = " << hex << val_print << endl;
+    #endif
     return *(this->_axi_mmap_ptr+read_address) & mask;
 }
 //== AXI IP Write
-int32_t ip_context::axi_write(int32_t write_address, int32_t value) {
+void ip_context::axi_write(int32_t write_address, int32_t value) {
+    #ifdef __IP_LOG
+    cout << "W[" << write_address << "] = " << hex << value << endl;
+    #endif
     *(this->_axi_mmap_ptr+write_address) = value;
-    return 1;
 }
 //== AXI IP Write with Mask
 void ip_context::axi_write_mask(int32_t write_address, int32_t value, int32_t mask) {
     int32_t register_value;
     register_value = *(this->_axi_mmap_ptr+write_address) & ~mask;
+    #ifdef __IP_LOG
+    int32_t val_print = register_value + (value & mask);
+    cout << "WM[" << write_address << "," << mask << "] = " << hex << val_print << endl;
+    #endif
     *(this->_axi_mmap_ptr+write_address) = register_value + (value & mask);
 }
 //== AXI IP Bit Set
 void ip_context::axi_bit_set(int32_t address, int32_t bit_mask) {
     int32_t register_value;
     register_value = *(this->_axi_mmap_ptr+address) & ~bit_mask;
+    #ifdef __IP_LOG
+    int32_t val_print = register_value + bit_mask;
+    cout << "BS[" << address << "," << bit_mask << "] = " << hex << val_print << endl;
+    #endif
     *(this->_axi_mmap_ptr+address) = register_value + bit_mask;
 }
 //== AXI IP Bit Clear
 void ip_context::axi_bit_clr(int32_t address, int32_t bit_mask) {
     int32_t register_value;
     register_value = *(this->_axi_mmap_ptr+address) & ~bit_mask;
+    #ifdef __IP_LOG
+    int32_t val_print = register_value + bit_mask;
+    cout << "BC[" << address << "," << bit_mask << "] = " << hex << val_print << endl;
+    #endif
     *(this->_axi_mmap_ptr+address) = register_value;
 }
 //== AXI IP Show Registers

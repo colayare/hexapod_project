@@ -29,7 +29,7 @@
 
 //- Registers Names
 #define AXI_IK_REG_CONTROL      0
-#define AXI_IK_REG_LEG_CONTROL  1
+#define AXI_IK_REG_LEG_CTRL     1
 #define AXI_IK_REG_X_IN         2
 #define AXI_IK_REG_Y_IN         3
 #define AXI_IK_REG_Z_IN         4
@@ -39,11 +39,25 @@
 #define AXI_IK_REG_OFFSET_BASE  5
 #define AXI_IK_REG_PWM_BASE     23
 
-//- Control Reg
+//- IP Control & Trigger Register
 #define AXI_IK_REG_CONTROL_CLEAR_REG    0x00000000
 #define AXI_IK_REG_CONTROL_WRITE_FIFO   0x00000001
 #define AXI_IK_REG_CONTROL_TRIGGER      0x00000002
-#define AXI_IK_REG_CONTROL_ONE_LEG      0x00000001
-#define AXI_IK_REG_CONTROL_MUX_LEG      0x00000000
+#define AXI_IK_REG_CONTROL_DIRECT_OUT   0x00000004
+
+//- Leg Counter Control Register
+#define AXI_IK_REG_LEG_CTR_ONE_LEG      0x00000001
+#define AXI_IK_REG_LEG_CTR_MUX_LEG      0x00000000
+#define AXI_IK_REG_LEG_CTR_LEG_SEL_O    0
+#define AXI_IK_REG_LEG_CTR_LEG_SEL_M    0x00000007
+#define AXI_IK_REG_LEG_CTR_SET_LEG_T    0x00000008
+#define AXI_IK_REG_LEG_CTR_MODE_O       4
+#define AXI_IK_REG_LEG_CTR_MODE_M       0x00000030
+#define AXI_IK_REG_LEG_CTR_OUTPUT_O     6
+#define AXI_IK_REG_LEG_CTR_OUTPUT_M     0x000000C0
+#define AXI_IK_REG_LEG_F2F_READ_MUX_O   9
+#define AXI_IK_REG_LEG_F2F_READ_MUX_M   0x00000E00
+#define AXI_IK_REG_LEG_PWM_INVERT_O     12
+#define AXI_IK_REG_LEG_PWM_INVERT_M     0x3FFFF000
 
 #endif //__IKINEMATICS_REG_MAP_H__
