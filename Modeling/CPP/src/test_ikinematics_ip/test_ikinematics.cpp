@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include "globals/axi_ip_globals.hpp"
 #include "hexapod/hexapod_kinematics.hpp"
+#include "hexapod/hexapod_locomotion.hpp"
 
 using namespace std;
 
@@ -20,18 +21,15 @@ int main() {
     // Initialize Joints Offsets
     iK_ip.init_joint_offsets();
     
+    // Initialize Servo Inversions
+    iK_ip.init_servo_invertion();
+    
     // Initialize Joints Positions
     iK_ip.init_joint_position();
     
-    iK_ip.axi_show_regs(0, 0x23);
     
-    ik_param_t ik_out;
-    
-    ik_out = iK_ip.read_ik_output(1);
-    
-    cout << ik_out.param[0] << endl;
-    cout << ik_out.param[1] << endl;
-    cout << ik_out.param[2] << endl;
+    //iK_ip.axi_show_regs(0, 0x23);
+  
 
     return 0;
 }

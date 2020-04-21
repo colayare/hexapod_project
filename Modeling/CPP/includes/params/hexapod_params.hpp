@@ -42,6 +42,24 @@
 #define HEXAPOD_JOINT_OFFSET_17    180.0
 
 //== Hexapod Servo Invertion
+#define HEXAPOD_SERVO_INV_00    0
+#define HEXAPOD_SERVO_INV_01    0
+#define HEXAPOD_SERVO_INV_02    1
+#define HEXAPOD_SERVO_INV_03    1
+#define HEXAPOD_SERVO_INV_04    1
+#define HEXAPOD_SERVO_INV_05    0
+#define HEXAPOD_SERVO_INV_06    0
+#define HEXAPOD_SERVO_INV_07    0
+#define HEXAPOD_SERVO_INV_08    1
+#define HEXAPOD_SERVO_INV_09    1
+#define HEXAPOD_SERVO_INV_10    0
+#define HEXAPOD_SERVO_INV_11    0
+#define HEXAPOD_SERVO_INV_12    0
+#define HEXAPOD_SERVO_INV_13    0
+#define HEXAPOD_SERVO_INV_14    1
+#define HEXAPOD_SERVO_INV_15    1
+#define HEXAPOD_SERVO_INV_16    1
+#define HEXAPOD_SERVO_INV_17    0
 
 
 #endif // __HEXAPOD_PARAMS__
