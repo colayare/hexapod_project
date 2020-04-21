@@ -5,7 +5,6 @@
 #include <stdint.h>
 #include "globals/axi_ip_globals.hpp"
 #include "hexapod/hexapod_kinematics.hpp"
-#include "hexapod/hexapod_locomotion.hpp"
 
 using namespace std;
 
