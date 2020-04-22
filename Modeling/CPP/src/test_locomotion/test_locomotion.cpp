@@ -3,6 +3,7 @@
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <stdint.h>
+#include <string.h>
 #include "globals/axi_ip_globals.h"
 #include "globals/linux_timing.h"
 #include "hexapod/hexapod_kinematics.h"
@@ -10,8 +11,14 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
     cout << "Test Inverse Kinematics IP" << endl;
+    
+    // Variables Declarations
+    // Walk Selector
+    uint32_t walk = 1;
+    // Walk Step Delay in ms
+    uint32_t delay = 100;
     
     // Declare Inverse Kinematics AXI IP Context
     hexapod_locomotion hexapod;
@@ -25,20 +32,60 @@ int main() {
     // Initialize Joints Positions
     hexapod.init_joint_position();
     
+    // Set var
+    uint32_t set_S = 1;
+    uint32_t set_res = 1;
+    uint32_t set_walk = 1;
+    uint32_t set_delay = 1;
+    
+    // Get Argv
+     for(int i = 0; i < argc; i++)
+    {
+        if ( argv[i] == std::string("-s") ) {
+            hexapod.S = atof(argv[i+1]);
+            set_S = 0;
+        } 
+        if ( argv[i] == std::string("-res") ) {
+            hexapod.res = atof(argv[i+1]);
+            set_res = 0;
+        }
+        if ( argv[i] == std::string("-w") ) {
+            walk = atoi(argv[i+1]);
+            set_walk = 0;
+        } 
+        if ( argv[i] == std::string("-delay") ) {
+            delay = atoi(argv[i+1]);
+            set_delay = 0;
+        } 
+    }
+    if ( set_S ) {
+        hexapod.S = 7.0;
+    }
+    if ( set_res ) {
+        hexapod.res = 0.07;
+    }
+    if ( set_walk ) {
+        walk = 1;
+    }
+    if ( set_delay ) {
+        delay = 10;
+    }
+    
+    // Print Settings
+    cout << "Set S=" << hexapod.S << endl;
+    cout << "Set res=" << hexapod.res << endl;
+    cout << "Set walk=" << walk << endl;
+    cout << "Set delay(ms)=" << delay << endl;
+    
     // Initialize Locomotion Parameters
-    hexapod.S   = 7;
-    hexapod.res = 0.07;
     hexapod.xo  = 12.38;
     hexapod.yo  = 5.0;
     hexapod.zo  = -10.51;
     
-    // Walk Selector
-    uint32_t walk = 1;
-    
     // 
     for (uint32_t i=0; i<hexapod.iteration_size(); i++) {
         hexapod.step(i, walk, 0);
-        delay_ms(100);
+        delay_ms(delay);
     }
 
     return 0;
