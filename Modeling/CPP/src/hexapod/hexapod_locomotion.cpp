@@ -1,10 +1,10 @@
 #include <math.h>   //CHECK IF NEEDED
 #include <cmath>
-#include "globals/global_defines.hpp"
-#include "hexapod/hexapod_kinematics.hpp"
-#include "hexapod/hexapod_locomotion.hpp"
-#include "params/hexapod_ip_params.hpp"
-#include "params/hexapod_params.hpp"
+#include "globals/global_defines.h"
+#include "hexapod/hexapod_kinematics.h"
+#include "hexapod/hexapod_locomotion.h"
+#include "params/hexapod_ip_params.h"
+#include "params/hexapod_params.h"
 
 uint32_t hexapod_locomotion::iteration_size() {
     return this->S/this->res + 1;

@@ -18,16 +18,16 @@ CC=g++
 CFLAGS=-I$(IDIR) 
 
 #### 
-_GLOBALS = axi_ip_globals.hpp global_defines.hpp
+_GLOBALS = axi_ip_globals.h global_defines.h linux_timing.h
 GLOBALS  = $(patsubst %,$(IDIR)/globals/%,$(_GLOBALS))
 
-_GLOBALS_OBJ = axi_ip_globals.o
+_GLOBALS_OBJ = axi_ip_globals.o linux_timing.o
 GLOBALS_OBJ  = $(patsubst %,$(ODIR)/%,$(_GLOBALS_OBJ))
 
-_PARAMS = hexapod_ip_params.hpp hexapod_params.hpp
+_PARAMS = hexapod_ip_params.h hexapod_params.h
 PARAMS  = $(patsubst %,$(IDIR)/params/%,$(_PARAMS))
 
-_HEXA_DEPS = hexapod_kinematics.hpp hexapod_locomotion.hpp
+_HEXA_DEPS = hexapod_kinematics.h hexapod_locomotion.h
 HEXA_DEPS  = $(patsubst %,$(IDIR)/hexapod/%,$(_HEXA_DEPS))
 
 _HEXA_OBJ = hexapod_kinematics.o hexapod_locomotion.o

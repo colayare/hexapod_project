@@ -1,9 +1,9 @@
 #include <math.h>
-#include "globals/axi_ip_globals.hpp"
-#include "globals/global_defines.hpp"
-#include "hexapod/hexapod_kinematics.hpp"
-#include "params/hexapod_ip_params.hpp"
-#include "params/hexapod_params.hpp"
+#include "globals/axi_ip_globals.h"
+#include "globals/global_defines.h"
+#include "hexapod/hexapod_kinematics.h"
+#include "params/hexapod_ip_params.h"
+#include "params/hexapod_params.h"
 
 void ikinematics_ip_context::write_fifo() {
     this->axi_bit_set(AXI_IK_REG_CONTROL, AXI_IK_REG_CONTROL_WRITE_FIFO);

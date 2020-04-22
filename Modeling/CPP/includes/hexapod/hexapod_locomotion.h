@@ -1,7 +1,7 @@
 #ifndef __HEXAPOD_LOCOMOTION_H__
 #define __HEXAPOD_LOCOMOTION_H__
 
-#include "hexapod_kinematics.hpp"
+#include "hexapod_kinematics.h"
 
 class hexapod_locomotion : public ikinematics_ip_context {
     //==== Members ==========================================================

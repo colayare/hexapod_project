@@ -2,9 +2,9 @@
 #define __HEXAPOD_KINEMATICS_H__
 
 #include <math.h>
-#include "params/hexapod_ip_params.hpp"
-#include "params/hexapod_params.hpp"
-#include "globals/axi_ip_globals.hpp"
+#include "params/hexapod_ip_params.h"
+#include "params/hexapod_params.h"
+#include "globals/axi_ip_globals.h"
 
 #define _USE_MATH_DEFINES
 

@@ -3,9 +3,10 @@
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <stdint.h>
-#include "globals/axi_ip_globals.hpp"
-#include "hexapod/hexapod_kinematics.hpp"
-#include "hexapod/hexapod_locomotion.hpp"
+#include "globals/axi_ip_globals.h"
+#include "globals/linux_timing.h"
+#include "hexapod/hexapod_kinematics.h"
+#include "hexapod/hexapod_locomotion.h"
 
 using namespace std;
 
@@ -37,6 +38,7 @@ int main() {
     // 
     for (uint32_t i=0; i<hexapod.iteration_size(); i++) {
         hexapod.step(i, walk, 0);
+        delay_ms(100);
     }
 
     return 0;

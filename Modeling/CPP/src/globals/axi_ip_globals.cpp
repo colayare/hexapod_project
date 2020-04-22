@@ -5,8 +5,8 @@
 #include <sys/mman.h>
 #include <stdint.h>
 #include <string>
-#include "globals/global_defines.hpp"
-#include "globals/axi_ip_globals.hpp"
+#include "globals/global_defines.h"
+#include "globals/axi_ip_globals.h"
 
 //== Init AXI IP Memory Map
 int32_t ip_context::init_axi_mmap_ptr(int32_t axi_mmap_size, int32_t axi_base_address, int32_t axi_word_size) {
