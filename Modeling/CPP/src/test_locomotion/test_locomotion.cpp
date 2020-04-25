@@ -19,8 +19,8 @@ int main(int argc, char* argv[]) {
     uint32_t walk = 1;
     // Walk Step Delay in ms
     uint32_t delay = 10;
-    // Inverse Kinematics Parameters Struct
-    ik_output_t ik_output;
+    // Number of gaits
+    uint32_t gaits = 10;
     
     // Declare Inverse Kinematics AXI IP Context
     hexapod_locomotion hexapod;
@@ -39,6 +39,7 @@ int main(int argc, char* argv[]) {
     uint32_t set_res = 1;
     uint32_t set_walk = 1;
     uint32_t set_delay = 1;
+    uint32_t set_gaits = 1;
     
     // Get Argv
      for(int i = 0; i < argc; i++)
@@ -58,7 +59,11 @@ int main(int argc, char* argv[]) {
         if ( argv[i] == std::string("-delay") ) {
             delay = atoi(argv[i+1]);
             set_delay = 0;
-        } 
+        }
+        if ( argv[i] == std::string("-gaits") ) {
+            gaits = atoi(argv[i+1]);
+            set_gaits = 0;
+        }
     }
     if ( set_S ) {
         hexapod.S = 7.0;
@@ -66,29 +71,25 @@ int main(int argc, char* argv[]) {
     if ( set_res ) {
         hexapod.res = 0.07;
     }
-    if ( set_walk ) {
-        walk = 1;
-    }
-    if ( set_delay ) {
-        delay = 10;
-    }
-    
     // Print Settings
     cout << "Set S=" << hexapod.S << endl;
     cout << "Set res=" << hexapod.res << endl;
     cout << "Set walk=" << walk << endl;
     cout << "Set delay(ms)=" << delay << endl;
+    cout << "Gaits=" << gaits << endl;
     
     // Initialize Locomotion Parameters
     hexapod.xo  = 12.38;
     hexapod.yo  = 5.0;
     hexapod.zo  = -10.51;
     
-    // 
-    for (uint32_t i=0; i<hexapod.iteration_size(); i++) {
-        hexapod.step(i, walk, 0);
-        
-        delay_ms(delay);
+    // Gaits
+    for (uint32_t gait=0; gait<gaits; gait++) {
+        for (uint32_t i=0; i<hexapod.iteration_size(); i++) {
+            hexapod.step(i, walk, 0);
+            
+            delay_ms(delay);
+        }
     }
     
     return 0;
