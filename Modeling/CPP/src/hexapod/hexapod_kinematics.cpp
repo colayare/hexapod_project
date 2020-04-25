@@ -6,13 +6,13 @@
 #include "params/hexapod_params.h"
 
 void ikinematics_ip_context::write_fifo() {
-    this->axi_bit_set(AXI_IK_REG_CONTROL, AXI_IK_REG_CONTROL_WRITE_FIFO);
-    this->axi_bit_clr(AXI_IK_REG_CONTROL, AXI_IK_REG_CONTROL_WRITE_FIFO);
+    this->axi_write(AXI_IK_REG_CONTROL, AXI_IK_REG_CONTROL_WRITE_FIFO);
+    this->axi_write(AXI_IK_REG_CONTROL, 0);
 }
 
 void ikinematics_ip_context::trigger_ikinematics() {
-    this->axi_bit_set(AXI_IK_REG_CONTROL, AXI_IK_REG_CONTROL_TRIGGER);
-    this->axi_bit_clr(AXI_IK_REG_CONTROL, AXI_IK_REG_CONTROL_TRIGGER);
+    this->axi_write(AXI_IK_REG_CONTROL, AXI_IK_REG_CONTROL_TRIGGER);
+    this->axi_write(AXI_IK_REG_CONTROL, 0);
 }
 
 void ikinematics_ip_context::leg_ctr_config(uint32_t config, uint32_t leg_select) {
@@ -75,9 +75,9 @@ void ikinematics_ip_context::set_joint_direct(uint32_t leg, ik_output_t joints) 
     this->joint_pos[leg*3+2] = joints.q3;
     
     #if defined(__IK_DEBUG) || defined(__ALL_DEBUG)
-    cout << "Joint [" << joint+leg*3 << "] = " << hex << int_position[joint] << endl;
-    cout << "Joint [" << joint+leg*3 << "] = " << hex << int_position[joint] << endl;
-    cout << "Joint [" << joint+leg*3 << "] = " << hex << int_position[joint] << endl;
+    cout << "Joint [" << 0+leg*3 << "] = " << hex << int_position[0] << endl;
+    cout << "Joint [" << 1+leg*3 << "] = " << hex << int_position[1] << endl;
+    cout << "Joint [" << 2+leg*3 << "] = " << hex << int_position[2] << endl;
     #endif
     
     this->leg_ctr_config(AXI_IK_REG_LEG_CTR_ONE_LEG, leg);
@@ -86,9 +86,15 @@ void ikinematics_ip_context::set_joint_direct(uint32_t leg, ik_output_t joints) 
     this->axi_write(AXI_IK_REG_Q2_OUT, int_position[1]);
     this->axi_write(AXI_IK_REG_Q3_OUT, int_position[2]);
     this->axi_write(AXI_IK_REG_CONTROL, AXI_IK_REG_CONTROL_DIRECT_OUT);
+    this->axi_write(AXI_IK_REG_CONTROL, 0);
 }
 
 void ikinematics_ip_context::write_ik_input(ik_input_t ik_input) {
+    #if defined(__IK_DEBUG) || defined(__ALL_DEBUG)
+    cout << "Set X = " << ik_input.x << endl;
+    cout << "Set Y = " << ik_input.y << endl;
+    cout << "Set Z = " << ik_input.z << endl;
+    #endif
     this->axi_write(AXI_IK_REG_X_IN, *(int *) &ik_input.x);
     this->axi_write(AXI_IK_REG_Y_IN, *(int *) &ik_input.y);
     this->axi_write(AXI_IK_REG_Z_IN, *(int *) &ik_input.z);

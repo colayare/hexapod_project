@@ -13,13 +13,15 @@ uint32_t hexapod_locomotion::iteration_size() {
 uint32_t hexapod_locomotion::step(float step_idx, uint32_t walk, float alpha) {
     this->get_step(step_idx, walk, alpha);
     
-    this->write_ik_input(this->ef_position.leg[0]);
-    this->write_ik_input(this->ef_position.leg[1]);
-    this->write_ik_input(this->ef_position.leg[2]);
-    this->write_ik_input(this->ef_position.leg[3]);
-    this->write_ik_input(this->ef_position.leg[4]);
-    this->write_ik_input(this->ef_position.leg[5]);
-    this->write_fifo();
+    this->leg_ctr_config(AXI_IK_REG_LEG_CTR_MUX_LEG, 0);
+    
+    for (uint32_t leg=0; leg<6; leg++) {
+        #ifdef __LOG
+        cout << "Assign Leg " << leg << " : " << endl;
+        #endif
+        this->write_ik_input(this->ef_position.leg[leg]);
+        this->write_fifo();
+    }
     this->trigger_ikinematics();
     
     return 1;

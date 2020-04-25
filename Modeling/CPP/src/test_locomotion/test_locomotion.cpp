@@ -19,6 +19,8 @@ int main(int argc, char* argv[]) {
     uint32_t walk = 1;
     // Walk Step Delay in ms
     uint32_t delay = 100;
+    // Inverse Kinematics Parameters Struct
+    ik_output_t ik_output;
     
     // Declare Inverse Kinematics AXI IP Context
     hexapod_locomotion hexapod;
@@ -31,6 +33,11 @@ int main(int argc, char* argv[]) {
     hexapod.init_servo_invertion();
     // Initialize Joints Positions
     hexapod.init_joint_position();
+    
+    // Show IP Status
+    cout << "IP : " << endl;
+    hexapod.axi_show_regs(0x0, 0x28);
+    cout << "-------------" << endl;
     
     // Set var
     uint32_t set_S = 1;
@@ -82,11 +89,23 @@ int main(int argc, char* argv[]) {
     hexapod.yo  = 5.0;
     hexapod.zo  = -10.51;
     
+    cout << " --- START --- " << endl;
+    
     // 
     for (uint32_t i=0; i<hexapod.iteration_size(); i++) {
         hexapod.step(i, walk, 0);
+        
         delay_ms(delay);
+        
+        for (uint32_t leg=0; leg<6; leg++) {
+            ik_output = hexapod.read_ik_output(leg+1);
+            cout << "q1 " << ik_output.q1 << endl;
+            cout << "q2 " << ik_output.q2 << endl;
+            cout << "q3 " << ik_output.q3 << endl;
+        }
     }
+    
+    cout << " --- END --- " << endl;
 
     return 0;
 }

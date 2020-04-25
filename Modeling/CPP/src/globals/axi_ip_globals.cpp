@@ -97,6 +97,6 @@ void ip_context::axi_bit_clr(int32_t address, int32_t bit_mask) {
 void ip_context::axi_show_regs(int32_t start_address, int32_t end_address) {
     //TODO: Check counter i word size access
     for (int32_t i=0;i<(end_address-start_address);i++) {
-        cout << "REG[" << i << "]\t= " << hex << *(this->_axi_mmap_ptr+i) << endl;
+        cout << "REG[" << i+start_address << "]\t= " << hex << *(this->_axi_mmap_ptr+start_address+i) << endl;
     }
 }
