@@ -18,6 +18,7 @@ def print_title(title, char='#'):
     return True
     
 def create_alias(aliases_src_file, alias_name, content):
+    content = content.replace("$", "\$")
     content = os.path.expandvars(content)
     alias_file_exist    = os.path.isfile(aliases_src_file)
     get_aliases     = ''
@@ -63,6 +64,7 @@ def create_variable(envar_src_file, envar_name, content):
                 os.system("grep -vwE \""+tmp[i].split("=")[1]+"\" "+envar_src_file+".tmp > "+envar_src_file+"")
                 os.system("echo \"export "+envar_name+"="+content+" >> "+envar_src_file)
                 os.system("rm "+envar_src_file+".tmp")
+    os.system("export "+envar_name+"=\""+content+"\"")
     return True
 
 ################# SETTING UP GIT REPOSITORY #################
@@ -112,6 +114,7 @@ else:
 create_variable(envar_src_file, "PROJ_PATH", git_dir)
 create_variable(envar_src_file, "MODEL_PY_PATH", git_dir+"/Modeling/Python")
 create_variable(envar_src_file, "MODEL_C_PATH", git_dir+"/Modeling/C")
+create_variable(envar_src_file, "MODEL_CPP_PATH", git_dir+"/Modeling/CPP")
 create_variable(envar_src_file, "STARTUP_SCRIPT", "/etc/init.d/mystartup")
 
 ################# SETTING UP ALIASES #################
@@ -123,11 +126,16 @@ if ( alias_exist ):
 else:
     get_aliases     = ''
 
+create_alias(aliases_src_file, "cdpy", "cd $MODEL_PY_PATH")
+create_alias(aliases_src_file, "cdc", "cd $MODEL_C_PATH")
+create_alias(aliases_src_file, "cdcpp", "cd $MODEL_CPP_PATH")
 create_alias(aliases_src_file, "REPO_PULL", "git pull --depth=1 origin master --rebase --autostash")
 create_alias(aliases_src_file, "py", "python")
 create_alias(aliases_src_file, "SET_OFFSETS", "python $MODEL_PY_PATH/set_hexapod_offsets.py")
 create_alias(aliases_src_file, "TEST_GAIT", "python $MODEL_PY_PATH/test_gait.py")
 create_alias(aliases_src_file, "SET_INIT", "python $MODEL_PY_PATH/set_initial_position.py")
+create_alias(aliases_src_file, "TEST_LOCOMOTION", "python $MODEL_PY_PATH/test_locomotion.py")
+create_alias(aliases_src_file, "TEST_TRANSLATION", "python $MODEL_PY_PATH/test_locomotion_translation.py")
 
 get_profile     = os.popen("cat "+envar_src_file).read()[:-1]
 if ( "source "+aliases_src_file not in get_profile ):

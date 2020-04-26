@@ -27,6 +27,8 @@ int main(int argc, char* argv[]) {
     
     // Initialize Inverse Kinematics IP
     hexapod.init_axi_mmap_ptr(AXI_IK_RMAPSIZE, AXI_IK_BASEADDR, AXI_IK_WORDSIZE);
+    cout << "Hexapod IKinematics AXI IP ptr : " << hexapod.get_mmap_ptr() << endl;
+    
     // Initialize Joints Offsets
     hexapod.init_joint_offsets();
     // Initialize Servo Inversions
@@ -37,9 +39,6 @@ int main(int argc, char* argv[]) {
     // Set var
     uint32_t set_S = 1;
     uint32_t set_res = 1;
-    uint32_t set_walk = 1;
-    uint32_t set_delay = 1;
-    uint32_t set_gaits = 1;
     
     // Get Argv
      for(int i = 0; i < argc; i++)
@@ -54,15 +53,12 @@ int main(int argc, char* argv[]) {
         }
         if ( argv[i] == std::string("-w") ) {
             walk = atoi(argv[i+1]);
-            set_walk = 0;
         } 
         if ( argv[i] == std::string("-delay") ) {
             delay = atoi(argv[i+1]);
-            set_delay = 0;
         }
         if ( argv[i] == std::string("-gaits") ) {
             gaits = atoi(argv[i+1]);
-            set_gaits = 0;
         }
     }
     if ( set_S ) {
