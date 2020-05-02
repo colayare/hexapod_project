@@ -9,6 +9,8 @@
 #include <sys/mman.h>
 #include <stdint.h>
 #include <string>
+#include <cstring>
+#include <linux/i2c-dev.h>
 
 using namespace std;
 
@@ -17,26 +19,28 @@ using namespace std;
 class ip_context {
     //==== Members  ============================================================
     public:
-        //uint32_t &*axi_mmap_ptr( uint32_t );
         uint32_t &axi_mmap_size( uint32_t );
         uint32_t &axi_base_address( uint32_t );
         uint32_t &axi_word_size( uint32_t );
-        
-    // protected:
-        // string  ip_name;            //== AXI IP NAME
+        string   dev_name;                  //== Device Name (eg. /dev/mem, /dev/i2c-0)
+        string   ip_name;                   //== AXI IP NAME
     
     private:
-        volatile uint32_t *_axi_mmap_ptr;      //== AXI IP Memory Map Pointer
-        uint32_t _axi_mmap_size;      //== AXI IP Memory MAP Size in Bytes
-        uint32_t _axi_base_address;   //== AXI IP Memory MAP Base Address
-        uint32_t _axi_word_size;      //== AXI IP Memory Map Word Size
+        volatile uint32_t *_axi_mmap_ptr;   //== AXI IP Memory Map Pointer
+        int32_t  _ip_file;
+        uint32_t _axi_mmap_size;            //== AXI IP Memory MAP Size in Bytes
+        uint32_t _axi_base_address;         //== AXI IP Memory MAP Base Address
+        uint32_t _axi_word_size;            //== AXI IP Memory Map Word Size
     
     //==== Method Prototypes ===================================================
     public:
+        //== Constructor
+        ip_context(char dev_name[]);
         //== Init AXI IP Memory Map
-        uint32_t init_axi_mmap_ptr(uint32_t axi_mmap_size, uint32_t axi_base_address, uint32_t axi_word_size);
+        uint32_t    init_axi_mmap_ptr(uint32_t axi_mmap_size, uint32_t axi_base_address, uint32_t axi_word_size);
         //== Get Private Members Functions
         volatile uint32_t *get_mmap_ptr();
+        int32_t     ip_file();
         
         //== AXI IP Operations 32 Bit
         uint32_t    axi_read(uint32_t read_address);

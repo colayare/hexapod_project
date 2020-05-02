@@ -5,15 +5,28 @@
 #include <sys/mman.h>
 #include <stdint.h>
 #include <string>
-#include "globals/global_defines.h"
+#include <string.h>
 #include "globals/axi_ip_globals.h"
+#include "globals/global_defines.h"
+
+//==============================================================================
+//== Class Methods
+//==============================================================================
+//== Constructor
+ip_context::ip_context(char dev_name[]) {
+    string dev(dev_name);
+    this->dev_name = dev;
+}
 
 //== Init AXI IP Memory Map
 uint32_t ip_context::init_axi_mmap_ptr(uint32_t axi_mmap_size, uint32_t axi_base_address, uint32_t axi_word_size) {
-    uint32_t _fdmem;
+    int32_t _fdmem;
     volatile uint32_t *axi_mmap_ptr = NULL;
     size_t mmap_size = (size_t) (axi_mmap_size * axi_word_size);
-    const char memDevice[] = "/dev/mem";
+    char memDevice[this->dev_name.size()];
+    
+    //== Get Device Name
+    strcpy(memDevice, this->dev_name.c_str()); 
     
     //== Validate 
     if ( !( axi_mmap_size && axi_base_address ) ) {
@@ -23,16 +36,17 @@ uint32_t ip_context::init_axi_mmap_ptr(uint32_t axi_mmap_size, uint32_t axi_base
 
     _fdmem = open( memDevice, O_RDWR | O_SYNC );
     if ( _fdmem < 0 ) {
-        cout << "Failed to open /dev/mem !\n" << endl;
+        cout << "Failed to open " << this->dev_name << " !\n" << endl;
         return 0;
     } else {
-        cout << "Open /dev/mem successfully !\n" << endl;
+        cout << "Open " << this->dev_name << " successfully !\n" << endl;
     }
     
     axi_mmap_ptr = (uint32_t *)(mmap(0, mmap_size, PROT_READ|PROT_WRITE, MAP_SHARED, _fdmem, axi_base_address));
     
     // Setting Class members values
     this->_axi_mmap_ptr      = axi_mmap_ptr;
+    this->_ip_file           = _fdmem;
     this->_axi_mmap_size     = axi_mmap_size;
     this->_axi_base_address  = axi_base_address;
     this->_axi_word_size     = axi_word_size;
@@ -41,6 +55,8 @@ uint32_t ip_context::init_axi_mmap_ptr(uint32_t axi_mmap_size, uint32_t axi_base
 }
 //== Get Memory Map Pointer
 volatile uint32_t *ip_context::get_mmap_ptr() { return this->_axi_mmap_ptr; }
+//== Get File
+int32_t ip_context::ip_file() { return this->_ip_file; }
 
 //==============================================================================
 //== 32 Bit Operations

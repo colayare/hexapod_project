@@ -1,6 +1,7 @@
 #ifndef __HEXAPOD_KINEMATICS_H__
 #define __HEXAPOD_KINEMATICS_H__
 
+#include <string>
 #include <math.h>
 #include "params/hexapod_ip_params.h"
 #include "params/hexapod_params.h"
@@ -105,6 +106,8 @@ class ikinematics_ip_context : public ip_context {
     
     //==== Method Prototypes ===================================================
     public :
+        // Constructor
+        ikinematics_ip_context(char dev_name[]):ip_context(dev_name) {}
         // Trigger FIFO Write Operation 
         void write_fifo();
         // Trigger Inverse Kinematics Calculation

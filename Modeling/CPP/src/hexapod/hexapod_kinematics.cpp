@@ -5,6 +5,10 @@
 #include "params/hexapod_ip_params.h"
 #include "params/hexapod_params.h"
 
+
+//== Constructor
+// ikinematics_ip_context::ikinematics_ip_context(char dev_name[]) {}
+
 void ikinematics_ip_context::write_fifo() {
     this->axi_write(AXI_IK_REG_CONTROL, AXI_IK_REG_CONTROL_WRITE_FIFO);
     this->axi_write(AXI_IK_REG_CONTROL, 0);

@@ -47,8 +47,6 @@ $(info $(HEXA_OBJ))
 $(info > Test Objects)
 $(info $(TEST_LOCOMOTION_OBJ))
 
-$(info ===============================)
-
 $(ODIR)/%.o: $(SDIR)/globals/%.cpp $(GLOBALS) 
 	$(CC) -Wall -c -o $@ $< $(CFLAGS)
 
@@ -57,9 +55,10 @@ $(ODIR)/%.o: $(SDIR)/hexapod/%.cpp $(HEXA_DEPS) $(PARAMS) $(GLOBALS)
 
 $(ODIR)/%.o: $(SDIR)/test_locomotion/%.cpp $(PARAMS) $(GLOBALS) $(HEXA_DEPS)
 	$(CC) -Wall -c -o $@ $< $(CFLAGS)
-	
+
 test_locomotion:  $(TEST_LOCOMOTION_OBJ) $(HEXA_OBJ) $(GLOBALS_OBJ)
-	@echo "Compile $(ODIR)/$@ "
+	@echo "==============================="
+	@echo -e "Compile \033[92m $(ODIR)/$@ \033[0m"
 	$(CC) -Wall -o $(ODIR)/$@ $^ $(CFLAGS)
 	
 clean:

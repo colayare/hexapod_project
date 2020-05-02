@@ -40,23 +40,37 @@ I2C_OBJ  	= $(patsubst %,$(ODIR)/%,$(_I2C_OBJ))
 $(info > I2C Includes)
 $(info $(I2C_DEPS))
 
+
+#### I2C OLED
+_I2C_OLED 	= i2c_oled.h i2c_oled_params.h
+I2C_OLED 	= $(patsubst %,$(IDIR)/i2c_peripherals/%,$(_I2C_OLED))
+
+_I2C_OLED_OBJ	= i2c_oled.o
+I2C_OLED_OBJ  	= $(patsubst %,$(ODIR)/%,$(_I2C_OLED_OBJ))
+
+$(info > I2C Includes)
+$(info $(I2C_OLED))
+
 #### Test Objects
-_TEST_I2C_OBJ	= test_i2c.o
-TEST_I2C_OBJ  = $(patsubst %,$(ODIR)/%,$(_TEST_I2C_OBJ))
+_TEST_OLED_OBJ	= test_oled.o
+TEST_OLED_OBJ  = $(patsubst %,$(ODIR)/%,$(_TEST_OLED_OBJ))
 
 $(info > Test Object)
-$(info $(TEST_I2C_OBJ))
+$(info $(TEST_OLED_OBJ))
 
 $(ODIR)/%.o: $(SDIR)/globals/%.cpp $(GLOBALS) 
 	$(CC) -Wall -c -o $@ $< $(CFLAGS)
 
 $(ODIR)/%.o: $(SDIR)/ip_context/%.cpp $(I2C_DEPS) $(PARAMS) $(GLOBALS) 
 	$(CC) -Wall -c -o $@ $< $(CFLAGS)
+	
+$(ODIR)/%.o: $(SDIR)/i2c_peripherals/%.cpp $(I2C_DEPS) $(PARAMS) $(GLOBALS) 
+	$(CC) -Wall -c -o $@ $< $(CFLAGS)
 
-$(ODIR)/%.o: $(SDIR)/test_i2c/%.cpp $(I2C_DEPS) $(PARAMS) $(GLOBALS)
+$(ODIR)/%.o: $(SDIR)/test_oled/%.cpp $(I2C_DEPS) $(PARAMS) $(GLOBALS)
 	$(CC) -Wall -c -o $@ $< $(CFLAGS)
 	
-test_i2c:  $(TEST_I2C_OBJ) $(I2C_OBJ) $(GLOBALS_OBJ)
+test_oled:  $(TEST_OLED_OBJ) $(I2C_OLED_OBJ) $(I2C_OBJ) $(GLOBALS_OBJ)
 	@echo "==============================="
 	@echo -e "Compile \033[92m $(ODIR)/$@ \033[0m"
 	$(CC) -Wall -o $(ODIR)/$@ $^ $(CFLAGS)

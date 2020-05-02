@@ -23,11 +23,14 @@ int main(int argc, char* argv[]) {
     uint32_t gaits = 10;
     
     // Declare Inverse Kinematics AXI IP Context
-    hexapod_locomotion hexapod;
+    hexapod_locomotion hexapod("/dev/mem");
+    
+    // Assign AXI IP Name
+    hexapod.ip_name = "IKinematics";
     
     // Initialize Inverse Kinematics IP
     hexapod.init_axi_mmap_ptr(AXI_IK_RMAPSIZE, AXI_IK_BASEADDR, AXI_IK_WORDSIZE);
-    cout << "Hexapod IKinematics AXI IP ptr : " << hexapod.get_mmap_ptr() << endl;
+    cout << hexapod.ip_name << " IP ptr : " << hexapod.get_mmap_ptr() << endl;
     
     // Initialize Joints Offsets
     hexapod.init_joint_offsets();

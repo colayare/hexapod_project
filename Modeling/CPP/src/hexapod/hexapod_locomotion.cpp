@@ -6,6 +6,9 @@
 #include "params/hexapod_ip_params.h"
 #include "params/hexapod_params.h"
 
+//== Constructor
+// hexapod_locomotion::hexapod_locomotion(char dev_name[]) {}
+
 uint32_t hexapod_locomotion::iteration_size() {
     return this->S/this->res + 1;
 }
