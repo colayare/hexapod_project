@@ -2,10 +2,66 @@
 #include "i2c_peripherals/i2c_oled_params.h"
 
 void i2c_oled::send_command(char command) {
-    char buffer[2];
-    buffer[0] = SSD1306_COMMAND;
-    buffer[1] = command;
-    this->i2c_write(buffer);
+    this->i2c_write_byte_data(SSD1306_COMMAND, (uint8_t) command);
+}
+
+void i2c_oled::send_data(char data) {
+    this->i2c_write_byte_data(SSD1306_DATA, (uint8_t) data);
+}
+
+void i2c_oled::set_cursor(uint8_t line, uint8_t cursor) {
+    if ((line <= SSD1306_LAST_LINE) && (cursor <= SSD1306_OLED_WIDTH)) {
+        this->send_command(SSD1306_SET_COLUMN_ADDR);
+        this->send_command(cursor);
+        this->send_command(127);
+        
+        this->send_command(SSD1306_SET_PAGE_ADDR);
+        this->send_command(line);
+        this->send_command(7);
+        
+        this->send_command(SSD1306_DATA_CONTINUE);
+        
+        this->_line = line;
+        this->_cursor = cursor;
+    }
+}
+
+void i2c_oled::goto_next_line() {
+    this->_line++;
+    this->_line = this->_line & 0x07;
+    this->set_cursor(this->_line, 0);
+}
+
+void i2c_oled::disp_char(uint8_t character) {
+    uint8_t data, i=0;
+    
+    if (((this->_cursor+C_FONT_SIZE) >= 128) || (character == '\n')) {
+        this->goto_next_line();
+    }
+    
+    if ( character != '\n' ) {
+        character = character - 0x20;
+        
+        while(1) {
+            data = C_FONT_TABLE[character][i];
+            
+            this->send_data(data);
+            this->_cursor++;
+            i++;
+            if ( i == C_FONT_SIZE ) {
+                this->i2c_write_byte(0x00);
+                this->_cursor++;
+                break;
+            }
+        }
+    }
+    
+}
+
+void i2c_oled::disp_str(uint8_t *ptr) {
+    while(*ptr) {
+        this->disp_char(*ptr++);
+    }
 }
 
 void i2c_oled::init() {
@@ -35,7 +91,7 @@ void i2c_oled::init() {
     this->send_command(SSD1306_NORMAL_DISPLAY);
     this->send_command(SSD1306_DISPLAY_ON);
 
-    //OLED_Clear();  /* Clear the complete LCD during init */
+    this->clear();  /* Clear the complete LCD during init */
 }
 
 void i2c_oled::clear() {
@@ -49,19 +105,11 @@ void i2c_oled::clear() {
     this->send_command(0);
     this->send_command(7);
 
-
-    // oledSendStart(SSD1306_ADDRESS<<1);
-    // oledSendByte(SSD1306_DATA_CONTINUE);
-    this->i2c_write_byte(SSD1306_DATA_CONTINUE);
+    this->send_command(SSD1306_DATA_CONTINUE);
     
-    char buffer[1];
-    buffer[0] = 0;
-
     for (i=0; i<1024; i++)      // Write Zeros to clear the display
     {
-        // oledSendByte(0);
-        // this->i2c_write(buffer);
-        this->i2c_write_byte(0);
+        this->send_data(0);
     }
 
     this->send_command(SSD1306_SET_COLUMN_ADDR);
@@ -72,7 +120,5 @@ void i2c_oled::clear() {
     this->send_command(0);
     this->send_command(7);	  
 
-    // oledSendStart(SSD1306_ADDRESS<<1);
-    // oledSendByte(SSD1306_DATA_CONTINUE);
-    this->i2c_write_byte(SSD1306_DATA_CONTINUE);
+    this->send_command(SSD1306_DATA_CONTINUE);
 }

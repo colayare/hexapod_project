@@ -1,48 +1,45 @@
 #ifndef __I2C_IP_CONTEXT__
 #define __I2C_IP_CONTEXT__
 
-#include <linux/i2c-dev.h>
-#include <sys/ioctl.h>
-#include <iostream>
-#include <fstream>
-#include <stdio.h>
-#include <fcntl.h>
-
+#include<iostream>
 #include <unistd.h>
-#include <stdint.h>
-#include <termios.h>
-#include <stdexcept>
-
-#include "globals/axi_ip_globals.h"
+#include <sys/types.h>
+#include <fcntl.h>
+#include <string>
+#include <cstring>
+#include <sys/ioctl.h>
+#include <linux/i2c-dev.h>
+#include <linux/i2c-dev-user.h>
 #include "globals/global_defines.h"
-#include "params/ip_reg_map.h"
-#include "params/i2c_ip_defines.h"
 
-class i2c_ip_context : public ip_context {
+using namespace std;
+
+class i2c_ip_context {
     
     //==== Members =============================================================
     public :
-        uint32_t &i2c_address ( uint32_t );
+        int32_t  i2c_file() { return this->_i2c_file; }
+        string   dev_name() { return this->_dev_name; }
+        uint32_t i2c_address() { return this->_i2c_address; }
         
     private :
+        int32_t  _i2c_file;
+        string   _dev_name;
         uint32_t _i2c_address;
 
     //==== Method Prototypes ===================================================
     public :
         //==  Constructor
-        i2c_ip_context(char dev_name[]):ip_context(dev_name) {}
-        //== 
-        void set_address(uint32_t address);
-        //== I2C Write
-        void i2c_write(char buffer[]);
-        //== I2C Write Byte
-        void i2c_write_byte(uint32_t byte);
-        //== I2C Read
-        char i2c_read(size_t read_size);
-        
-        // Register Reset
-        uint8_t reg_reset_check(); 
-
+        i2c_ip_context(string dev_name);
+        //== Set Device Address
+        void set_address(uint8_t address);
+        //== I2C Access Methods ================================================
+        int32_t i2c_read_byte();
+        int32_t i2c_write_byte(uint8_t value);
+        int32_t i2c_read_byte_data(uint8_t command);
+        int32_t i2c_write_byte_data(uint8_t command, uint8_t value);
+        int32_t i2c_read_word_data(uint8_t command);
+        int32_t i2c_write_word_data(uint8_t command, uint16_t value);
 };
 
 #endif //__I2C_IP_CONTEXT__

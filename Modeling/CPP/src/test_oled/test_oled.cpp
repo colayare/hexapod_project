@@ -1,3 +1,5 @@
+#include <string.h>
+#include <cstring>
 #include "globals/linux_timing.h"
 #include "i2c_peripherals/i2c_oled.h"
 #include "i2c_peripherals/i2c_oled_params.h"
@@ -10,41 +12,56 @@ int main(int argc, char* argv[]) {
     
     // Declare I2C OLED
     i2c_oled oled("/dev/i2c-0");
-    oled.init_axi_mmap_ptr(AXI_I2C0_RMAPSIZE, AXI_I2C0_BASEADDR, 1);
-    
     oled.set_address(SSD1306_ADDRESS);
     
-    // oled.i2c_read(4);
+    oled.init();
     
-    // oled.send_command(SSD1306_DISPLAYON);
-    // oled.i2c_read(4);
-    // oled.send_command(SSD1306_INVERTDISPLAY);
-    // oled.i2c_read(4);
+    // oled.set_cursor(0,0);
+    // oled.send_command(SSD1306_DATA_CONTINUE);
+    // for (int i=0; i<1024; i++) {
+        // oled.send_data(0xAA);
+    // }
+    // oled.set_cursor(0,0);
+    // oled.send_command(SSD1306_DATA_CONTINUE);
+    
+    // oled.send_command(SSD1306_INVERT_DISPLAY);
     
     // for (int i=0; i<4; i++) {
         // delay_ms(500);
     // }
     
-    // oled.send_command(SSD1306_DISPLAYOFF);
-    // oled.i2c_read(4);
+    // oled.send_command(SSD1306_NORMAL_DISPLAY);
     
-    cout << "-----------------------" << endl;
+    // for (int i=0; i<4; i++) {
+        // delay_ms(500);
+    // }
     
-    oled.i2c_read(4);
-    oled.init();
-    oled.i2c_read(4);
-    oled.clear();
-    oled.i2c_read(4);
+    // oled.clear();
     
-    oled.send_command(0xA6);
+    char str[20];
     
-    for (int i=0; i<4; i++) {
-        delay_ms(500);
-    }
     
-    oled.send_command(0xA7);
+    oled.set_cursor(0, 0);
+    strncpy(str, "3", sizeof(str));
+    oled.disp_str((uint8_t *) &str);
     
-    for (int i=0; i<4; i++) {
-        delay_ms(500);
-    }
+    for (int i=0; i<2; i++) delay_ms(500);
+    
+    oled.set_cursor(0, 0);
+    strncpy(str, "2", sizeof(str));
+    oled.disp_str((uint8_t *) &str);
+    
+    for (int i=0; i<2; i++) delay_ms(500);
+    
+    oled.set_cursor(0, 0);
+    strncpy(str, "1", sizeof(str));
+    oled.disp_str((uint8_t *) &str);
+    
+    for (int i=0; i<2; i++) delay_ms(500);
+    
+    oled.set_cursor(0, 0);
+    strncpy(str, "Testing!", sizeof(str));
+    oled.disp_str((uint8_t *) &str);
+    
+    oled.send_command(SSD1306_DATA_CONTINUE);
 }
