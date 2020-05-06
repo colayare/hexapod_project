@@ -1,27 +1,47 @@
 # Created by https://www.gitignore.io/api/xilinxvivado
 # Edit at https://www.gitignore.io/?templates=xilinxvivado
 
+
+#########################################################################################################
+##	
+##	https://github.com/colayare/hexapod_project
+##########
+##	Exclude all in repository
+#*
+#!*/
+## 	.gitignore
+!.gitignore
+
+### Python ###
+#########################################################################################################
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+### TCL/ ###
+#########################################################################################################
+!TCL/*
+
+### Petalinux/ ###
+#########################################################################################################
+!Petalinux/*
+
+### Verification/ ###
+#########################################################################################################
+!Verification/*
+
+!*/
+
 ### XilinxVivado ###
 #########################################################################################################
 ##	This is an example .gitignore file for Vivado, please treat it as an example as
 ##	it might not be complete. In addition, XAPP 1165 should be followed.
 #########
-## 	.gitignore
-!.gitignore
-##	Exclude all inside Vivado Project
-arty7z10_ikinematics_v2_2/*
-!*/
-##	TCL's Directory
-#!TCL/*
-##	Petalinux Directory
-#!Petalinux/*
-##	Modeling Directory
-Modeling/*.pyc
-Modeling/*.~
-#!Modeling/*
+#!*/
 ###########################################################################
 ##	SDK .metadata Folder content to avoid SDK not opening issue
-arty7z10_ikinematics_v2_2/arty7z10_ikinematics_v2_2.sdk/.metadata/
+#arty7z10_ikinematics_v2_2/arty7z10_ikinematics_v2_2.sdk/.metadata/
 ###########################################################################
 ##	VIVADO
 #Source files:
