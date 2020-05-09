@@ -8,52 +8,52 @@ __Register Modes__\
 __Numeric values__\
 N     : Decimal\
 0xN   : Hexadecimal Format\
-0bN   : Binary Format\
+0bN   : Binary Format
 
 ## REGISTER MAP
 |ADDR|REG NAME|Comment|
 |------|------|------|
-|0x00||Trigger Register|
-|0x01||Leg Counter Register|
-|0x02||Inverse Kinematics Input X|
-|0x03||Inverse Kinematics Input Y|
-|0x04||Inverse Kinematics Input Z|
-|0x05||Digital Offset Q1|
-|0x06||Digital Offset Q2|
-|0x07||Digital Offset Q3|
-|0x08||Digital Offset Q4|
-|0x09||Digital Offset Q5|
-|0x0A||Digital Offset Q6|
-|0x0B||Digital Offset Q7|
-|0x0C||Digital Offset Q8|
-|0x0D||Digital Offset Q9|
-|0x0E||Digital Offset Q10|
-|0x0F||Digital Offset Q11|
-|0x10||Digital Offset Q12|
-|0x11||Digital Offset Q13|
-|0x12||Digital Offset Q14|
-|0x13||Digital Offset Q15|
-|0x14||Digital Offset Q16|
-|0x15||Digital Offset Q17|
-|0x16||Digital Offset Q18|
-|0x17||Leg 1 - Q1|
-|0x18||Leg 1 - Q2|
-|0x19||Leg 1 - Q3|
-|0x1A||Leg 2 - Q1|
-|0x1B||Leg 2 - Q2|
-|0x1C||Leg 2 - Q3|
-|0x1D||Leg 3 - Q1|
-|0x1E||Leg 3 - Q2|
-|0x1F||Leg 3 - Q3|
-|0x20||Leg 4 - Q1|
-|0x21||Leg 4 - Q2|
-|0x22||Leg 4 - Q3|
-|0x23||Leg 5 - Q1|
-|0x24||Leg 5 - Q2|
-|0x25||Leg 5 - Q3|
-|0x26||Leg 6 - Q1|
-|0x27||Leg 6 - Q2|
-|0x28||Leg 6 - Q3|
+|0x00|TRIG|Trigger Register|
+|0x01|LEGC|Leg Counter Register|
+|0x02|IKIX|Inverse Kinematics Input X|
+|0x03|IKIY|Inverse Kinematics Input Y|
+|0x04|IKIZ|Inverse Kinematics Input Z|
+|0x05|OF01|Digital Offset Q1|
+|0x06|OF02|Digital Offset Q2|
+|0x07|OF03|Digital Offset Q3|
+|0x08|OF04|Digital Offset Q4|
+|0x09|OF05|Digital Offset Q5|
+|0x0A|OF06|Digital Offset Q6|
+|0x0B|OF07|Digital Offset Q7|
+|0x0C|OF08|Digital Offset Q8|
+|0x0D|OF09|Digital Offset Q9|
+|0x0E|OF10|Digital Offset Q10|
+|0x0F|OF11|Digital Offset Q11|
+|0x10|OF12|Digital Offset Q12|
+|0x11|OF13|Digital Offset Q13|
+|0x12|OF14|Digital Offset Q14|
+|0x13|OF15|Digital Offset Q15|
+|0x14|OF16|Digital Offset Q16|
+|0x15|OF17|Digital Offset Q17|
+|0x16|OF18|Digital Offset Q18|
+|0x17|KO01|Leg 1 - Q1|
+|0x18|KO02|Leg 1 - Q2|
+|0x19|KO03|Leg 1 - Q3|
+|0x1A|KO04|Leg 2 - Q1|
+|0x1B|KO05|Leg 2 - Q2|
+|0x1C|KO06|Leg 2 - Q3|
+|0x1D|KO07|Leg 3 - Q1|
+|0x1E|KO08|Leg 3 - Q2|
+|0x1F|KO09|Leg 3 - Q3|
+|0x20|KO10|Leg 4 - Q1|
+|0x21|KO11|Leg 4 - Q2|
+|0x22|KO12|Leg 4 - Q3|
+|0x23|KO13|Leg 5 - Q1|
+|0x24|KO14|Leg 5 - Q2|
+|0x25|KO15|Leg 5 - Q3|
+|0x26|KO16|Leg 6 - Q1|
+|0x27|KO17|Leg 6 - Q2|
+|0x28|KO18|Leg 6 - Q3|
 
 ----
 # REGISTER SPECIFICATION 32-bit Register Size
@@ -138,7 +138,7 @@ __Word__    = 32-bit\
 \
 __Register Description__\
 This registers works as Inverse Kinematics input when write and Inverse Kinematics output calculation when read\
-\ 
+\
 __Bit Description__
 |Bit|Type|Description|
 |------|------|------|
@@ -157,10 +157,10 @@ __Bit Description__
 |31:0|RW|Leg 1 - Q1 Floating-Point Digital Offset|
 
 ## Digital Offset Q2
-__Address__ = 0x06
-__Word__    = 32-bit
+__Address__ = 0x06\
+__Word__    = 32-bit\
 \
-__Register Description__
+__Register Description__\
 This Registers contains the angular value which is added to the Inverse Kinematics Leg 1 - Q2 result for Calculate PWM Servo Value\
 \
 __Bit Description__
@@ -172,7 +172,7 @@ __Bit Description__
 __Address__ = 0x07\
 __Word__    = 32-bit\
 \
-__Register Description__
+__Register Description__\
 This Registers contains the angular value which is added to the Inverse Kinematics Leg 1 - Q3 result for Calculate PWM Servo Value\
 \
 __Bit Description__
