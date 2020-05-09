@@ -1,6 +1,6 @@
 # Inverse Kinematics IP Register Map
 
-#### Legend
+## Legend
 __Register Modes__\
 [T]   : Trigger\
 [R]   : Read\
@@ -60,11 +60,11 @@ N     : Decimal\
 
 ## Trigger Register
 __Address__ = 0x00\
-__Word__    = 32-bit
-
+__Word__    = 32-bit\
+\
 __Register Description__\
-This Register contains functionability triggers
-
+This Register contains functionability triggers\
+\
 __Bit Description__
 |Bit|Type|Description|
 |------|------|------|
@@ -74,12 +74,12 @@ __Bit Description__
 |31:3|-|Unused|
 
 ## Leg Counter Register
-__Address__ = 0x01
-__Word__    = 32-bit
-
+__Address__ = 0x01\
+__Word__    = 32-bit\
+\
 __Register Description__
-    This Register handles Leg Counter Module
-
+This Register handles Leg Counter Module\
+\
 __Bit Description__
 |Bit|Type|Description|
 |------|------|------|
@@ -113,7 +113,7 @@ __Address__ = 0x02\
 __Word__    = 32-bit\
 \
 __Register Description__\
-   This registers works as Inverse Kinematics input when write and Inverse Kinematics output calculation when read
+This registers works as Inverse Kinematics input when write and Inverse Kinematics output calculation when read\
 \
 __Bit Description__
 |Bit|Type|Description|
@@ -125,20 +125,19 @@ __Address__ = 0x03\
 __Word__    = 32-bit\
 \
 __Register Description__\
-   This registers works as Inverse Kinematics input when write and Inverse Kinematics output calculation when read\
+This registers works as Inverse Kinematics input when write and Inverse Kinematics output calculation when read\
 \
 __Bit Description__
 |Bit|Type|Description|
 |------|------|------|
 |31:0|RW|Floating-Point Inverse Kinematics IP Parameter<br>[READ]  = IP iKinematics Output Parameter Q2<br>[WRITE] = IP iKinematics Input Parameter Y|
 
-
 ## Inverse Kinematics Input Z 
-__Address__ = 0x04
-__Word__    = 32-bit
+__Address__ = 0x04\
+__Word__    = 32-bit\
 \
-__Register Description__
-   This registers works as Inverse Kinematics input when write and Inverse Kinematics output calculation when read
+__Register Description__\
+This registers works as Inverse Kinematics input when write and Inverse Kinematics output calculation when read\
 \ 
 __Bit Description__
 |Bit|Type|Description|
@@ -149,8 +148,8 @@ __Bit Description__
 __Address__ = 0x05\
 __Word__    = 32-bit\
 \
-__Register Description__
-This Registers contains the angular value which is added to the Inverse Kinematics Leg1 - Q1 result for Calculate PWM Servo Value
+__Register Description__\
+This Registers contains the angular value which is added to the Inverse Kinematics Leg1 - Q1 result for Calculate PWM Servo Value\
 \
 __Bit Description__
 |Bit|Type|Description|
@@ -162,7 +161,7 @@ __Address__ = 0x06
 __Word__    = 32-bit
 \
 __Register Description__
-This Registers contains the angular value which is added to the Inverse Kinematics Leg 1 - Q2 result for Calculate PWM Servo Value
+This Registers contains the angular value which is added to the Inverse Kinematics Leg 1 - Q2 result for Calculate PWM Servo Value\
 \
 __Bit Description__
 |Bit|Type|Description|
@@ -174,7 +173,7 @@ __Address__ = 0x07\
 __Word__    = 32-bit\
 \
 __Register Description__
-This Registers contains the angular value which is added to the Inverse Kinematics Leg 1 - Q3 result for Calculate PWM Servo Value
+This Registers contains the angular value which is added to the Inverse Kinematics Leg 1 - Q3 result for Calculate PWM Servo Value\
 \
 __Bit Description__
 |Bit|Type|Description|
