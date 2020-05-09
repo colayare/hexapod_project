@@ -1,72 +1,73 @@
 # Inverse Kinematics IP Register Map
 
-# Legend
-[T] : Trigger
-[R] : Read
-[W] : Write
+#### Legend
+Register Modes
+- [T]   : Trigger
+- [R]   : Read
+- [W]   : Write
 Numeric values:
-  X   : Decimal
-  Xh  : Hexadecimal Format
-  Xb  : Binary Format
+- N     : Decimal
+- 0xN   : Hexadecimal Format
+- 0bN   : Binary Format
 
-#### REGISTER MAP ####
-0x00 Trigger Register
-0x01 Leg Counter Register
-0x02 Inverse Kinematics Input X
-0x03 Inverse Kinematics Input Y
-0x04 Inverse Kinematics Input Z
-0x05 Digital Offset Q1
-0x06 Digital Offset Q2
-0x07 Digital Offset Q3
-0x08 Digital Offset Q4
-0x09 Digital Offset Q5
-0x0A Digital Offset Q6
-0x0B Digital Offset Q7
-0x0C Digital Offset Q8
-0x0D Digital Offset Q9
-0x0E Digital Offset Q10
-0x0F Digital Offset Q11
-0x10 Digital Offset Q12
-0x11 Digital Offset Q13
-0x12 Digital Offset Q14
-0x13 Digital Offset Q15
-0x14 Digital Offset Q16
-0x15 Digital Offset Q17
-0x16 Digital Offset Q18
-0x17 Leg 1 - Q1
-0x18 Leg 1 - Q2
-0x19 Leg 1 - Q3
-0x1A Leg 2 - Q1
-0x1B Leg 2 - Q2
-0x1C Leg 2 - Q3
-0x1D Leg 3 - Q1
-0x1E Leg 3 - Q2
-0x1F Leg 3 - Q3
-0x20 Leg 4 - Q1
-0x21 Leg 4 - Q2
-0x22 Leg 4 - Q3
-0x23 Leg 5 - Q1
-0x24 Leg 5 - Q2
-0x25 Leg 5 - Q3
-0x26 Leg 6 - Q1
-0x27 Leg 6 - Q2
-0x28 Leg 6 - Q3
+## REGISTER MAP
+- 0x00 Trigger Register
+- 0x01 Leg Counter Register
+- 0x02 Inverse Kinematics Input X
+- 0x03 Inverse Kinematics Input Y
+- 0x04 Inverse Kinematics Input Z
+- 0x05 Digital Offset Q1
+- 0x06 Digital Offset Q2
+- 0x07 Digital Offset Q3
+- 0x08 Digital Offset Q4
+- 0x09 Digital Offset Q5
+- 0x0A Digital Offset Q6
+- 0x0B Digital Offset Q7
+- 0x0C Digital Offset Q8
+- 0x0D Digital Offset Q9
+- 0x0E Digital Offset Q10
+- 0x0F Digital Offset Q11
+- 0x10 Digital Offset Q12
+- 0x11 Digital Offset Q13
+- 0x12 Digital Offset Q14
+- 0x13 Digital Offset Q15
+- 0x14 Digital Offset Q16
+- 0x15 Digital Offset Q17
+- 0x16 Digital Offset Q18
+- 0x17 Leg 1 - Q1
+- 0x18 Leg 1 - Q2
+- 0x19 Leg 1 - Q3
+- 0x1A Leg 2 - Q1
+- 0x1B Leg 2 - Q2
+- 0x1C Leg 2 - Q3
+- 0x1D Leg 3 - Q1
+- 0x1E Leg 3 - Q2
+- 0x1F Leg 3 - Q3
+- 0x20 Leg 4 - Q1
+- 0x21 Leg 4 - Q2
+- 0x22 Leg 4 - Q3
+- 0x23 Leg 5 - Q1
+- 0x24 Leg 5 - Q2
+- 0x25 Leg 5 - Q3
+- 0x26 Leg 6 - Q1
+- 0x27 Leg 6 - Q2
+- 0x28 Leg 6 - Q3
 
-#### REGISTER SPECIFICATION 32-bit Register Size ####
-## Trigger Register
-  Address = 0x00
-  Word    = 32-bit
+## REGISTER SPECIFICATION 32-bit Register Size
+#### Trigger Register
+- __Address__ = 0x00
+- __Word__    = 32-bit
 
-  Register Description
-    This Register contains functionability triggers
+- __Register Description__
+This Register contains functionability triggers
 
-  Bit Description
-    0 [T] = Trigger Fifo Write
-    1 [T] = Trigger Inv. Kinematics calculation
-    2 [T] = Write Angular value Direct to Output Trigger
-    31:3  = Unused
+-  __Bit Description__
+    > 0 [T] = Trigger Fifo Write
+    > 1 [T] = Trigger Inv. Kinematics calculation
+    > 2 [T] = Write Angular value Direct to Output Trigger
+    > 31:3  = Unused
 
-## Leg Counter Register
+#### Leg Counter Register
   Address = 0x01
   Word    = 32-bit
 
@@ -112,7 +113,7 @@ Numeric values:
     29 [RW]     = Leg 18 Servo Controler PWM Inversion
     31:30       = Unused
 
-## Inverse Kinematics Input X 
+#### Inverse Kinematics Input X 
   Address = 0x02
   Word    = 32-bit
 
@@ -124,7 +125,7 @@ Numeric values:
                 [READ]  = IP Output
                 [WRITE] = IP Input
 
-## Inverse Kinematics Input Y 
+#### Inverse Kinematics Input Y 
   Address = 0x03
   Word    = 32-bit
 
@@ -137,7 +138,7 @@ Numeric values:
                 [WRITE] = IP Input
 
 
-## Inverse Kinematics Input Z 
+#### Inverse Kinematics Input Z 
   Address = 0x04
   Word    = 32-bit
 
@@ -149,7 +150,7 @@ Numeric values:
                 [READ]  = IP Output
                 [WRITE] = IP Input
 
-## Digital Offset Q1
+#### Digital Offset Q1
   Address = 0x05
   Word    = 32-bit
 
@@ -159,7 +160,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 1 - Q1 Floating-Point Digital Offset
 
-## Digital Offset Q2
+#### Digital Offset Q2
   Address = 0x06
   Word    = 32-bit
 
@@ -169,7 +170,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 1 - Q2 Floating-Point Digital Offset
 
-## Digital Offset Q3
+#### Digital Offset Q3
   Address = 0x07
   Word    = 32-bit
 
@@ -179,7 +180,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 1 - Q3 Floating-Point Digital Offset
 
-## Digital Offset Q4
+#### Digital Offset Q4
   Address = 0x08
   Word    = 32-bit
 
@@ -189,7 +190,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 2 - Q1 Floating-Point Digital Offset
 
-## Digital Offset Q5
+#### Digital Offset Q5
   Address = 0x09
   Word    = 32-bit
 
@@ -199,7 +200,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 2 - Q2 Floating-Point Digital Offset
 
-## Digital Offset Q6
+#### Digital Offset Q6
   Address = 0x0A
   Word    = 32-bit
 
@@ -209,7 +210,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 2 - Q3 Floating-Point Digital Offset
 
-## Digital Offset Q7
+#### Digital Offset Q7
   Address = 0x0B
   Word    = 32-bit
 
@@ -219,7 +220,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 3 - Q1 Floating-Point Digital Offset
 
-## Digital Offset Q8
+#### Digital Offset Q8
   Address = 0x0C
   Word    = 32-bit
 
@@ -229,7 +230,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 3 - Q2 Floating-Point Digital Offset
 
-## Digital Offset Q9
+#### Digital Offset Q9
   Address = 0x0D
   Word    = 32-bit
 
@@ -239,7 +240,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 3 - Q3 Floating-Point Digital Offset
 
-## Digital Offset Q10
+#### Digital Offset Q10
   Address = 0x0E
   Word    = 32-bit
 
@@ -249,7 +250,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 4 - Q1 Floating-Point Digital Offset
 
-## Digital Offset Q11
+#### Digital Offset Q11
   Address = 0x0F
   Word    = 32-bit
 
@@ -259,7 +260,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 4 - Q2 Floating-Point Digital Offset
 
-## Digital Offset Q12
+#### Digital Offset Q12
   Address = 0x10
   Word    = 32-bit
 
@@ -269,7 +270,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 4 - Q3 Floating-Point Digital Offset
 
-## Digital Offset Q13
+#### Digital Offset Q13
   Address = 0x11
   Word    = 32-bit
 
@@ -279,7 +280,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 5 - Q1 Floating-Point Digital Offset
 
-## Digital Offset Q14
+#### Digital Offset Q14
   Address = 0x12
   Word    = 32-bit
 
@@ -289,7 +290,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 5 - Q2 Floating-Point Digital Offset
 
-## Digital Offset Q15
+#### Digital Offset Q15
   Address = 0x13
   Word    = 32-bit
 
@@ -299,7 +300,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 5 - Q3 Floating-Point Digital Offset
 
-## Digital Offset Q16
+#### Digital Offset Q16
   Address = 0x14
   Word    = 32-bit
 
@@ -309,7 +310,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 6 - Q1 Floating-Point Digital Offset
 
-## Digital Offset Q17
+#### Digital Offset Q17
   Address = 0x15
   Word    = 32-bit
 
@@ -319,7 +320,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 6 - Q2 Floating-Point Digital Offset
 
-## Digital Offset Q18
+#### Digital Offset Q18
   Address = 0x16
   Word    = 32-bit
 
@@ -329,7 +330,7 @@ Numeric values:
   Bit Description
     31:0 [RW] = Leg 6 - Q3 Floating-Point Digital Offset
 
-## Leg 1 - Q1
+#### Leg 1 - Q1
     Address = 0x17
     Word    = 32-bit
 
