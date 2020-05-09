@@ -1,0 +1,1468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spirit:component xmlns:xilinx="http://www.xilinx.com" xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <spirit:vendor>xilinx.com</spirit:vendor>
+  <spirit:library>user</spirit:library>
+  <spirit:name>axi_ikinematics</spirit:name>
+  <spirit:version>1.2</spirit:version>
+  <spirit:busInterfaces>
+    <spirit:busInterface>
+      <spirit:name>S00_AXI</spirit:name>
+      <spirit:busType spirit:vendor="xilinx.com" spirit:library="interface" spirit:name="aximm" spirit:version="1.0"/>
+      <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="interface" spirit:name="aximm_rtl" spirit:version="1.0"/>
+      <spirit:slave>
+        <spirit:memoryMapRef spirit:memoryMapRef="S00_AXI"/>
+      </spirit:slave>
+      <spirit:portMaps>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>AWADDR</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_awaddr</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>AWPROT</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_awprot</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>AWVALID</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_awvalid</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>AWREADY</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_awready</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>WDATA</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_wdata</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>WSTRB</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_wstrb</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>WVALID</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_wvalid</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>WREADY</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_wready</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>BRESP</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_bresp</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>BVALID</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_bvalid</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>BREADY</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_bready</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>ARADDR</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_araddr</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>ARPROT</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_arprot</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>ARVALID</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_arvalid</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>ARREADY</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_arready</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>RDATA</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_rdata</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>RRESP</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_rresp</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>RVALID</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_rvalid</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>RREADY</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_rready</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+      </spirit:portMaps>
+      <spirit:parameters>
+        <spirit:parameter>
+          <spirit:name>WIZ_DATA_WIDTH</spirit:name>
+          <spirit:value spirit:format="long" spirit:id="BUSIFPARAM_VALUE.S00_AXI.WIZ_DATA_WIDTH" spirit:choiceRef="choice_list_6fc15197">32</spirit:value>
+        </spirit:parameter>
+        <spirit:parameter>
+          <spirit:name>WIZ_NUM_REG</spirit:name>
+          <spirit:value spirit:format="long" spirit:id="BUSIFPARAM_VALUE.S00_AXI.WIZ_NUM_REG" spirit:minimum="4" spirit:maximum="512" spirit:rangeType="long">41</spirit:value>
+        </spirit:parameter>
+        <spirit:parameter>
+          <spirit:name>SUPPORTS_NARROW_BURST</spirit:name>
+          <spirit:value spirit:format="long" spirit:id="BUSIFPARAM_VALUE.S00_AXI.SUPPORTS_NARROW_BURST" spirit:choiceRef="choice_pairs_ce1226b1">0</spirit:value>
+        </spirit:parameter>
+      </spirit:parameters>
+    </spirit:busInterface>
+    <spirit:busInterface>
+      <spirit:name>S00_AXI_RST</spirit:name>
+      <spirit:busType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="reset" spirit:version="1.0"/>
+      <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="reset_rtl" spirit:version="1.0"/>
+      <spirit:slave/>
+      <spirit:portMaps>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>RST</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_aresetn</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+      </spirit:portMaps>
+      <spirit:parameters>
+        <spirit:parameter>
+          <spirit:name>POLARITY</spirit:name>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.S00_AXI_RST.POLARITY" spirit:choiceRef="choice_list_9d8b0d81">ACTIVE_LOW</spirit:value>
+        </spirit:parameter>
+      </spirit:parameters>
+    </spirit:busInterface>
+    <spirit:busInterface>
+      <spirit:name>S00_AXI_CLK</spirit:name>
+      <spirit:busType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="clock" spirit:version="1.0"/>
+      <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="clock_rtl" spirit:version="1.0"/>
+      <spirit:slave/>
+      <spirit:portMaps>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>CLK</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>s00_axi_aclk</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+      </spirit:portMaps>
+      <spirit:parameters>
+        <spirit:parameter>
+          <spirit:name>ASSOCIATED_BUSIF</spirit:name>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.S00_AXI_CLK.ASSOCIATED_BUSIF">S00_AXI</spirit:value>
+        </spirit:parameter>
+        <spirit:parameter>
+          <spirit:name>ASSOCIATED_RESET</spirit:name>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.S00_AXI_CLK.ASSOCIATED_RESET">s00_axi_aresetn</spirit:value>
+        </spirit:parameter>
+      </spirit:parameters>
+    </spirit:busInterface>
+  </spirit:busInterfaces>
+  <spirit:memoryMaps>
+    <spirit:memoryMap>
+      <spirit:name>S00_AXI</spirit:name>
+      <spirit:addressBlock>
+        <spirit:name>S00_AXI_reg</spirit:name>
+        <spirit:baseAddress spirit:format="long" spirit:resolve="user">0</spirit:baseAddress>
+        <spirit:range spirit:format="long">4096</spirit:range>
+        <spirit:width spirit:format="long">32</spirit:width>
+        <spirit:usage>register</spirit:usage>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>OFFSET_BASE_PARAM</spirit:name>
+            <spirit:value spirit:id="ADDRBLOCKPARAM_VALUE.S00_AXI.S00_AXI_REG.OFFSET_BASE_PARAM">C_S00_AXI_BASEADDR</spirit:value>
+          </spirit:parameter>
+          <spirit:parameter>
+            <spirit:name>OFFSET_HIGH_PARAM</spirit:name>
+            <spirit:value spirit:id="ADDRBLOCKPARAM_VALUE.S00_AXI.S00_AXI_REG.OFFSET_HIGH_PARAM">C_S00_AXI_HIGHADDR</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
+      </spirit:addressBlock>
+    </spirit:memoryMap>
+  </spirit:memoryMaps>
+  <spirit:model>
+    <spirit:views>
+      <spirit:view>
+        <spirit:name>xilinx_verilogsynthesis</spirit:name>
+        <spirit:displayName>Verilog Synthesis</spirit:displayName>
+        <spirit:envIdentifier>verilogSource:vivado.xilinx.com:synthesis</spirit:envIdentifier>
+        <spirit:language>verilog</spirit:language>
+        <spirit:modelName>axi_ikinematics_v1_2</spirit:modelName>
+        <spirit:fileSetRef>
+          <spirit:localName>xilinx_verilogsynthesis_view_fileset</spirit:localName>
+        </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>bc691cb2</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
+      </spirit:view>
+      <spirit:view>
+        <spirit:name>xilinx_verilogbehavioralsimulation</spirit:name>
+        <spirit:displayName>Verilog Simulation</spirit:displayName>
+        <spirit:envIdentifier>verilogSource:vivado.xilinx.com:simulation</spirit:envIdentifier>
+        <spirit:language>verilog</spirit:language>
+        <spirit:modelName>axi_ikinematics_v1_2</spirit:modelName>
+        <spirit:fileSetRef>
+          <spirit:localName>xilinx_verilogbehavioralsimulation_view_fileset</spirit:localName>
+        </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>bc691cb2</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
+      </spirit:view>
+      <spirit:view>
+        <spirit:name>xilinx_softwaredriver</spirit:name>
+        <spirit:displayName>Software Driver</spirit:displayName>
+        <spirit:envIdentifier>:vivado.xilinx.com:sw.driver</spirit:envIdentifier>
+        <spirit:fileSetRef>
+          <spirit:localName>xilinx_softwaredriver_view_fileset</spirit:localName>
+        </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>97932ace</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
+      </spirit:view>
+      <spirit:view>
+        <spirit:name>xilinx_xpgui</spirit:name>
+        <spirit:displayName>UI Layout</spirit:displayName>
+        <spirit:envIdentifier>:vivado.xilinx.com:xgui.ui</spirit:envIdentifier>
+        <spirit:fileSetRef>
+          <spirit:localName>xilinx_xpgui_view_fileset</spirit:localName>
+        </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>b4c6e58c</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
+      </spirit:view>
+      <spirit:view>
+        <spirit:name>bd_tcl</spirit:name>
+        <spirit:displayName>Block Diagram</spirit:displayName>
+        <spirit:envIdentifier>:vivado.xilinx.com:block.diagram</spirit:envIdentifier>
+        <spirit:fileSetRef>
+          <spirit:localName>bd_tcl_view_fileset</spirit:localName>
+        </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>16328387</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
+      </spirit:view>
+    </spirit:views>
+    <spirit:ports>
+      <spirit:port>
+        <spirit:name>s00_pwm_out</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_ROB_NLEGS&apos;)) * spirit:decode(id(&apos;MODELPARAM_VALUE.C_ROB_NJOINTS&apos;))) - 1)">17</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_awaddr</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S00_AXI_ADDR_WIDTH&apos;)) - 1)">7</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_awprot</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">2</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_awvalid</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_awready</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_wdata</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S00_AXI_DATA_WIDTH&apos;)) - 1)">31</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_wstrb</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_S00_AXI_DATA_WIDTH&apos;)) / 8) - 1)">3</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_wvalid</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_wready</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_bresp</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">1</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_bvalid</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_bready</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_araddr</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S00_AXI_ADDR_WIDTH&apos;)) - 1)">7</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_arprot</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">2</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_arvalid</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_arready</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_rdata</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S00_AXI_DATA_WIDTH&apos;)) - 1)">31</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_rresp</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long">1</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_rvalid</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_rready</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_aclk</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s00_axi_aresetn</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+    </spirit:ports>
+    <spirit:modelParameters>
+      <spirit:modelParameter xsi:type="spirit:nameValueTypeType" spirit:dataType="integer">
+        <spirit:name>C_S00_AXI_DATA_WIDTH</spirit:name>
+        <spirit:displayName>C S00 AXI DATA WIDTH</spirit:displayName>
+        <spirit:description>Width of S_AXI data bus</spirit:description>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S00_AXI_DATA_WIDTH" spirit:order="3" spirit:rangeType="long">32</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_S00_AXI_ADDR_WIDTH</spirit:name>
+        <spirit:displayName>C S00 AXI ADDR WIDTH</spirit:displayName>
+        <spirit:description>Width of S_AXI address bus</spirit:description>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S00_AXI_ADDR_WIDTH" spirit:order="4" spirit:rangeType="long">8</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_FIFO_DEPTH</spirit:name>
+        <spirit:displayName>C Fifo Depth</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_FIFO_DEPTH">16</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_FLP_WIDTH</spirit:name>
+        <spirit:displayName>C Flp Width</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_FLP_WIDTH">32</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_FXP_WIDTH</spirit:name>
+        <spirit:displayName>C Fxp Width</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_FXP_WIDTH">20</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_FXP_POINT</spirit:name>
+        <spirit:displayName>C Fxp Point</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_FXP_POINT">16</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="signed((C_FXP_WIDTH - 1) 0)">
+        <spirit:name>C_IKN_iK</spirit:name>
+        <spirit:displayName>C Ikn Ik</spirit:displayName>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_IKN_iK" spirit:bitStringLength="32">0x00009B74</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="signed((C_FXP_WIDTH - 1) 0)">
+        <spirit:name>C_IKN_iKH</spirit:name>
+        <spirit:displayName>C Ikn Ikh</spirit:displayName>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_IKN_iKH" spirit:bitStringLength="32">0x0003C370</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="signed((C_FXP_WIDTH - 1) 0)">
+        <spirit:name>C_IKN_F</spirit:name>
+        <spirit:displayName>C Ikn F</spirit:displayName>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_IKN_F" spirit:bitStringLength="32">0x0000EA90</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="signed((C_FXP_WIDTH - 1) 0)">
+        <spirit:name>C_IKN_C2</spirit:name>
+        <spirit:displayName>C Ikn C2</spirit:displayName>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_IKN_C2" spirit:bitStringLength="32">0x000FF1EB</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="signed((C_FXP_WIDTH - 1) 0)">
+        <spirit:name>C_IKN_C3</spirit:name>
+        <spirit:displayName>C Ikn C3</spirit:displayName>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_IKN_C3" spirit:bitStringLength="32">0x000FFAFD</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="signed((C_FXP_WIDTH - 1) 0)">
+        <spirit:name>C_IKN_Ca8</spirit:name>
+        <spirit:displayName>C Ikn Ca8</spirit:displayName>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_IKN_Ca8" spirit:bitStringLength="32">0x00062CD9</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="signed((C_FXP_WIDTH - 1) 0)">
+        <spirit:name>C_IKN_L1</spirit:name>
+        <spirit:displayName>C Ikn L1</spirit:displayName>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_IKN_L1" spirit:bitStringLength="32">0x0000070A</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="signed((C_FXP_WIDTH - 1) 0)">
+        <spirit:name>C_IKN_nL1</spirit:name>
+        <spirit:displayName>C Ikn Nl1</spirit:displayName>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_IKN_nL1" spirit:bitStringLength="32">0x000FF8F5</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_COR_ITER</spirit:name>
+        <spirit:displayName>C Cor Iter</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_COR_ITER">16</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_COR_N_ITER</spirit:name>
+        <spirit:displayName>C Cor N Iter</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_COR_N_ITER">1</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="signed((C_FXP_WIDTH - 1) 0)">
+        <spirit:name>C_PWM_OFFSET</spirit:name>
+        <spirit:displayName>C Pwm Offset</spirit:displayName>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_PWM_OFFSET" spirit:bitStringLength="32">0x0001921F</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_PWM_SIZE</spirit:name>
+        <spirit:displayName>C Pwm Size</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_PWM_SIZE">8</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_PWM_FREQ</spirit:name>
+        <spirit:displayName>C Pwm Freq</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_PWM_FREQ">100</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_PWM_MAX_IN</spirit:name>
+        <spirit:displayName>C Pwm Max In</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_PWM_MAX_IN">200</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_ROB_NLEGS</spirit:name>
+        <spirit:displayName>C Rob Nlegs</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_ROB_NLEGS">6</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_ROB_NJOINTS</spirit:name>
+        <spirit:displayName>C Rob Njoints</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_ROB_NJOINTS">3</spirit:value>
+      </spirit:modelParameter>
+    </spirit:modelParameters>
+  </spirit:model>
+  <spirit:choices>
+    <spirit:choice>
+      <spirit:name>choice_list_6fc15197</spirit:name>
+      <spirit:enumeration>32</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
+      <spirit:name>choice_list_9d8b0d81</spirit:name>
+      <spirit:enumeration>ACTIVE_HIGH</spirit:enumeration>
+      <spirit:enumeration>ACTIVE_LOW</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
+      <spirit:name>choice_pairs_ce1226b1</spirit:name>
+      <spirit:enumeration spirit:text="true">1</spirit:enumeration>
+      <spirit:enumeration spirit:text="false">0</spirit:enumeration>
+    </spirit:choice>
+  </spirit:choices>
+  <spirit:fileSets>
+    <spirit:fileSet>
+      <spirit:name>xilinx_verilogsynthesis_view_fileset</spirit:name>
+      <spirit:file>
+        <spirit:name>src/FSM_iKinematics_FSMv2.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/FXP_iKinematics.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/axi_ikinematics_v1_2_S00_AXI.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/cordic_c_exp.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fixed_to_float_converter.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/float_to_fixed_converter.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_adder.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_cordic_c.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_cordic_hv.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_cordic_lh.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_multiplier.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_to_pwm.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/leading_one_detector.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/leg_counter.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/servo_pwm_generator.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/atan_lut_mem.mem</spirit:name>
+        <spirit:userFileType>mem</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/axi_ikinematics_v1_2.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:userFileType>CHECKSUM_4a1d2422</spirit:userFileType>
+      </spirit:file>
+    </spirit:fileSet>
+    <spirit:fileSet>
+      <spirit:name>xilinx_verilogbehavioralsimulation_view_fileset</spirit:name>
+      <spirit:file>
+        <spirit:name>src/FSM_iKinematics_FSMv2.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/FXP_iKinematics.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/axi_ikinematics_v1_2_S00_AXI.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/cordic_c_exp.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fixed_to_float_converter.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/float_to_fixed_converter.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_adder.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_cordic_c.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_cordic_hv.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_cordic_lh.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_multiplier.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/fxp_to_pwm.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/leading_one_detector.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/leg_counter.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/servo_pwm_generator.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/atan_lut_mem.mem</spirit:name>
+        <spirit:userFileType>mem</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/axi_ikinematics_v1_2.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+    </spirit:fileSet>
+    <spirit:fileSet>
+      <spirit:name>xilinx_softwaredriver_view_fileset</spirit:name>
+      <spirit:file>
+        <spirit:name>drivers/axi_ikinematics_v1_0/data/axi_ikinematics.mdd</spirit:name>
+        <spirit:userFileType>mdd</spirit:userFileType>
+        <spirit:userFileType>driver_mdd</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>drivers/axi_ikinematics_v1_0/data/axi_ikinematics.tcl</spirit:name>
+        <spirit:fileType>tclSource</spirit:fileType>
+        <spirit:userFileType>driver_tcl</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>drivers/axi_ikinematics_v1_0/src/Makefile</spirit:name>
+        <spirit:userFileType>driver_src</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>drivers/axi_ikinematics_v1_0/src/axi_ikinematics.h</spirit:name>
+        <spirit:fileType>cSource</spirit:fileType>
+        <spirit:userFileType>driver_src</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>drivers/axi_ikinematics_v1_0/src/axi_ikinematics.c</spirit:name>
+        <spirit:fileType>cSource</spirit:fileType>
+        <spirit:userFileType>driver_src</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>drivers/axi_ikinematics_v1_0/src/axi_ikinematics_selftest.c</spirit:name>
+        <spirit:fileType>cSource</spirit:fileType>
+        <spirit:userFileType>driver_src</spirit:userFileType>
+      </spirit:file>
+    </spirit:fileSet>
+    <spirit:fileSet>
+      <spirit:name>xilinx_xpgui_view_fileset</spirit:name>
+      <spirit:file>
+        <spirit:name>xgui/axi_ikinematics_v1_2.tcl</spirit:name>
+        <spirit:fileType>tclSource</spirit:fileType>
+        <spirit:userFileType>CHECKSUM_b4c6e58c</spirit:userFileType>
+        <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
+      </spirit:file>
+    </spirit:fileSet>
+    <spirit:fileSet>
+      <spirit:name>bd_tcl_view_fileset</spirit:name>
+      <spirit:file>
+        <spirit:name>bd/bd.tcl</spirit:name>
+        <spirit:fileType>tclSource</spirit:fileType>
+      </spirit:file>
+    </spirit:fileSet>
+  </spirit:fileSets>
+  <spirit:description>Hexapod Inverse Kinematics</spirit:description>
+  <spirit:parameters>
+    <spirit:parameter>
+      <spirit:name>C_S00_AXI_DATA_WIDTH</spirit:name>
+      <spirit:displayName>C S00 AXI DATA WIDTH</spirit:displayName>
+      <spirit:description>Width of S_AXI data bus</spirit:description>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_S00_AXI_DATA_WIDTH" spirit:choiceRef="choice_list_6fc15197" spirit:order="3">32</spirit:value>
+      <spirit:vendorExtensions>
+        <xilinx:parameterInfo>
+          <xilinx:enablement>
+            <xilinx:isEnabled xilinx:id="PARAM_ENABLEMENT.C_S00_AXI_DATA_WIDTH">false</xilinx:isEnabled>
+          </xilinx:enablement>
+        </xilinx:parameterInfo>
+      </spirit:vendorExtensions>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_S00_AXI_ADDR_WIDTH</spirit:name>
+      <spirit:displayName>C S00 AXI ADDR WIDTH</spirit:displayName>
+      <spirit:description>Width of S_AXI address bus</spirit:description>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_S00_AXI_ADDR_WIDTH" spirit:order="4" spirit:rangeType="long">8</spirit:value>
+      <spirit:vendorExtensions>
+        <xilinx:parameterInfo>
+          <xilinx:enablement>
+            <xilinx:isEnabled xilinx:id="PARAM_ENABLEMENT.C_S00_AXI_ADDR_WIDTH">false</xilinx:isEnabled>
+          </xilinx:enablement>
+        </xilinx:parameterInfo>
+      </spirit:vendorExtensions>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_S00_AXI_BASEADDR</spirit:name>
+      <spirit:displayName>C S00 AXI BASEADDR</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_S00_AXI_BASEADDR" spirit:order="5" spirit:bitStringLength="32">0xFFFFFFFF</spirit:value>
+      <spirit:vendorExtensions>
+        <xilinx:parameterInfo>
+          <xilinx:enablement>
+            <xilinx:isEnabled xilinx:id="PARAM_ENABLEMENT.C_S00_AXI_BASEADDR">false</xilinx:isEnabled>
+          </xilinx:enablement>
+        </xilinx:parameterInfo>
+      </spirit:vendorExtensions>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_S00_AXI_HIGHADDR</spirit:name>
+      <spirit:displayName>C S00 AXI HIGHADDR</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_S00_AXI_HIGHADDR" spirit:order="6" spirit:bitStringLength="32">0x00000000</spirit:value>
+      <spirit:vendorExtensions>
+        <xilinx:parameterInfo>
+          <xilinx:enablement>
+            <xilinx:isEnabled xilinx:id="PARAM_ENABLEMENT.C_S00_AXI_HIGHADDR">false</xilinx:isEnabled>
+          </xilinx:enablement>
+        </xilinx:parameterInfo>
+      </spirit:vendorExtensions>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>Component_Name</spirit:name>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.Component_Name" spirit:order="1">axi_ikinematics_v1_2</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_FIFO_DEPTH</spirit:name>
+      <spirit:displayName>C Fifo Depth</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_FIFO_DEPTH">16</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_FLP_WIDTH</spirit:name>
+      <spirit:displayName>C Flp Width</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_FLP_WIDTH">32</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_FXP_WIDTH</spirit:name>
+      <spirit:displayName>C Fxp Width</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_FXP_WIDTH">20</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_FXP_POINT</spirit:name>
+      <spirit:displayName>C Fxp Point</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_FXP_POINT">16</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_IKN_iK</spirit:name>
+      <spirit:displayName>C Ikn Ik</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_IKN_iK" spirit:bitStringLength="32">0x00009B74</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_IKN_iKH</spirit:name>
+      <spirit:displayName>C Ikn Ikh</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_IKN_iKH" spirit:bitStringLength="32">0x0003C370</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_IKN_F</spirit:name>
+      <spirit:displayName>C Ikn F</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_IKN_F" spirit:bitStringLength="32">0x0000EA90</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_IKN_C2</spirit:name>
+      <spirit:displayName>C Ikn C2</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_IKN_C2" spirit:bitStringLength="32">0x000FF1EB</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_IKN_C3</spirit:name>
+      <spirit:displayName>C Ikn C3</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_IKN_C3" spirit:bitStringLength="32">0x000FFAFD</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_IKN_Ca8</spirit:name>
+      <spirit:displayName>C Ikn Ca8</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_IKN_Ca8" spirit:bitStringLength="32">0x00062CD9</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_IKN_L1</spirit:name>
+      <spirit:displayName>C Ikn L1</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_IKN_L1" spirit:bitStringLength="32">0x0000070A</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_IKN_nL1</spirit:name>
+      <spirit:displayName>C Ikn Nl1</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_IKN_nL1" spirit:bitStringLength="32">0x000FF8F5</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_COR_ITER</spirit:name>
+      <spirit:displayName>C Cor Iter</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_COR_ITER">16</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_COR_N_ITER</spirit:name>
+      <spirit:displayName>C Cor N Iter</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_COR_N_ITER">1</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_PWM_OFFSET</spirit:name>
+      <spirit:displayName>C Pwm Offset</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.C_PWM_OFFSET" spirit:bitStringLength="32">0x0001921F</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_PWM_SIZE</spirit:name>
+      <spirit:displayName>C Pwm Size</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_PWM_SIZE">8</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_PWM_FREQ</spirit:name>
+      <spirit:displayName>C Pwm Freq</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_PWM_FREQ">100</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_PWM_MAX_IN</spirit:name>
+      <spirit:displayName>C Pwm Max In</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_PWM_MAX_IN">200</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_ROB_NLEGS</spirit:name>
+      <spirit:displayName>C Rob Nlegs</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_ROB_NLEGS">6</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_ROB_NJOINTS</spirit:name>
+      <spirit:displayName>C Rob Njoints</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_ROB_NJOINTS">3</spirit:value>
+    </spirit:parameter>
+  </spirit:parameters>
+  <spirit:vendorExtensions>
+    <xilinx:coreExtensions>
+      <xilinx:supportedFamilies>
+        <xilinx:family xilinx:lifeCycle="Pre-Production">zynq</xilinx:family>
+      </xilinx:supportedFamilies>
+      <xilinx:taxonomies>
+        <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
+      </xilinx:taxonomies>
+      <xilinx:displayName>axi_ikinematics_v1.2</xilinx:displayName>
+      <xilinx:coreRevision>24</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2020-05-08T00:36:05Z</xilinx:coreCreationDateTime>
+      <xilinx:tags>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@d9d7e34_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5fc8481d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@66249426_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@75f19092_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f37ce9e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@353540fb_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@57de5175_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@20a6d680_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a548a15_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6f7425e4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f8f4df8_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4bc14216_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5c1e5c95_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7ef67de7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2a62cec9_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7a601068_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@40b754c7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@46e2bb05_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d9745ac_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@641290b3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@42e0cc09_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@62493ace_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4d577dd3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ec387b3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@68122886_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61794a0e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f0bdaef_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@42fe121d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2c8b6065_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1508834e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a702fee_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d07cd9b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@d5f78bf_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3b1a821f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@d85b69b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d84ca8e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7957378e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@65f7f934_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ae8d9bf_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1dc5ee00_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@424b38f4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@38dac69f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@55451d47_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@76b72a4e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3aa087a4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@20e2bd64_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ac512c4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@23dc1c0e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@753c9524_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@29d591a8_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1f0df05e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2928ad8e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4b2c5ee6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f70f14b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@49c289e0_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@62245d21_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@17c8e3e1_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@75813e00_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@437fb6e3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@740d4f4c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@24db40a4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4997bb8_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7bc57be3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@52e506d9_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@29cda6ff_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d19c86c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@434c95a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6ad1ef0b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@30a51e45_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@329366e2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3e62779_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1b1be676_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f24ba26_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37981974_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2641adb_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@59f6c103_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@782da8aa_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@733568d9_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c74b6ae_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3eca16a5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6deafed7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3290e443_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a2923d1_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@57f670e4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6112a1be_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6711585f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6b4acc25_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6396b71b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@52658601_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@68fc19c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1feba615_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a34287d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@57b8e914_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@58ebbe0d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6cf8b391_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@67138293_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d507ad2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3c39c299_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@44f72b79_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3072f08c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6fa50169_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@62736f86_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@20167fe5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@41037827_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6f3d6d9c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@69e381ed_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@611032df_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1c896146_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@411a8961_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d6c7a61_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@164dd391_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@48c66548_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2b41e563_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@44ca41_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6462adb2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d76a7fa_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a506c20_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f00a575_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2c96750e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2964452e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3bc207c7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d653763_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@db61fef_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37b6dc95_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@59540a1c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@45b0eb99_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@ec4dda7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@585b4f92_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@26c9b5f2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@709a2a93_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@23cb0cbb_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@26928ab5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7033fa80_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@164b8c1_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4329dc92_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@150b4387_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2fc770_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7baae299_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@529ca687_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4276472f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7587f6ed_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@31e96214_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7975056b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2f95c10b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@55bf9442_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d2356a2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@69ef357d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@71d1ff76_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1a44dc0b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@437b1718_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@164f98e5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1eba531b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@49d4b774_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@540815f6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f812d54_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@71cde972_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@59890c99_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1936c277_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@c59097d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@60d6b883_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6590a7aa_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5531f8d5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c131896_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@468dc162_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6696d144_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3783e2fc_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3456693f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@318ccf62_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ef6db03_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@78347266_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2524bd11_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7fc4a006_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7b658c26_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@334b3610_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7e728e81_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@533459c7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7aacf65e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@742e206a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@69e872cd_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@153991d8_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7af8256b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@760065a6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3823173e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@322e3087_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@190dfdf2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@45dcaa65_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5ebc0c31_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@620e85b3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c69f754_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@470dfc41_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@661a6f9d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1e5cbe9f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6590c44b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@39335070_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7b5748e6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5495262f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6e6be9b2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5b3f2cfc_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3d8b1f01_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5467ef45_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6ae08271_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7a3c0a3a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@487c8a9d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7429aa6b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@57ff3fe2_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@789e83ac_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@55bc201_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7883216e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@99f7fba_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5e8a0e59_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a252a91_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d297581_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2bf21c74_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@b174c7c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@586168fe_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2db9b1f5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@9b9e41b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5e4a52ea_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1b4e4e52_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@76077e5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5a949f9e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d2b0b3a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7649c9cb_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2e95241b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1a0eee87_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1588e027_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@64ed2f50_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@512e94a9_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@581d787d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@21fee08c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@22b8a099_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@400051e7_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1bc583b9_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@e6b5d95_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4616a293_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3d7edb3b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@58e462e8_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3c4fb65f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a13dcd9_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2051a77a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6d0488c5_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@375fce07_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5e42ccb4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2f5e6fb6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4c723c87_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@946c176_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@99450dd_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61dbd9e0_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@463cff7a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d7036b4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a7c29e6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3e4f44dc_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1646215e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7fb8dce0_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@32f1d346_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@26ab7e0c_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@13140ea1_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@627fc810_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3479f00a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5af37435_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@29fd16b3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c99b949_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@670e05cb_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@73a20835_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@9a6b9d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@27d434ce_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61eb27ed_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@f5859ed_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@742bd022_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7e2be227_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4432161f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1f4f1a8b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4705f84_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@30a076dd_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4fd70381_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2b1bf3df_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@19c20ae6_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7ccf9ce3_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@46903e9d_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@43c9fe73_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@48c46e02_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@67d96159_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@73e6d282_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@30c8fd73_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@62ad892_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@600f07_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@614062fb_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@23851135_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1904ab06_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1f4cb49e_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@478e672_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d2c9649_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@fb36d79_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@63134cd1_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@18629314_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@22921a09_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@76987e39_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5daf1dad_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/TCL/create_iKinematics/ip_repo/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@394fe5f_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/Vivado_Project/IP/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@67c3722a_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/Vivado_Project/IP/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@55e0d6b_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/Vivado_Project/IP/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@589591a4_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/Vivado_Project/IP/axi_ikinematics_1.2</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4d374ae0_ARCHIVE_LOCATION">c:/xilinx_work_area/hexapod_project/Vivado_Project/IP/axi_ikinematics_1.2</xilinx:tag>
+      </xilinx:tags>
+    </xilinx:coreExtensions>
+    <xilinx:packagingInfo>
+      <xilinx:xilinxVersion>2018.3</xilinx:xilinxVersion>
+      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="2bde1f26"/>
+      <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="ed1368d5"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="1ce7d3f1"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="bfe2dc01"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="085cefc8"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="d6b424a7"/>
+    </xilinx:packagingInfo>
+  </spirit:vendorExtensions>
+</spirit:component>
