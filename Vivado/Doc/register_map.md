@@ -85,7 +85,7 @@ __Bit Description__
 |------|------|------|
 |2:0|W|Leg input selector|
 |3|T|Set leg input|
-|5:4|W|<p>Select counter mode<br>00b : Incremental ctr mode<br>01b : Static leg<br>10b - 11b : Forbiden</p>|
+|5:4|W|<p>Select counter mode<br>0b00 : Incremental ctr mode<br>0b01 : Static leg<br>0b10 - 0b11 : Forbiden</p>|
 |8:6|RW|Current leg counter pointer|
 |11:9|RW|<p>Output Fixed Point to Floating Point converter selector<br>0 : Inverse Kinematics Result<br>1 : Leg 1<br>2 : Leg 2<br>3 : Leg 3<br>4 : Leg 4<br>5 : Leg 5<br>6 : Leg 6<br>7 : Forbiden</p>|
 |12|RW|<p>Leg 1 Servo Controler PWM Inversion<br>0 : No invert PWM<br>1 : Invert PWM</p>|
