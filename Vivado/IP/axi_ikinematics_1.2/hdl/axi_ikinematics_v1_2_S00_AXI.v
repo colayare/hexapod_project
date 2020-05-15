@@ -52,6 +52,7 @@
         //-- 
         output wire [C_PWM_SIZE*C_ROB_NLEGS*C_ROB_NJOINTS-1:0] O_JOINT_PWM,
         output wire [C_ROB_NLEGS*C_ROB_NJOINTS-1:0] O_JOINT_PWM_COMPLEMENT_OUT,
+        output reg  O_IKN_TRIGGER,
         // User ports ends
         // Do not modify the ports beyond this line
 
@@ -273,6 +274,8 @@
     reg [C_S_AXI_DATA_WIDTH-1:0]    slv_reg38;
     reg [C_S_AXI_DATA_WIDTH-1:0]    slv_reg39;
     reg [C_S_AXI_DATA_WIDTH-1:0]    slv_reg40;
+    reg [C_S_AXI_DATA_WIDTH-1:0]    slv_reg41;
+    reg [C_S_AXI_DATA_WIDTH-1:0]    slv_reg42;
     wire     slv_reg_rden;
     wire     slv_reg_wren;
     reg [C_S_AXI_DATA_WIDTH-1:0]     reg_data_out;
@@ -426,6 +429,8 @@
           slv_reg38 <= 0;
           slv_reg39 <= 0;
           slv_reg40 <= 0;
+          slv_reg41 <= 0;
+          slv_reg42 <= 0;
         end 
       else begin
         if (slv_reg_wren)
@@ -718,6 +723,20 @@
                     // Slave register 40
                     slv_reg40[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
                   end  
+              6'h29:
+                for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
+                  if ( S_AXI_WSTRB[byte_index] == 1 ) begin
+                    // Respective byte enables are asserted as per write strobes 
+                    // Slave register 40
+                    slv_reg41[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+                  end  
+              6'h2A:
+                for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
+                  if ( S_AXI_WSTRB[byte_index] == 1 ) begin
+                    // Respective byte enables are asserted as per write strobes 
+                    // Slave register 40
+                    slv_reg42[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+                  end  
               default : begin
                           slv_reg00 <= slv_reg00;
                           slv_reg01 <= slv_reg01;
@@ -760,6 +779,8 @@
                           slv_reg38 <= slv_reg38;
                           slv_reg39 <= slv_reg39;
                           slv_reg40 <= slv_reg40;
+                          slv_reg41 <= slv_reg41;
+                          slv_reg42 <= slv_reg42;
                         end
             endcase
           end
@@ -868,29 +889,31 @@
     begin
           // Address decoding for reading registers
           case ( axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] )
-            `REG_TRIG   : reg_data_out <= `REG(`REG_TRIG);         // Trigger Register
+            `REG_TRIG   : reg_data_out <= `REG(`REG_TRIG);  // Trigger Register
+            `REG_CTRL   : reg_data_out <= `REG(`REG_CTRL);  // Control Register
+            `REG_STAT   : reg_data_out <= `REG(`REG_STAT);  // Status Register
             `REG_LEGC   : reg_data_out <= reg_config_out;   // Cofiguration : Leg Counter
             `REG_IKIX   : reg_data_out <= flp_output_q1;    // FLP : [WRITE] Direct Kinematics X, [READ] Inverse Kinematics Q1
             `REG_IKIY   : reg_data_out <= flp_output_q2;    // FLP : [WRITE] Direct Kinematics Y, [READ] Inverse Kinematics Q2
             `REG_IKIZ   : reg_data_out <= flp_output_q3;    // FLP : [WRITE] Direct Kinematics Z, [READ] Inverse Kinematics Q3
-            `REG_OF01   : reg_data_out <= `REG(`REG_OF01);         // Offset Q1    -- Leg 1
-            `REG_OF02   : reg_data_out <= `REG(`REG_OF02);         // Offset Q2
-            `REG_OF03   : reg_data_out <= `REG(`REG_OF03);         // Offset Q3
-            `REG_OF04   : reg_data_out <= `REG(`REG_OF04);         // Offset Q4    -- Leg 2
-            `REG_OF05   : reg_data_out <= `REG(`REG_OF05);         // Offset Q5
-            `REG_OF06   : reg_data_out <= `REG(`REG_OF06);        // Offset Q6
-            `REG_OF07   : reg_data_out <= `REG(`REG_OF07);        // Offset Q7    -- Leg 3
-            `REG_OF08   : reg_data_out <= `REG(`REG_OF08);        // Offset Q8    
-            `REG_OF09   : reg_data_out <= `REG(`REG_OF09);        // Offset Q9
-            `REG_OF10   : reg_data_out <= `REG(`REG_OF10);        // Offset Q10    -- Leg 4
-            `REG_OF11   : reg_data_out <= `REG(`REG_OF11);        // Offset Q11
-            `REG_OF12   : reg_data_out <= `REG(`REG_OF12);        // Offset Q12
-            `REG_OF13   : reg_data_out <= `REG(`REG_OF13);        // Offset Q13    -- Leg 5
-            `REG_OF14   : reg_data_out <= `REG(`REG_OF14);        // Offset Q14
-            `REG_OF15   : reg_data_out <= `REG(`REG_OF15);        // Offset Q15
-            `REG_OF16   : reg_data_out <= `REG(`REG_OF16);        // Offset Q16    -- Leg 6
-            `REG_OF17   : reg_data_out <= `REG(`REG_OF17);        // Offset Q17
-            `REG_OF18   : reg_data_out <= `REG(`REG_OF18);        // Offset Q18
+            `REG_OF01   : reg_data_out <= `REG(`REG_OF01);  // Offset Q1    -- Leg 1
+            `REG_OF02   : reg_data_out <= `REG(`REG_OF02);  // Offset Q2
+            `REG_OF03   : reg_data_out <= `REG(`REG_OF03);  // Offset Q3
+            `REG_OF04   : reg_data_out <= `REG(`REG_OF04);  // Offset Q4    -- Leg 2
+            `REG_OF05   : reg_data_out <= `REG(`REG_OF05);  // Offset Q5
+            `REG_OF06   : reg_data_out <= `REG(`REG_OF06);  // Offset Q6
+            `REG_OF07   : reg_data_out <= `REG(`REG_OF07);  // Offset Q7    -- Leg 3
+            `REG_OF08   : reg_data_out <= `REG(`REG_OF08);  // Offset Q8    
+            `REG_OF09   : reg_data_out <= `REG(`REG_OF09);  // Offset Q9
+            `REG_OF10   : reg_data_out <= `REG(`REG_OF10);  // Offset Q10    -- Leg 4
+            `REG_OF11   : reg_data_out <= `REG(`REG_OF11);  // Offset Q11
+            `REG_OF12   : reg_data_out <= `REG(`REG_OF12);  // Offset Q12
+            `REG_OF13   : reg_data_out <= `REG(`REG_OF13);  // Offset Q13    -- Leg 5
+            `REG_OF14   : reg_data_out <= `REG(`REG_OF14);  // Offset Q14
+            `REG_OF15   : reg_data_out <= `REG(`REG_OF15);  // Offset Q15
+            `REG_OF16   : reg_data_out <= `REG(`REG_OF16);  // Offset Q16    -- Leg 6
+            `REG_OF17   : reg_data_out <= `REG(`REG_OF17);  // Offset Q17
+            `REG_OF18   : reg_data_out <= `REG(`REG_OF18);  // Offset Q18
             `REG_KO01   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[0+:C_FXP_WIDTH]};                 // PWM Q1
             `REG_KO02   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH+:C_FXP_WIDTH]};       // PWM Q2
             `REG_KO03   : reg_data_out <= {{C_FXP_DATA_FILL{1'b0}}, ikn_output_rb[C_FXP_WIDTH*2+:C_FXP_WIDTH]};     // PWM Q3
@@ -1222,6 +1245,18 @@
           reg_output_direct <= 1'b0;
             
 
+    //----------------------------------------------
+    //-- Control Register Logic
+    //----------------------------------------------
+    always @( posedge S_AXI_ACLK )
+      if ( S_AXI_ARESETN == 1'b0 )
+        O_IKN_TRIGGER <= 1'b0;
+      else
+        if ( `REG(`REG_CTRL)[`CTRL_TRIG] )
+          O_IKN_TRIGGER <= `REG(`REG_CTRL)[`CTRL_TRIG_EN] & ikn_start;
+        else
+          O_IKN_TRIGGER <= `REG(`REG_CTRL)[`CTRL_TRIG_EN] & fifo_empty & ikn_data_ready;
+    
     //----------------------------------------------
     //-- LEG Counter Module Control Logic
     //----------------------------------------------

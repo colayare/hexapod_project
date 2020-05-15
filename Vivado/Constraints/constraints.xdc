@@ -22,6 +22,9 @@ set_property -dict { PACKAGE_PIN A20   IOSTANDARD LVCMOS33 } [get_ports { pwm_ou
 set_property -dict { PACKAGE_PIN P16   IOSTANDARD LVCMOS33 } [get_ports { IIC_scl_io }]; #IO_L24N_T3_34 Sch=CK_SCL
 set_property -dict { PACKAGE_PIN P15   IOSTANDARD LVCMOS33 } [get_ports { IIC_sda_io }]; #IO_L24P_T3_34 Sch=CK_SDA
 
+# LED0
+set_property -dict { PACKAGE_PIN R14    IOSTANDARD LVCMOS33 } [get_ports { tmr_led }]; #IO_L6N_T0_VREF_34 Sch=LED0
+
 #clk_fpga_0
 create_clock -name VCLK -period 10
 set_output_delay 1 -clock [get_clocks VCLK] [get_ports pwm_out[0]]

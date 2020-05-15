@@ -49,6 +49,7 @@
 	(
 		// Users to add ports here
 		output wire [C_ROB_NLEGS*C_ROB_NJOINTS-1:0] s00_pwm_out,
+    output wire s00_ikn_trigger,
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -120,6 +121,7 @@
 		//-- User ports --
 		.O_JOINT_PWM(o_joint_pwm),
 		.O_JOINT_PWM_COMPLEMENT_OUT(o_joint_pwm_complement),
+    .O_IKN_TRIGGER(s00_ikn_trigger),
 		//-- End User Ports --
 		.S_AXI_ACLK(s00_axi_aclk),
 		.S_AXI_ARESETN(s00_axi_aresetn),
