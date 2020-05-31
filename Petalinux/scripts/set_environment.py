@@ -89,13 +89,15 @@ if ( "-no_git" not in sys.argv ):
 
     if ( not git_exists ):
         print(">>> Setting up Git repository...")
+        gitUserName = raw_input("\tEnter Git user name: ")
+        gitUserMail = raw_input("\tEnter Git user email:")
         os.system("git init")
         os.system("git remote add -f origin "+repo)
         os.system("git config core.sparseCheckout true")
         os.system("git config branch.autosetuprebase always")
-        os.system("git config --global user.email \"carlos.olaya.reyes@gmail.com\"")
-        os.system("git config --global user.name \"Erick\"")
-        
+        os.system("git config --global user.email \""+gitUserMail+"\"")
+        os.system("git config --global user.name \""+gitUserName+"\"")
+        os.system("git config --global http.sslverify false")
         os.system("echo \"Modeling\" >> .git/info/sparse-checkout")
         
     if ( ".git" in os.popen("ls "+git_dir+" -1a").read()[:-1].split("\n") ):
