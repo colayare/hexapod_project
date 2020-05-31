@@ -3,8 +3,9 @@
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <stdint.h>
-#include "globals/axi_ip_globals.hpp"
-#include "hexapod/hexapod_kinematics.hpp"
+#include "globals/global_defines.h"
+#include "globals/axi_ip_globals.h"
+#include "hexapod/hexapod_kinematics.h"
 
 using namespace std;
 

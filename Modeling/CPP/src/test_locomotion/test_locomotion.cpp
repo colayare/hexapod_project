@@ -4,6 +4,7 @@
 #include <sys/mman.h>
 #include <stdint.h>
 #include <string.h>
+#include "globals/global_defines.h"
 #include "globals/axi_ip_globals.h"
 #include "globals/linux_timing.h"
 #include "hexapod/hexapod_kinematics.h"

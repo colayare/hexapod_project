@@ -11,7 +11,6 @@
 #include <string>
 #include <cstring>
 #include <linux/i2c-dev.h>
-#include "params/ip_reg_map.h"
 
 using namespace std;
 

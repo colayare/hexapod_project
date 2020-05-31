@@ -16,13 +16,13 @@ CFLAGS=-I$(IDIR)
 EXT=cpp
 
 
-_GLOBALS   = axi_ip_globals.hpp 
+_GLOBALS   = axi_ip_globals.h global_defines.h
 GLOBALS    = $(patsubst %,$(IDIR)/globals/%,$(_DEPS))
 
-_HEXA_DEPS 	= hexapod_kinematics.hpp
+_HEXA_DEPS 	= hexapod_kinematics.h
 HEXA_DEPS	= $(patsubst %,$(IDIR)/hexapod/%,$(_HEXA_DEPS))
 
-_PARAMS = hexapod_ip_params.hpp hexapod_params.hpp
+_PARAMS = hexapod_ip_params.h hexapod_params.h
 PARAMS  = $(patsubst %,$(IDIR)/params/%,$(_PARAMS))
 
 _TEST_IKINEMATICS_OBJ 	= test_ikinematics.o
