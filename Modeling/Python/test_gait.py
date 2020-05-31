@@ -11,6 +11,7 @@ print('Appending path'+ abs_path+'/includes')
 sys.path.append(abs_path+'/includes')
 from hexapod_class import hexapod_kinematics as hc
 from numeric_conversions import numeric_conversions as NUM_CONV
+from iKinematics_IP import iKinematics_IP as REGMAP
 
 #### Get Linux prompt params
 cols = int(os.popen('tput cols').read()[:-1])
@@ -21,7 +22,7 @@ div  = cols * '#'
 #### Functions
 def gait(hexapod, leg, step):
     hexapod.config_leg_ctr("one_leg", leg)
-    hexapod.set_ptr(2)
+    hexapod.set_ptr(REGMAP.REG_IKIX)
     for axi in range ( 3 ):
         hexapod.axi_map.write(hexapod.gait[leg*hexapod.step_size*3+step*3+axi])
     hexapod.axi_write_fifo()

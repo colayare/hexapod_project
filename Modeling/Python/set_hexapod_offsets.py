@@ -9,6 +9,7 @@ print('Appending path : '+ abs_path+'/includes')
 sys.path.append(abs_path+'/includes')
 from hexapod_class import hexapod_kinematics as hc
 from numeric_conversions import numeric_conversions as NUM_CONV
+from iKinematics_IP import iKinematics_IP as REGMAP
 
 #### Get Linux prompt params
 cols = int(os.popen('tput cols').read()[:-1])
@@ -17,9 +18,9 @@ dash = cols * '-'
 div  = cols * '#'
 
 def axi_read_fxp_out_params(hexapod, leg):
-    fxp_q1 = hexapod.axi_hread(23+leg*3)
-    fxp_q2 = hexapod.axi_hread(24+leg*3)
-    fxp_q3 = hexapod.axi_hread(25+leg*3)
+    fxp_q1 = hexapod.axi_hread(REGMAP.REG_KO01+leg*3)
+    fxp_q2 = hexapod.axi_hread(REGMAP.REG_KO02+leg*3)
+    fxp_q3 = hexapod.axi_hread(REGMAP.REG_KO03+leg*3)
     return [fxp_q1, fxp_q2, fxp_q3]
 
 def fstr(float_num):
@@ -151,7 +152,7 @@ while(1):
             if ( off_idx < 3 ):
                 off_val = nc.dfloat2hfloat(nc.sec2rad(float(usr_opt.split(',')[1].replace(' ',''))))
                 print('Setting Offset['+str(off_idx)+'] = '+off_val)
-                hexapod.axi_hwrite(5+int(opt_leg)*3, off_val)
+                hexapod.axi_hwrite(REGMAP.REG_OF01+int(opt_leg)*3, off_val)
                 hexapod.j_offs[int(opt_leg)][off_idx] = float(usr_opt.split(',')[1].replace(' ',''))
                 [off_q1, off_q2, off_q3] = hexapod.j_offs[int(opt_leg)]
             else:
@@ -173,7 +174,7 @@ while(1):
             hexapod.i_inv_s[ser_idx] = str(inv_val)
             hexapod.axi_set_pwm_inv(ser_idx, inv_val)
         elif ( usr_opt.upper() == 'SHOW' ):
-            hexapod.show_regs(end_address=0x28, autoskip=False)
+            hexapod.show_regs(end_address=REGMAP.REG_KO18, autoskip=False)
         elif ( usr_opt.upper() == 'SAVE OFFSET' ):
             hexapod.save_offsets()
         elif ( usr_opt.upper() == 'SAVE INIT' ):

@@ -5,6 +5,7 @@ from time import sleep as sleep
 from cordic_model import CORDIC as CORDIC
 from numeric_conversions import numeric_conversions as numeric_conversions
 from devmem_map import axi_ip_mmap as axi_ip_mmap
+from iKinematics_IP import iKinematics_IP as REGMAP
 import math as mt
 import os
 
@@ -169,7 +170,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
         for step in range ( self.step_size ):
             self.config_leg_ctr(1, 0)
             for leg in range ( 6 ):
-                self.set_ptr(2)
+                self.set_ptr(REGMAP.REG_IKIX)
                 for axi in range ( 3 ):
                     self.axi_map.write(self.gait[leg*self.step_size*3+step*3+axi])
                 self.axi_write_fifo()
@@ -180,7 +181,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     def set_step(self):
         self.config_leg_ctr(1, 0)
         for leg in self.joints:
-            self.set_ptr(2)
+            self.set_ptr(REGMAP.REG_IKIX)
             for axis in leg:
                 self.axi_map.write( self.to_bytes(int(self.dfloat2hfloat(axis), 16))  )
             self.axi_write_fifo()
@@ -190,7 +191,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     def set_step_debug_leg(self, leg_selector=0):
         self.config_leg_ctr(1, 0)
         for i, leg in enumerate(self.joints):
-            self.set_ptr(2)
+            self.set_ptr(REGMAP.REG_IKIX)
             for axis in leg:
                 self.axi_map.write( self.to_bytes(int(self.dfloat2hfloat(axis), 16))  )
             self.axi_write_fifo()
@@ -204,22 +205,6 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     
     def step_delay(self):
         sleep(self.delay)
-        
-#    def step_interpolate(self, gait, points, scale):
-#        lines   = np.linspace(0, 30, 30)
-#        lin_i   = np.linspace(0, 30, points)
-#        gaits   = np.zeros(shape=(3,points))
-#        bgaits  = np.zeros(shape=(3,points)).astype(bytes)
-#        for i in range (3):
-#            inter = np.interp(lin_i, lines, gait[i])
-#            gaits[i] = inter * scale
-#            for j, step in enumerate(gaits[i]):
-#                bgaits[i][j] = self.to_bytes(int(self.dfloat2hfloat(step), 16))
-#        self.gait  = np.transpose(gaits)
-#        self.bgaits = np.transpose(bgaits)
-#        self.steps  = points
-#        self.scale  = scale
-#        return True
     
     #### AXI IP Handling ######################################################
     #### Configure Leg Control
@@ -244,7 +229,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
         else:
             print("Invalid mode, selected leg multiplexion")
             mode_in = 0x0
-        self.axi_write_mask(1, leg_in + 0x8 + mode_in, mask)
+        self.axi_write_mask(REGMAP.REG_LEGC, leg_in + 0x8 + mode_in, mask)
         return True
     
     ## Set Leg configuration
@@ -256,49 +241,49 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
         set_val     = 8 + (leg_select & 0x7)
         config      = (conf<<4) & 0x30  
         value       = set_val + config + reg1
-        self.axi_write_mask(1, value, mask)
+        self.axi_write_mask(REGMAP.REG_LEGC, value, mask)
         return True
     
     ## Write iKinematics Parameters on input FIFO
     def axi_write_params_in(self, x_in, y_in, z_in):
         if ( type(x_in) == str or type(y_in) is str or type(z_in) is str ):
-            self.axi_hwrite(2, x_in)
-            self.axi_hwrite(3, y_in)
-            self.axi_hwrite(4, z_in)
+            self.axi_hwrite(REGMAP.REG_IKIX, x_in)
+            self.axi_hwrite(REGMAP.REG_IKIY, y_in)
+            self.axi_hwrite(REGMAP.REG_IKIZ, z_in)
         else:
-            self.axi_write(2, x_in)
-            self.axi_write(3, y_in)
-            self.axi_write(4, z_in)
+            self.axi_write(REGMAP.REG_IKIX, x_in)
+            self.axi_write(REGMAP.REG_IKIY, y_in)
+            self.axi_write(REGMAP.REG_IKIZ, z_in)
         return True
     
     def axi_read_params(self):
-        x = self.axi_read(2)
-        y = self.axi_read(3)
-        z = self.axi_read(4)
+        x = self.axi_read(REGMAP.REG_IKIX)
+        y = self.axi_read(REGMAP.REG_IKIY)
+        z = self.axi_read(REGMAP.REG_IKIZ)
         return [x, y, z]
         
     def axi_hread_params(self):
-        x = self.axi_hread(2)
-        y = self.axi_hread(3)
-        z = self.axi_hread(4)
+        x = self.axi_hread(REGMAP.REG_IKIX)
+        y = self.axi_hread(REGMAP.REG_IKIY)
+        z = self.axi_hread(REGMAP.REG_IKIZ)
         return [x, y, z]
     
     ## Write iKinematics parameters to input FIFO
     def axi_write_fifo(self):
-        self.axi_write(0, 1)
-        self.axi_write(0, 0)
+        self.axi_write(REGMAP.REG_TRIG, 1)
+        self.axi_write(REGMAP.REG_TRIG, 0)
         return True
     
     ## Trigger iKinematics Calculation
     def axi_trigger_ikinematics(self):
-        self.axi_write(0, 2)
-        self.axi_write(0, 0)
+        self.axi_write(REGMAP.REG_TRIG, 2)
+        self.axi_write(REGMAP.REG_TRIG, 0)
         return True
     
     ## Write output directly without calculation
     def axi_write_out_direct(self):
-        self.axi_write(0, 4)
-        self.axi_write(0, 0)
+        self.axi_write(REGMAP.REG_TRIG, 4)
+        self.axi_write(REGMAP.REG_TRIG, 0)
         return True
     
     ## Set PWM Channel Inversion bit
@@ -307,7 +292,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
             self.log_file += 'axi_set_pwm_inv:\n'
         idx_mask    = 1 << (pwm_idx+12)
         set_val     = val << (pwm_idx+12)
-        self.axi_write_mask(1, set_val, idx_mask)
+        self.axi_write_mask(REGMAP.REG_CTRL, set_val, idx_mask)
         return True
     
     ## Set output multiplexor
@@ -317,17 +302,17 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
             self.log_file += 'axi_set_out_mux:\n'
         mask        = self.R1_F2F_READ_MUX
         mux_sel     = (selector & 0x7) << 9
-        self.axi_write_mask(1, mux_sel, mask)
+        self.axi_write_mask(REGMAP.REG_CTRL, mux_sel, mask)
         return True
     
     # Set hexapod offsets
     def axi_set_offset(self, leg, off_q1, off_q2, off_q3):
-        self.axi_write(5+leg*3, off_q1)
-        self.axi_write(6+leg*3, off_q2)
-        self.axi_write(7+leg*3, off_q3)
+        self.axi_write(REGMAP.REG_OF01+leg*3, off_q1)
+        self.axi_write(REGMAP.REG_OF02+leg*3, off_q2)
+        self.axi_write(REGMAP.REG_OF03+leg*3, off_q3)
         return True
     
-    # Set read offsets
+    # Set default offsets
     def set_default_offsets(self, print_out=False):
         for i in range(6):
             offset_q1 = self.dfloat2hfloat(self.sec2rad(self.j_offs[i][0])).lstrip('x')
@@ -343,7 +328,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
             self.axi_set_offset(i, int(offset_q1,16), int(offset_q2,16), int(offset_q3,16))
         return True
     
-    # Set read offsets
+    # Set initial position
     def set_init_position(self, print_out=False):
         for i in range(6):
             q1 = self.dfloat2hfloat(self.sec2rad(self.i_pos[i][0]+self.j_offs[i][0])).lstrip('x')
@@ -367,21 +352,21 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     
     # Read offsets
     def axi_read_offset(self, leg):
-        off1 = self.axi_read(5+leg*3)
-        off2 = self.axi_read(6+leg*3)
-        off3 = self.axi_read(7+leg*3)
+        off1 = self.axi_read(REGMAP.REG_OF01+leg*3)
+        off2 = self.axi_read(REGMAP.REG_OF02+leg*3)
+        off3 = self.axi_read(REGMAP.REG_OF03+leg*3)
         return [off1, off2, off3]
     
     # Read offsets
     def axi_hread_offset(self, leg):
-        off1 = self.axi_hread(5+leg*3)
-        off2 = self.axi_hread(6+leg*3)
-        off3 = self.axi_hread(7+leg*3)
+        off1 = self.axi_hread(REGMAP.REG_OF01+leg*3)
+        off2 = self.axi_hread(REGMAP.REG_OF02+leg*3)
+        off3 = self.axi_hread(REGMAP.REG_OF03+leg*3)
         return [off1, off2, off3]
     
     # Get PWM values
     def axi_get_pwm(self, leg):
-        pwm1 = (int(self.axi_hread(23+leg*3),16) & 0x3FC00) >> 10
-        pwm2 = (int(self.axi_hread(24+leg*3),16) & 0x3FC00) >> 10
-        pwm3 = (int(self.axi_hread(25+leg*3),16) & 0x3FC00) >> 10
+        pwm1 = (int(self.axi_hread(REGMAP.REG_KO01+leg*3),16) & 0x3FC00) >> 10
+        pwm2 = (int(self.axi_hread(REGMAP.REG_KO02+leg*3),16) & 0x3FC00) >> 10
+        pwm3 = (int(self.axi_hread(REGMAP.REG_KO03+leg*3),16) & 0x3FC00) >> 10
         return [pwm1, pwm2, pwm3]

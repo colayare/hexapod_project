@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
 import os, sys
 from time import sleep as sleep
 from math import sin as sin
