@@ -10,26 +10,26 @@
 // ikinematics_ip_context::ikinematics_ip_context(char dev_name[]) {}
 
 void ikinematics_ip_context::write_fifo() {
-    this->axi_write(AXI_IK_REG_CONTROL, AXI_IK_REG_CONTROL_WRITE_FIFO);
-    this->axi_write(AXI_IK_REG_CONTROL, 0);
+    this->axi_write(IK_REG_TRIG, IK_REG_TRIG_WRITE_FIFO);
+    this->axi_write(IK_REG_TRIG, 0);
 }
 
 void ikinematics_ip_context::trigger_ikinematics() {
-    this->axi_write(AXI_IK_REG_CONTROL, AXI_IK_REG_CONTROL_TRIGGER);
-    this->axi_write(AXI_IK_REG_CONTROL, 0);
+    this->axi_write(IK_REG_TRIG, IK_REG_TRIG_TRIGGER);
+    this->axi_write(IK_REG_TRIG, 0);
 }
 
 void ikinematics_ip_context::leg_ctr_config(uint32_t config, uint32_t leg_select) {
-    const uint32_t mask  = AXI_IK_REG_LEG_CTR_LEG_SEL_M + AXI_IK_REG_LEG_CTR_SET_LEG_T + AXI_IK_REG_LEG_CTR_MODE_M;
-    uint32_t set_val     = ((leg_select << AXI_IK_REG_LEG_CTR_LEG_SEL_O) & AXI_IK_REG_LEG_CTR_LEG_SEL_M) + AXI_IK_REG_LEG_CTR_SET_LEG_T;
-    uint32_t set_config  = (config << AXI_IK_REG_LEG_CTR_MODE_O) & AXI_IK_REG_LEG_CTR_MODE_M;
+    const uint32_t mask  = IK_REG_LEGC_CTR_LEG_SEL_M + IK_REG_LEGC_CTR_SET_LEG_T + IK_REG_LEGC_CTR_MODE_M;
+    uint32_t set_val     = ((leg_select << IK_REG_LEGC_CTR_LEG_SEL_O) & IK_REG_LEGC_CTR_LEG_SEL_M) + IK_REG_LEGC_CTR_SET_LEG_T;
+    uint32_t set_config  = (config << IK_REG_LEGC_CTR_MODE_O) & IK_REG_LEGC_CTR_MODE_M;
     uint32_t value       = set_val + set_config;
-    this->axi_write_mask(AXI_IK_REG_LEG_CTRL, value, mask);
+    this->axi_write_mask(IK_REG_LEGC, value, mask);
 }
 
 void ikinematics_ip_context::leg_ctr_out_mux(uint32_t out_mux_select) {
-    uint32_t mux_sel = (out_mux_select << AXI_IK_REG_LEG_F2F_READ_MUX_O) & AXI_IK_REG_LEG_F2F_READ_MUX_M;
-    this->axi_write_mask(AXI_IK_REG_LEG_CTRL, mux_sel, AXI_IK_REG_LEG_F2F_READ_MUX_M);
+    uint32_t mux_sel = (out_mux_select << IK_REG_LEGC_F2F_READ_MUX_O) & IK_REG_LEGC_F2F_READ_MUX_M;
+    this->axi_write_mask(IK_REG_LEGC, mux_sel, IK_REG_LEGC_F2F_READ_MUX_M);
 }
 
 void ikinematics_ip_context::init_joint_offsets() {
@@ -41,7 +41,7 @@ void ikinematics_ip_context::init_joint_offsets() {
         #if defined(__IK_DEBUG) || defined(__ALL_DEBUG)
         cout << "Offset [" << i << "] = " << hex << int_offset << endl;
         #endif
-        this->axi_write(i+AXI_IK_REG_OFFSET_BASE, int_offset);
+        this->axi_write(i+IK_REG_OF01, int_offset);
     }
 }
 
@@ -63,8 +63,8 @@ void ikinematics_ip_context::init_servo_invertion() {
     #if defined(__IK_DEBUG) || defined(__ALL_DEBUG)
     cout << "Inversion values " << hex << servo_inv << endl;
     #endif
-    servo_inv = servo_inv << AXI_IK_REG_LEG_PWM_INVERT_O;
-    this->axi_write_mask(AXI_IK_REG_LEG_CTRL, servo_inv, AXI_IK_REG_LEG_PWM_INVERT_M);
+    servo_inv = servo_inv << IK_REG_LEGC_PWM_INVERT_O;
+    this->axi_write_mask(IK_REG_LEGC, servo_inv, IK_REG_LEGC_PWM_INVERT_M);
 }
 
 void ikinematics_ip_context::set_joint_direct(uint32_t leg, ik_output_t joints) {
@@ -84,13 +84,13 @@ void ikinematics_ip_context::set_joint_direct(uint32_t leg, ik_output_t joints) 
     cout << "Joint [" << 2+leg*3 << "] = " << hex << int_position[2] << endl;
     #endif
     
-    this->leg_ctr_config(AXI_IK_REG_LEG_CTR_ONE_LEG, leg);
+    this->leg_ctr_config(IK_REG_LEGC_CTR_ONE_LEG, leg);
     this->leg_ctr_out_mux(leg+1);
-    this->axi_write(AXI_IK_REG_Q1_OUT, int_position[0]);
-    this->axi_write(AXI_IK_REG_Q2_OUT, int_position[1]);
-    this->axi_write(AXI_IK_REG_Q3_OUT, int_position[2]);
-    this->axi_write(AXI_IK_REG_CONTROL, AXI_IK_REG_CONTROL_DIRECT_OUT);
-    this->axi_write(AXI_IK_REG_CONTROL, 0);
+    this->axi_write(IK_REG_IKQ1, int_position[0]);
+    this->axi_write(IK_REG_IKQ2, int_position[1]);
+    this->axi_write(IK_REG_IKQ3, int_position[2]);
+    this->axi_write(IK_REG_TRIG, IK_REG_TRIG_DIRECT_OUT);
+    this->axi_write(IK_REG_TRIG, 0);
 }
 
 void ikinematics_ip_context::write_ik_input(ik_input_t ik_input) {
@@ -99,18 +99,18 @@ void ikinematics_ip_context::write_ik_input(ik_input_t ik_input) {
     cout << "Set Y = " << ik_input.y << endl;
     cout << "Set Z = " << ik_input.z << endl;
     #endif
-    this->axi_write(AXI_IK_REG_X_IN, *(int *) &ik_input.x);
-    this->axi_write(AXI_IK_REG_Y_IN, *(int *) &ik_input.y);
-    this->axi_write(AXI_IK_REG_Z_IN, *(int *) &ik_input.z);
+    this->axi_write(IK_REG_IKIX, *(int *) &ik_input.x);
+    this->axi_write(IK_REG_IKIY, *(int *) &ik_input.y);
+    this->axi_write(IK_REG_IKIZ, *(int *) &ik_input.z);
 }
 
 ik_output_t ikinematics_ip_context::read_ik_output(uint32_t selector) {
     ik_output_t temp_out;
     uint32_t read_values [3];
     this->leg_ctr_out_mux(selector);
-    read_values[0] = this->axi_read(AXI_IK_REG_Q1_OUT);
-    read_values[1] = this->axi_read(AXI_IK_REG_Q2_OUT);
-    read_values[2] = this->axi_read(AXI_IK_REG_Q3_OUT);
+    read_values[0] = this->axi_read(IK_REG_IKQ1);
+    read_values[1] = this->axi_read(IK_REG_IKQ2);
+    read_values[2] = this->axi_read(IK_REG_IKQ3);
     
     temp_out.q1 = *(float *) &read_values[0];
     temp_out.q2 = *(float *) &read_values[1];

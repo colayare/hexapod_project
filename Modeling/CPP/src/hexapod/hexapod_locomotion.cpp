@@ -16,7 +16,7 @@ uint32_t hexapod_locomotion::iteration_size() {
 uint32_t hexapod_locomotion::step(float step_idx, uint32_t walk, float alpha) {
     this->get_step(step_idx, walk, alpha);
     
-    this->leg_ctr_config(AXI_IK_REG_LEG_CTR_MUX_LEG, 0);
+    this->leg_ctr_config(IK_REG_LEGC_CTR_MUX_LEG, 0);
     
     for (uint32_t leg=0; leg<6; leg++) {
         #ifdef __LOG
