@@ -52,6 +52,7 @@ class ip_context {
         void        axi_show_regs(uint32_t start_address, uint32_t end_address);
         uint32_t    axi_read_exp(uint32_t address, uint32_t expected_value);
         uint32_t    axi_wait(uint32_t address, uint32_t value, uint32_t cycles);
+        uint32_t    axi_wait_mask(uint32_t address, uint32_t value, uint32_t mask, uint32_t cycles);
         
         //== AXI IP Operations 16 Bit
         uint16_t    axi_read16(uint16_t read_address);

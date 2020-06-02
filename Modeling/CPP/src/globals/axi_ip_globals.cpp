@@ -150,6 +150,21 @@ uint32_t ip_context::axi_wait(uint32_t address, uint32_t value, uint32_t cycles)
     #endif
     return exit;
 }
+//== AXI IP Wait for Read Value with Mask
+uint32_t ip_context::axi_wait_mask(uint32_t address, uint32_t value, uint32_t mask, uint32_t cycles) {
+    uint32_t cnt    = 0;
+    uint32_t exit   = 1;
+    while ( (*(this->_axi_mmap_ptr+address) & mask) != value || exit ) {
+        cnt++;
+        if ( cnt == cycles ) {
+            exit = 0;
+        }
+    }
+    #ifdef __IP_LOG
+    std::cout << "WAIT32[" << std::hex << address << "," << value << "," << cycles << "] = " << cnt << "," << exit << std::endl;
+    #endif
+    return exit;
+}
 
 //==============================================================================
 //== 16 Bit Operations
