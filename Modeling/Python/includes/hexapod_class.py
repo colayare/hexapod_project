@@ -292,7 +292,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
             self.log_file += 'axi_set_pwm_inv:\n'
         idx_mask    = 1 << (pwm_idx+12)
         set_val     = val << (pwm_idx+12)
-        self.axi_write_mask(REGMAP.REG_CTRL, set_val, idx_mask)
+        self.axi_write_mask(REGMAP.REG_LEGC, set_val, idx_mask)
         return True
     
     ## Set output multiplexor
@@ -302,7 +302,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
             self.log_file += 'axi_set_out_mux:\n'
         mask        = self.R1_F2F_READ_MUX
         mux_sel     = (selector & 0x7) << 9
-        self.axi_write_mask(REGMAP.REG_CTRL, mux_sel, mask)
+        self.axi_write_mask(REGMAP.REG_LEGC, mux_sel, mask)
         return True
     
     # Set hexapod offsets
