@@ -58,6 +58,7 @@ $(ODIR)/%.o: $(SDIR)/hexapod/%.cpp $(HEXA_DEPS) $(PARAMS) $(GLOBALS)
 $(ODIR)/%.o: $(SDIR)/%.cpp $(PARAMS) $(GLOBALS) $(HEXA_DEPS)
 	$(CC) -Wall -c -o $@ $< $(CFLAGS)
 
-test_ikinematics: $(TEST_IKINEMATICS_OBJ)
-	@echo "Compile $(ODIR)/$@ "
+test_ikinematics: $(TEST_IKINEMATICS_OBJ) $(HEXA_OBJ) $(GLOBALS_OBJ)
+	@echo "==============================="
+	@echo -e "Compile \033[92m $(ODIR)/$@ \033[0m"
 	$(CC) -Wall -o $(ODIR)/$@ $^ $(CFLAGS)
