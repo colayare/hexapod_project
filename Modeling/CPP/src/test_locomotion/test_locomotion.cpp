@@ -85,7 +85,9 @@ int main(int argc, char* argv[]) {
     
     // Gaits
     for (uint32_t gait=0; gait<gaits; gait++) {
+			  cout << RED << "##### GAIT N " << gait << RESET << endl;
         for (uint32_t i=0; i<hexapod.iteration_size(); i++) {
+            cout << GREEN << "step : " << i << RESET << endl;
             hexapod.step(i, walk, 0);
             
             delay_ms(delay);

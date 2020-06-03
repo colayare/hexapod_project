@@ -154,7 +154,7 @@ uint32_t ip_context::axi_wait(uint32_t address, uint32_t value, uint32_t cycles)
 uint32_t ip_context::axi_wait_mask(uint32_t address, uint32_t value, uint32_t mask, uint32_t cycles) {
     uint32_t cnt    = 0;
     uint32_t exit   = 1;
-    while ( (*(this->_axi_mmap_ptr+address) & mask) != value || exit ) {
+    while ( (*(this->_axi_mmap_ptr+address) & mask) != value && exit ) {
         cnt++;
         if ( cnt == cycles ) {
             exit = 0;
