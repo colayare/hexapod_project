@@ -48,9 +48,9 @@ void ikinematics_ip_context::init_joint_offsets() {
 void ikinematics_ip_context::init_joint_position() {
     ik_output_t leg_joints;
     for (int leg=0;leg<6;leg++) {
-        leg_joints.q1 = *(this->_joint_pos_init+leg*3+0);
-        leg_joints.q2 = *(this->_joint_pos_init+leg*3+1);
-        leg_joints.q3 = *(this->_joint_pos_init+leg*3+2);
+        leg_joints.q1 = *(this->_joint_pos_init+leg*IK_REG_IKIX+0);
+        leg_joints.q2 = *(this->_joint_pos_init+leg*IK_REG_IKIX+1);
+        leg_joints.q3 = *(this->_joint_pos_init+leg*IK_REG_IKIX+2);
         this->set_joint_direct(leg, leg_joints);
     }
 }
