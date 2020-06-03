@@ -27,8 +27,7 @@ int main() {
     // Initialize Joints Positions
     iK_ip.init_joint_position();
     
-    
-    //iK_ip.axi_show_regs(0, 0x23);
+    iK_ip.axi_show_regs(0, IK_REG_KO18);
   
 
     return 0;

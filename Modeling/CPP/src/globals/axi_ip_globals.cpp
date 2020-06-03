@@ -117,7 +117,7 @@ void ip_context::axi_bit_clr(uint32_t address, uint32_t bit_mask) {
 //== AXI IP Show Registers
 void ip_context::axi_show_regs(uint32_t start_address, uint32_t end_address) {
     //TODO: Check counter i word size access
-    for (uint32_t i=0;i<(end_address-start_address);i++) {
+    for (uint32_t i=0;i<(end_address-start_address)+1;i++) {
         cout << "REG32[" << i+start_address << "]\t= " << hex << *(this->_axi_mmap_ptr+start_address+i) << endl;
     }
 }
