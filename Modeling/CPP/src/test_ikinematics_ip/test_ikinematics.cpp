@@ -13,7 +13,7 @@ int main() {
     cout << "Test Inverse Kinematics IP" << endl;
     
     // Declare Inverse Kinematics AXI IP Context
-    ikinematics_ip_context iK_ip;
+    ikinematics_ip_context iK_ip("/dev/mem");
     
     // Initialize Inverse Kinematics IP
     iK_ip.init_axi_mmap_ptr(AXI_IK_RMAPSIZE, AXI_IK_BASEADDR, AXI_IK_WORDSIZE);
