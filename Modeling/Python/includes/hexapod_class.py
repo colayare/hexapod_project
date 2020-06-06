@@ -219,7 +219,7 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     ## > 0-5 : Selects the output leg
     def config_leg_ctr(self, mode, leg):
         if ( self.enable_ip_logs ):
-            self.log_file += 'config_leg_ctr:\n'
+            self.log_file += 'config_leg_ctr: start\n'
         mask    = self.R1_LEG_IN_SELCT + self.R1_SET_LEG_IN + self.R1_COUNTER_MODE
         leg_in  = leg & 0x7
         if ( mode == "one_leg" or mode == 0 ):
@@ -230,18 +230,22 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
             print("Invalid mode, selected leg multiplexion")
             mode_in = 0x0
         self.axi_write_mask(REGMAP.REG_LEGC, leg_in + 0x8 + mode_in, mask)
+        if ( self.enable_ip_logs ):
+            self.log_file += 'config_leg_ctr: end\n'
         return True
     
     ## Set Leg configuration
     def axi_set_leg_conf(self, conf, leg_select):
         if ( self.enable_ip_logs ):
-            self.log_file += 'axi_set_leg_conf:\n'
+            self.log_file += 'axi_set_leg_conf: start\n'
         mask        = self.R1_LEG_IN_SELCT + self.R1_SET_LEG_IN + self.R1_COUNTER_MODE
         reg1        = int(self.axi_read(1), 16)
         set_val     = 8 + (leg_select & 0x7)
         config      = (conf<<4) & 0x30  
         value       = set_val + config + reg1
         self.axi_write_mask(REGMAP.REG_LEGC, value, mask)
+        if ( self.enable_ip_logs ):
+            self.log_file += 'axi_set_leg_conf: end\n'
         return True
     
     ## Write iKinematics Parameters on input FIFO
@@ -289,27 +293,35 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     ## Set PWM Channel Inversion bit
     def axi_set_pwm_inv(self, pwm_idx, val):
         if ( self.enable_ip_logs ):
-            self.log_file += 'axi_set_pwm_inv:\n'
+            self.log_file += 'axi_set_pwm_inv: start\n'
         idx_mask    = 1 << (pwm_idx+12)
         set_val     = val << (pwm_idx+12)
         self.axi_write_mask(REGMAP.REG_LEGC, set_val, idx_mask)
+        if ( self.enable_ip_logs ):
+            self.log_file += 'axi_set_pwm_inv: end\n'
         return True
     
     ## Set output multiplexor
     ## f2f_mux_selector offset
     def axi_set_out_mux(self, selector):
         if ( self.enable_ip_logs ):
-            self.log_file += 'axi_set_out_mux:\n'
+            self.log_file += 'axi_set_out_mux: start\n'
         mask        = self.R1_F2F_READ_MUX
         mux_sel     = (selector & 0x7) << 9
         self.axi_write_mask(REGMAP.REG_LEGC, mux_sel, mask)
+        if ( self.enable_ip_logs ):
+            self.log_file += 'axi_set_out_mux: end\n'
         return True
     
     # Set hexapod offsets
     def axi_set_offset(self, leg, off_q1, off_q2, off_q3):
+        if ( self.enable_ip_logs ):
+            self.log_file += 'axi_set_offset: start\n'
         self.axi_write(REGMAP.REG_OF01+leg*3, off_q1)
         self.axi_write(REGMAP.REG_OF02+leg*3, off_q2)
         self.axi_write(REGMAP.REG_OF03+leg*3, off_q3)
+        if ( self.enable_ip_logs ):
+            self.log_file += 'axi_set_offset: end\n'
         return True
     
     # Set default offsets
@@ -330,6 +342,8 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
     
     # Set initial position
     def set_init_position(self, print_out=False):
+        if ( self.enable_ip_logs ):
+            self.log_file += 'set_init_position: start\n'
         for i in range(6):
             q1 = self.dfloat2hfloat(self.sec2rad(self.i_pos[i][0]+self.j_offs[i][0])).lstrip('x')
             q2 = self.dfloat2hfloat(self.sec2rad(self.i_pos[i][1]+self.j_offs[i][1])).lstrip('x')
@@ -347,6 +361,8 @@ class hexapod_kinematics(axi_ip_mmap, numeric_conversions):
                 print('\tQ1 = 0x'+q1+' | '+str(self.hfloat2dfloat(q1))+' | '+str(self.rad2sec(self.hfloat2dfloat(q1)))+' | '+str(pwm1))
                 print('\tQ2 = 0x'+q1+' | '+str(self.hfloat2dfloat(q2))+' | '+str(self.rad2sec(self.hfloat2dfloat(q2)))+' | '+str(pwm2))
                 print('\tQ3 = 0x'+q1+' | '+str(self.hfloat2dfloat(q3))+' | '+str(self.rad2sec(self.hfloat2dfloat(q3)))+' | '+str(pwm3))
+        if ( self.enable_ip_logs ):
+            self.log_file += 'set_init_position: end\n'
 
         return True
     
