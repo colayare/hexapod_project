@@ -16,16 +16,34 @@ uint32_t hexapod_locomotion::iteration_size() {
 uint32_t hexapod_locomotion::step(float step_idx, uint32_t walk, float alpha) {
     this->get_step(step_idx, walk, alpha);
     
+    #if defined(__LOCOMOTION_DEBUG) || defined(__ALL_DEBUG)
+    cout << "step(step_idx=" << step_idx << ",walk=" << walk << ",alpha=" << alpha << ")" << endl;
+    ik_output_t locomotion_out;
+    for (uint32_t leg=0; leg<6; leg++) {
+        this->leg_ctr_config(IK_REG_LEGC_CTR_ONE_LEG, leg);
+        this->write_ik_input(this->ef_position.leg[leg]);
+        this->write_fifo();
+        this->trigger_ikinematics();
+        for (uint32_t i=0; i<10; i++) {
+          asm ("nop");
+        }
+        //locomotion_out = this->read_ik_output(leg+1);
+        locomotion_out = this->read_ik_output(0);
+        cout << "OUT>" << step_idx << "," << leg << "," << locomotion_out.q1 << "," << locomotion_out.q2 << "," << locomotion_out.q3 << endl;
+        cout << "Result Q1 = " << *(float *) &locomotion_out.q1 << endl;
+        cout << "Result Q2 = " << *(float *) &locomotion_out.q2 << endl;
+        cout << "Result Q3 = " << *(float *) &locomotion_out.q3 << endl;
+    }
+
+    #else
     this->leg_ctr_config(IK_REG_LEGC_CTR_MUX_LEG, 0);
     
     for (uint32_t leg=0; leg<6; leg++) {
-        #ifdef __LOG
-        cout << "Assign Leg " << leg << " : " << endl;
-        #endif
         this->write_ik_input(this->ef_position.leg[leg]);
         this->write_fifo();
     }
     this->trigger_ikinematics();
+    #endif
     
     return 1;
 }
@@ -373,12 +391,12 @@ uint32_t hexapod_locomotion::get_step(float step_idx, uint32_t walk, float alpha
     this->ef_position = ef;
     
     #if defined(__LOCOMOTION_DEBUG) || defined(__ALL_DEBUG)
-    cout << 1 << "," << ef.leg[0].x << "," << ef.leg[0].y << "," << ef.leg[0].z << endl;
-    cout << 2 << "," << ef.leg[1].x << "," << ef.leg[1].y << "," << ef.leg[1].z << endl;
-    cout << 3 << "," << ef.leg[2].x << "," << ef.leg[2].y << "," << ef.leg[2].z << endl;
-    cout << 4 << "," << ef.leg[3].x << "," << ef.leg[3].y << "," << ef.leg[3].z << endl;
-    cout << 5 << "," << ef.leg[4].x << "," << ef.leg[4].y << "," << ef.leg[4].z << endl;
-    cout << 6 << "," << ef.leg[5].x << "," << ef.leg[5].y << "," << ef.leg[5].z << endl;
+    cout << "STEP>" << step_idx << "," << 0 << "," << ef.leg[0].x << "," << ef.leg[0].y << "," << ef.leg[0].z << endl;
+    cout << "STEP>" << step_idx << "," << 1 << "," << ef.leg[1].x << "," << ef.leg[1].y << "," << ef.leg[1].z << endl;
+    cout << "STEP>" << step_idx << "," << 2 << "," << ef.leg[2].x << "," << ef.leg[2].y << "," << ef.leg[2].z << endl;
+    cout << "STEP>" << step_idx << "," << 3 << "," << ef.leg[3].x << "," << ef.leg[3].y << "," << ef.leg[3].z << endl;
+    cout << "STEP>" << step_idx << "," << 4 << "," << ef.leg[4].x << "," << ef.leg[4].y << "," << ef.leg[4].z << endl;
+    cout << "STEP>" << step_idx << "," << 5 << "," << ef.leg[5].x << "," << ef.leg[5].y << "," << ef.leg[5].z << endl;
     #endif
     
     return 1;

@@ -1,6 +1,6 @@
 # Includes Directory
 IDIR=$(MODEL_CPP_PATH)/includes
-SDIR=$(MODEL_CPP_PATH)/src/test_ikinematics_ip
+SDIR=$(MODEL_CPP_PATH)/src
 # Execution directory set as Outputs Directory
 ODIR=$(MODEL_CPP_PATH)/bin
 $(info ===============================)
@@ -17,9 +17,9 @@ EXT=cpp
 
 
 _GLOBALS   = axi_ip_globals.h global_defines.h
-GLOBALS    = $(patsubst %,$(IDIR)/globals/%,$(_DEPS))
+GLOBALS    = $(patsubst %,$(IDIR)/globals/%,$(_GLOBALS))
 
-_GLOBALS_OBJ = axi_ip_globals.o linux_timing.o
+_GLOBALS_OBJ = axi_ip_globals.o 
 GLOBALS_OBJ  = $(patsubst %,$(ODIR)/%,$(_GLOBALS_OBJ))
 
 _PARAMS = hexapod_ip_params.h hexapod_params.h ip_reg_map.h
@@ -28,7 +28,7 @@ PARAMS  = $(patsubst %,$(IDIR)/params/%,$(_PARAMS))
 _HEXA_DEPS 	= hexapod_kinematics.h
 HEXA_DEPS	= $(patsubst %,$(IDIR)/hexapod/%,$(_HEXA_DEPS))
 
-_HEXA_OBJ = hexapod_kinematics.o hexapod_locomotion.o
+_HEXA_OBJ = hexapod_kinematics.o 
 HEXA_OBJ  = $(patsubst %,$(ODIR)/%,$(_HEXA_OBJ))
 
 _TEST_IKINEMATICS_OBJ 	= test_ikinematics.o
@@ -55,10 +55,13 @@ $(ODIR)/%.o: $(SDIR)/globals/%.cpp $(GLOBALS)
 $(ODIR)/%.o: $(SDIR)/hexapod/%.cpp $(HEXA_DEPS) $(PARAMS) $(GLOBALS) 
 	$(CC) -Wall -c -o $@ $< $(CFLAGS)
 
-$(ODIR)/%.o: $(SDIR)/%.cpp $(PARAMS) $(GLOBALS) $(HEXA_DEPS)
+$(ODIR)/%.o: $(SDIR)/test_ikinematics_ip/%.cpp $(PARAMS) $(GLOBALS) $(HEXA_DEPS)
 	$(CC) -Wall -c -o $@ $< $(CFLAGS)
 
 test_ikinematics: $(TEST_IKINEMATICS_OBJ) $(HEXA_OBJ) $(GLOBALS_OBJ)
 	@echo "==============================="
 	@echo -e "Compile \033[92m $(ODIR)/$@ \033[0m"
 	$(CC) -Wall -o $(ODIR)/$@ $^ $(CFLAGS)
+
+clean:
+	rm -f $(ODIR)/*.o *~ core $(IDIR)*~

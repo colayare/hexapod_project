@@ -16,7 +16,18 @@
 ip_context::ip_context(char dev_name[]) {
     string dev(dev_name);
     this->dev_name = dev;
+    #ifdef __IP_LOG
+    cout.fill('0');
+    #endif
 }
+//== Private Members Function Getters
+//== Get Memory Map Pointer
+volatile uint32_t *ip_context::get_mmap_ptr() { return this->_axi_mmap_ptr; }
+//== Get File
+int32_t     ip_context::ip_file() { return this->_ip_file; }
+uint32_t    ip_context::get_axi_mmap_size() { return this->_axi_mmap_size; }
+uint32_t    ip_context::get_axi_base_address() { return this->_axi_base_address; }
+uint32_t    ip_context::get_axi_word_size() { return this->_axi_word_size; }
 
 //== Init AXI IP Memory Map
 uint32_t ip_context::init_axi_mmap_ptr(uint32_t axi_mmap_size, uint32_t axi_base_address, uint32_t axi_word_size) {
@@ -29,7 +40,7 @@ uint32_t ip_context::init_axi_mmap_ptr(uint32_t axi_mmap_size, uint32_t axi_base
     strcpy(memDevice, this->dev_name.c_str()); 
     
     //== Validate 
-    if ( !( axi_mmap_size && axi_base_address ) ) {
+    if ( !( axi_mmap_size | axi_base_address ) ) {
         cout << "ERROR : AXI MMAP Size or Base Address is zero" << endl;
         return 0;
     }
@@ -42,7 +53,9 @@ uint32_t ip_context::init_axi_mmap_ptr(uint32_t axi_mmap_size, uint32_t axi_base
         cout << "Open " << this->dev_name << " successfully !\n" << endl;
     }
     
-    axi_mmap_ptr = (uint32_t *)(mmap(0, mmap_size, PROT_READ|PROT_WRITE, MAP_SHARED, _fdmem, axi_base_address));
+    //axi_mmap_ptr = (uint32_t *)(mmap(0, mmap_size, PROT_READ|PROT_WRITE, MAP_SHARED, _fdmem, axi_base_address));
+    //axi_mmap_ptr = (uint32_t *)(mmap(NULL, axi_mmap_size, PROT_READ|PROT_WRITE, MAP_SHARED, _fdmem, mapping_n * axi_mmap_size));
+    axi_mmap_ptr = (uint32_t *)(mmap(NULL, axi_mmap_size, PROT_READ|PROT_WRITE, MAP_SHARED, _fdmem,  axi_base_address));
     
     // Setting Class members values
     this->_axi_mmap_ptr      = axi_mmap_ptr;
@@ -53,10 +66,6 @@ uint32_t ip_context::init_axi_mmap_ptr(uint32_t axi_mmap_size, uint32_t axi_base
     
     return 1;
 }
-//== Get Memory Map Pointer
-volatile uint32_t *ip_context::get_mmap_ptr() { return this->_axi_mmap_ptr; }
-//== Get File
-int32_t ip_context::ip_file() { return this->_ip_file; }
 
 //==============================================================================
 //== 32 Bit Operations
@@ -65,7 +74,7 @@ int32_t ip_context::ip_file() { return this->_ip_file; }
 uint32_t ip_context::axi_read(uint32_t read_address) {
     #ifdef __IP_LOG
     uint32_t val_print = *(this->_axi_mmap_ptr+read_address);
-    cout << "R32[" << read_address << "] = " << hex << val_print << endl;
+    cout << hex << "R32[" << setw(8) << read_address << "] = " << setw(8) << val_print << endl;
     #endif
     return *(this->_axi_mmap_ptr+read_address);
 }
@@ -73,14 +82,14 @@ uint32_t ip_context::axi_read(uint32_t read_address) {
 uint32_t ip_context::axi_read_mask(uint32_t read_address, uint32_t mask) {
     #ifdef __IP_LOG
     uint32_t val_print = *(this->_axi_mmap_ptr+read_address) & mask;
-    cout << "RM32[" << read_address << "," << mask << "] = " << hex << val_print << endl;
+    cout << hex << "RM32[" << setw(8) << read_address << "," << setw(8) << mask << "] = " << setw(8) << val_print << endl;
     #endif
     return *(this->_axi_mmap_ptr+read_address) & mask;
 }
 //== AXI IP Write
 void ip_context::axi_write(uint32_t write_address, uint32_t value) {
     #ifdef __IP_LOG
-    cout << "W32[" << write_address << "] = " << hex << value << endl;
+    cout << hex << "W32[" << setw(8) << write_address << "] = " << setw(8) << value << endl;
     #endif
     *(this->_axi_mmap_ptr+write_address) = value;
 }
@@ -90,7 +99,7 @@ void ip_context::axi_write_mask(uint32_t write_address, uint32_t value, uint32_t
     register_value = *(this->_axi_mmap_ptr+write_address) & ~mask;
     #ifdef __IP_LOG
     uint32_t val_print = register_value + (value & mask);
-    cout << "WM32[" << write_address << "," << mask << "] = " << hex << val_print << endl;
+    cout << hex << "WM32[" << setw(8) << write_address << "," << setw(8) << value << "," << setw(8) << mask << "] = " << setw(8) << val_print << endl;
     #endif
     *(this->_axi_mmap_ptr+write_address) = register_value + (value & mask);
 }
@@ -100,7 +109,7 @@ void ip_context::axi_bit_set(uint32_t address, uint32_t bit_mask) {
     register_value = *(this->_axi_mmap_ptr+address) & ~bit_mask;
     #ifdef __IP_LOG
     uint32_t val_print = register_value + bit_mask;
-    cout << "BS32[" << address << "," << bit_mask << "] = " << hex << val_print << endl;
+    cout << hex << "BS32[" << setw(8) << address << "," << setw(8) << bit_mask << "] = " << setw(8) << val_print << endl;
     #endif
     *(this->_axi_mmap_ptr+address) = register_value + bit_mask;
 }
@@ -110,15 +119,15 @@ void ip_context::axi_bit_clr(uint32_t address, uint32_t bit_mask) {
     register_value = *(this->_axi_mmap_ptr+address) & ~bit_mask;
     #ifdef __IP_LOG
     uint32_t val_print = register_value + bit_mask;
-    cout << "BC32[" << address << "," << bit_mask << "] = " << hex << val_print << endl;
+    cout << hex << "BC32[" << setw(8) << address << "," << setw(8) << bit_mask << "] = " << setw(8) << val_print << endl;
     #endif
     *(this->_axi_mmap_ptr+address) = register_value;
 }
 //== AXI IP Show Registers
 void ip_context::axi_show_regs(uint32_t start_address, uint32_t end_address) {
     //TODO: Check counter i word size access
-    for (uint32_t i=0;i<(end_address-start_address)+1;i++) {
-        cout << "REG32[" << i+start_address << "]\t= " << hex << *(this->_axi_mmap_ptr+start_address+i) << endl;
+    for (uint32_t i=0;i<=(end_address-start_address)+1;i++) {
+        cout << hex << "REG32[" << setw(8) << i+start_address << "]\t= " << setw(8) << *(this->_axi_mmap_ptr+start_address+i) << endl;
     }
 }
 //== AXI IP Read Expected Value
@@ -131,7 +140,7 @@ uint32_t ip_context::axi_read_exp(uint32_t address, uint32_t expected_value) {
         result = 0;
     }
     #ifdef __IP_LOG
-    cout << "RE32[" << hex << address << "," << expected_value << "] = " << *(this->_axi_mmap_ptr+address) << " = " << result << endl;
+    cout << "RE32[" << hex << setw(8) << address << "," << setw(8) << expected_value << "] = " << setw(8) << *(this->_axi_mmap_ptr+address) << " = " << result << endl;
     #endif
     return result;
 }
@@ -146,7 +155,7 @@ uint32_t ip_context::axi_wait(uint32_t address, uint32_t value, uint32_t cycles)
         }
     }
     #ifdef __IP_LOG
-    cout << "WAIT32[" << hex << address << "," << value << "," << cycles << "] = " << cnt << "," << exit << endl;
+    cout << hex << "WAIT32[" << setw(8) << address << "," << setw(8) << value << "," << dec << cycles << "] = " << cnt << "," << exit << endl;
     #endif
     return exit;
 }
@@ -161,7 +170,7 @@ uint32_t ip_context::axi_wait_mask(uint32_t address, uint32_t value, uint32_t ma
         }
     }
     #ifdef __IP_LOG
-    std::cout << "WAIT32[" << std::hex << address << "," << value << "," << cycles << "] = " << cnt << "," << exit << std::endl;
+    cout << hex << "WAIT32[" << setw(8) << address << "," << setw(8) << value << "," << dec << cycles << "] = " << cnt << "," << exit << std::endl;
     #endif
     return exit;
 }

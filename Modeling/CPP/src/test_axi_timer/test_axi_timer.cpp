@@ -28,17 +28,24 @@ int main(void) {
   cout << "Testing AXI TIMER 0" << endl;
 
 	//**** Instantiate Hexapod Context ****
-	hexapod_locomotion hexapod("/dev/mem");
+  cout << "Initialize iKinematics Context" << endl;
+	//hexapod_locomotion hexapod("/dev/mem");
+	hexapod_locomotion hexapod(AXI_IK_UIO);
 	hexapod.ip_name = "hexapod";
 
 	// Initialize Inverse Kinematics IP
 	hexapod.init_axi_mmap_ptr(AXI_IK_RMAPSIZE, AXI_IK_BASEADDR, AXI_IK_WORDSIZE);
 	// Initialize Joints Offsets
+  cout << "init_joint_offsets" << endl;
 	hexapod.init_joint_offsets();
 	// Initialize Servo Inversions
+  cout << "init_servo_invertion" << endl;
 	hexapod.init_servo_invertion();
 	// Initialize Joints Positions
+  cout << "init_joint_position" << endl;
 	hexapod.init_joint_position();
+
+  hexapod.axi_show_regs(0, 43);
 
 
 	// Initialize Locomotion Parameters
@@ -50,7 +57,8 @@ int main(void) {
 	//********
 
   //**** Initialize AXI TMR0 Context ****
-	ip_context axi_tmr0("/dev/mem");
+  cout << "Initialize AXI Timer0 Context" << endl;
+	ip_context axi_tmr0(AXI_TMR0_UIO);
   axi_tmr0.ip_name = "AXI Timer 0";
   axi_tmr0.init_axi_mmap_ptr(AXI_TMR0_RMAPSIZE, AXI_TMR0_BASEADDR, AXI_TMR0_WORDSIZE);
 	//********
@@ -89,7 +97,7 @@ int main(void) {
     axi_tmr0.axi_bit_set(0, 1 << 6);		// Enable TMR0 Interrupt
     axi_tmr0.axi_bit_set(0, 1 << 7); 		// Enable TMR0 Start Count
     axi_tmr0.axi_wait_mask(0, 1 << 8, 1 << 8, TMR_TMOUT);
-    axi_tmr0.axi_bit_set(0, 1 << 8);
+    //axi_tmr0.axi_bit_set(0, 1 << 8);
     cout << "Timer Overflow" << endl;
   }
 

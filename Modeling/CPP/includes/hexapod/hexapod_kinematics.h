@@ -3,6 +3,8 @@
 
 #include <string>
 #include <math.h>
+#include <iomanip>
+#include <iostream>
 #include "params/hexapod_ip_params.h"
 #include "params/hexapod_params.h"
 #include "globals/axi_ip_globals.h"

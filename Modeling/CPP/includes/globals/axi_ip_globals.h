@@ -3,6 +3,7 @@
 //==============================================================================
 // Includes
 #include <iostream>
+#include <iomanip>
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -38,9 +39,12 @@ class ip_context {
         ip_context(char dev_name[]);
         //== Init AXI IP Memory Map
         uint32_t    init_axi_mmap_ptr(uint32_t axi_mmap_size, uint32_t axi_base_address, uint32_t axi_word_size);
-        //== Get Private Members Functions
+        //== Private Members Functions Getters
         volatile uint32_t *get_mmap_ptr();
         int32_t     ip_file();
+        uint32_t    get_axi_mmap_size();
+        uint32_t    get_axi_base_address();
+        uint32_t    get_axi_word_size();
         
         //== AXI IP Operations 32 Bit
         uint32_t    axi_read(uint32_t read_address);

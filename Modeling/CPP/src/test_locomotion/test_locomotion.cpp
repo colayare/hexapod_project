@@ -21,24 +21,24 @@ int main(int argc, char* argv[]) {
     // Walk Step Delay in ms
     uint32_t delay = 10;
     // Number of gaits
-    uint32_t gaits = 10;
+    uint32_t gaits = 2;
     
     // Declare Inverse Kinematics AXI IP Context
-    hexapod_locomotion hexapod("/dev/mem");
+    hexapod_locomotion hexapod(AXI_IK_UIO);
     
     // Assign AXI IP Name
     hexapod.ip_name = "IKinematics";
     
     // Initialize Inverse Kinematics IP
-    hexapod.init_axi_mmap_ptr(AXI_IK_RMAPSIZE, AXI_IK_BASEADDR, AXI_IK_WORDSIZE);
+    hexapod.init_axi_mmap_ptr(AXI_IK_RMAPSIZE, AXI_IK_MMAPADDR * AXI_IK_0_DEVICE_ID, AXI_IK_WORDSIZE);
     cout << hexapod.ip_name << " IP ptr : " << hexapod.get_mmap_ptr() << endl;
     
     // Initialize Joints Offsets
-    hexapod.init_joint_offsets();
+    //hexapod.init_joint_offsets();
     // Initialize Servo Inversions
     hexapod.init_servo_invertion();
     // Initialize Joints Positions
-    hexapod.init_joint_position();
+    //hexapod.init_joint_position();
     
     // Set var
     uint32_t set_S = 1;
