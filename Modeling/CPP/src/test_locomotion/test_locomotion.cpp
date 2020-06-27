@@ -34,11 +34,11 @@ int main(int argc, char* argv[]) {
     cout << hexapod.ip_name << " IP ptr : " << hexapod.get_mmap_ptr() << endl;
     
     // Initialize Joints Offsets
-    //hexapod.init_joint_offsets();
+    hexapod.init_joint_offsets();
     // Initialize Servo Inversions
     hexapod.init_servo_invertion();
     // Initialize Joints Positions
-    //hexapod.init_joint_position();
+    hexapod.init_joint_position();
     
     // Set var
     uint32_t set_S = 1;
@@ -93,6 +93,9 @@ int main(int argc, char* argv[]) {
             delay_ms(delay);
         }
     }
+
+    // Return Joints to initial position
+    hexapod.init_joint_position();
     
     return 0;
 }

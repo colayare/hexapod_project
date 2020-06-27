@@ -19,7 +19,7 @@
 #define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
-#define __IP_LOG
-#define __ALL_DEBUG
+//#define __IP_LOG
+//#define __ALL_DEBUG
 
 #endif // __GLOBAL_DEFINES_H__
