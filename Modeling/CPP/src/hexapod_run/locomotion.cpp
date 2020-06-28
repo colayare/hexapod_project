@@ -21,27 +21,27 @@ using namespace std;
 int main(int argc, char* argv[]) {
     cout << "Test Inverse Kinematics IP" << endl;
     
-		//=================================================================
-		// AXI TIMER IP CONTEXT 
-		//=================================================================
-		// Declare AXI TMR IP CONTEXT
-		ip_context axi_tmr0(AXI_TMR0_UIO);
-		// Assign AXI IP Name
-		axi_tmr0.ip_name = "axi_tmr0";
-		// Initialize AXI TMR IP 
-		axi_tmr0.init_axi_mmap_ptr(AXI_TMR0_RMAPSIZE, AXI_TMR0_BASEADDR * AXI_TMR_0_DEVICE_ID, AXI_TMR0_WORDSIZE);
-		// Configure AXI TMR
-		axi_tmr0.axi_bit_set(0, 1 << 1);    // Select Down Counter
-		axi_tmr0.axi_write(1, TMR_10MS);		// Load CTR value to Load Reg
+    //=================================================================
+    // AXI TIMER IP CONTEXT 
+    //=================================================================
+    // Declare AXI TMR IP CONTEXT
+    ip_context axi_tmr0(AXI_TMR0_UIO);
+    // Assign AXI IP Name
+    axi_tmr0.ip_name = "axi_tmr0";
+    // Initialize AXI TMR IP 
+    axi_tmr0.init_axi_mmap_ptr(AXI_TMR0_RMAPSIZE, AXI_TMR0_BASEADDR * AXI_TMR_0_DEVICE_ID, AXI_TMR0_WORDSIZE);
+    // Configure AXI TMR
+    axi_tmr0.axi_bit_set(0, 1 << 1);    // Select Down Counter
+    axi_tmr0.axi_write(1, TMR_10MS);		// Load CTR value to Load Reg
     axi_tmr0.axi_bit_set(0, 1 << 5);		// Load TMR0
     axi_tmr0.axi_bit_clr(0, 1 << 5);
-		axi_tmr0.axi_bit_set(0, 1 << 6);		// Enable TMR0 Interrupt
+    axi_tmr0.axi_bit_set(0, 1 << 6);		// Enable TMR0 Interrupt
 
-		//=================================================================
+    //=================================================================
 
-		//=================================================================
-		// HEXAPOD IP CONTEXT
-		//=================================================================
+    //=================================================================
+    // HEXAPOD IP CONTEXT
+    //=================================================================
     // Declare Inverse Kinematics AXI IP Context
     hexapod_locomotion hexapod(AXI_IK_UIO);
     // Assign AXI IP Name
@@ -54,17 +54,17 @@ int main(int argc, char* argv[]) {
     hexapod.init_servo_invertion();
     // Initialize Joints Positions
     hexapod.init_joint_position();
-		// Initialize Locomotion Parameters
+    // Initialize Locomotion Parameters
     hexapod.xo  = 12.38;		//
     hexapod.yo  = 5.0;
     hexapod.zo  = -10.51;
-		hexapod.S 	= 7.0;
-		hexapod.res	= 0.07;
-		//=================================================================
+    hexapod.S 	= 7.0;
+    hexapod.res	= 0.07;
+    //=================================================================
 
-		//=================================================================
-		// I2C OLED CONTEXT
-		//=================================================================
+    //=================================================================
+    // I2C OLED CONTEXT
+    //=================================================================
     #ifdef USE_OLED
     // Declare I2C OLED Context
     i2c_oled oled("/dev/i2c-0");
@@ -92,16 +92,16 @@ int main(int argc, char* argv[]) {
     #endif
 
     
-		//=================================================================
-		// Get Arguments
-		//=================================================================
+    //=================================================================
+    // Get Arguments
+    //=================================================================
     // Variables Declarations
     // Walk Selector
-		// 0 : Forbiden 
-		// 1 : Tripod
-		// 2 : Quadruped
-		// 3 : Quadruped 4+2
-		// 4 : Pentapod
+    // 0 : Forbiden 
+    // 1 : Tripod
+    // 2 : Quadruped
+    // 3 : Quadruped 4+2
+    // 4 : Pentapod
     uint32_t walk = 1;
     // Walk Step Delay in ms
     uint32_t delay = 10;
@@ -125,23 +125,23 @@ int main(int argc, char* argv[]) {
             gaits = atoi(argv[i+1]);
         }
     }
-		//=================================================================
+    //=================================================================
     
 		//=================================================================
-		// RUN
-		//=================================================================
+    // RUN
+    //=================================================================
     for (uint32_t gait=0; gait<gaits; gait++) {
-			  cout << RED << "##### GAIT N " << gait << RESET << endl;
+        cout << RED << "##### GAIT N " << gait << RESET << endl;
         for (uint32_t i=0; i<hexapod.iteration_size(); i++) {
             cout << GREEN << "step : " << i << RESET << endl;
-						// Disable TMR0 Count
-						axi_tmr0.axi_bit_clr(0, 1 << 7);		
-						// Calculate & Send hexapod walk step
+            // Disable TMR0 Count
+            axi_tmr0.axi_bit_clr(0, 1 << 7);		
+            // Calculate & Send hexapod walk step
             hexapod.step(i, walk, 0);
             // Load TMR ctr value
             axi_tmr0.axi_bit_set(0, 1 << 5);
             axi_tmr0.axi_bit_clr(0, 1 << 5);
-						// Enable TMR0 Start Count
+            // Enable TMR0 Start Count
             axi_tmr0.axi_bit_set(0, 1 << 7);
             // During TMR0 Count display status
             #ifdef USE_OLED
@@ -158,9 +158,9 @@ int main(int argc, char* argv[]) {
             //sprintf(str, "%.3f", hexapod.ef_position.leg[0].z);
             //oled.disp_str((uint8_t *) &str);
             #endif
-						// Poll AXI TMR0 Interrupt
+            // Poll AXI TMR0 Interrupt
             axi_tmr0.axi_wait_mask(0, 1 << 8, 1 << 8, TMR_TMOUT);
-						// Clear TMR0 Interrupt Flag
+            // Clear TMR0 Interrupt Flag
             axi_tmr0.axi_bit_set(0, 1 << 8);
         }
     }
