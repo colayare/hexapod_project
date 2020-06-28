@@ -33,6 +33,9 @@ uint32_t    ip_context::get_axi_word_size() { return this->_axi_word_size; }
 uint32_t ip_context::init_axi_mmap_ptr(uint32_t axi_mmap_size, uint32_t axi_base_address, uint32_t axi_word_size) {
     int32_t _fdmem;
     volatile uint32_t *axi_mmap_ptr = NULL;
+    // TODO:
+    // axi_word_size function input is not used anymore
+    // mmap_size variable is not used anymore
     size_t mmap_size = (size_t) (axi_mmap_size * axi_word_size);
     char memDevice[this->dev_name.size()];
     
