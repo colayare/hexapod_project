@@ -13,18 +13,15 @@
 #include <cstring>
 #include <linux/i2c-dev.h>
 
-using namespace std;
+using String = std::string;
 
 //==============================================================================
 // AXI IP Global Class
 class ip_context {
     //==== Members  ============================================================
     public:
-        uint32_t &axi_mmap_size( uint32_t );
-        uint32_t &axi_base_address( uint32_t );
-        uint32_t &axi_word_size( uint32_t );
-        string   dev_name;                  //== Device Name (eg. /dev/mem, /dev/i2c-0)
-        string   ip_name;                   //== AXI IP NAME
+        String   dev_name;                  //== Device Name (eg. /dev/mem, /dev/i2c-0)
+        String   ip_name;                   //== AXI IP NAME
     
     private:
         volatile uint32_t *_axi_mmap_ptr;   //== AXI IP Memory Map Pointer
@@ -36,9 +33,13 @@ class ip_context {
     //==== Method Prototypes ===================================================
     public:
         //== Constructor
-        ip_context(char dev_name[]);
+        ip_context();
+        ip_context(String ip_name);
+        ip_context(String ip_name, char dev_name[], uint32_t axi_base_address, uint32_t axi_mmap_size);
+        //== Destructor
+        //~ip_context();
         //== Init AXI IP Memory Map
-        uint32_t    init_axi_mmap_ptr(uint32_t axi_mmap_size, uint32_t axi_base_address, uint32_t axi_word_size);
+        uint32_t    init_axi_mmap_ptr(char dev_name[], uint32_t axi_base_address, uint32_t axi_mmap_size);
         //== Private Members Functions Getters
         volatile uint32_t *get_mmap_ptr();
         int32_t     ip_file();

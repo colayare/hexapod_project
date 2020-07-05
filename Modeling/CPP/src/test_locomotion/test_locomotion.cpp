@@ -24,13 +24,10 @@ int main(int argc, char* argv[]) {
     uint32_t gaits = 2;
     
     // Declare Inverse Kinematics AXI IP Context
-    hexapod_locomotion hexapod(AXI_IK_UIO);
-    
-    // Assign AXI IP Name
-    hexapod.ip_name = "IKinematics";
+    hexapod_locomotion hexapod("ikenamtics_ip");
     
     // Initialize Inverse Kinematics IP
-    hexapod.init_axi_mmap_ptr(AXI_IK_RMAPSIZE, AXI_IK_MMAPADDR * AXI_IK_0_DEVICE_ID, AXI_IK_WORDSIZE);
+    hexapod.init_axi_mmap_ptr(AXI_IK_UIO, AXI_IK_MMAPADDR * AXI_IK_0_DEVICE_ID, AXI_IK_RMAPSIZE);
     cout << hexapod.ip_name << " IP ptr : " << hexapod.get_mmap_ptr() << endl;
     
     // Initialize Joints Offsets

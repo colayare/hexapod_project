@@ -29,12 +29,10 @@ int main(void) {
 
 	//**** Instantiate Hexapod Context ****
   cout << "Initialize iKinematics Context" << endl;
-	//hexapod_locomotion hexapod("/dev/mem");
-	hexapod_locomotion hexapod(AXI_IK_UIO);
-	hexapod.ip_name = "hexapod";
-
-	// Initialize Inverse Kinematics IP
-	hexapod.init_axi_mmap_ptr(AXI_IK_RMAPSIZE, AXI_IK_BASEADDR, AXI_IK_WORDSIZE);
+  // Declare Inverse Kinematics AXI IP Context
+  hexapod_locomotion hexapod("ikenamtics_ip");
+  // Initialize Inverse Kinematics IP
+  hexapod.init_axi_mmap_ptr(AXI_IK_UIO, AXI_IK_MMAPADDR * AXI_IK_0_DEVICE_ID, AXI_IK_RMAPSIZE);
 	// Initialize Joints Offsets
   cout << "init_joint_offsets" << endl;
 	hexapod.init_joint_offsets();
@@ -58,9 +56,10 @@ int main(void) {
 
   //**** Initialize AXI TMR0 Context ****
   cout << "Initialize AXI Timer0 Context" << endl;
-	ip_context axi_tmr0(AXI_TMR0_UIO);
-  axi_tmr0.ip_name = "AXI Timer 0";
-  axi_tmr0.init_axi_mmap_ptr(AXI_TMR0_RMAPSIZE, AXI_TMR0_BASEADDR, AXI_TMR0_WORDSIZE);
+  // Declare AXI TMR IP CONTEXT
+  ip_context axi_tmr0("axi_tmr0");
+  // Initialize AXI TMR IP 
+  axi_tmr0.init_axi_mmap_ptr(AXI_TMR0_UIO, AXI_TMR0_BASEADDR * AXI_TMR_0_DEVICE_ID, AXI_TMR0_RMAPSIZE);
 	//********
   
 	// Test Register Access

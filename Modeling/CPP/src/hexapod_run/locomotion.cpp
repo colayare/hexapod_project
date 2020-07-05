@@ -12,8 +12,10 @@
 #include "i2c_peripherals/i2c_oled.h"
 #include "i2c_peripherals/i2c_oled_params.h"
 
-#define TMR_10MS  100000
-#define TMR_TMOUT TMR_10MS * 2
+#define TMR_1MS   100000
+#define TMR_10MS  TMR_1MS * 10
+#define TMR_1S    TMR_1MS * 1000
+#define TMR_TMOUT TMR_1S * 3TMR_1S * 3
 //#define USE_OLED
 
 using namespace std;
@@ -25,11 +27,9 @@ int main(int argc, char* argv[]) {
     // AXI TIMER IP CONTEXT 
     //=================================================================
     // Declare AXI TMR IP CONTEXT
-    ip_context axi_tmr0(AXI_TMR0_UIO);
-    // Assign AXI IP Name
-    axi_tmr0.ip_name = "axi_tmr0";
+    ip_context axi_tmr0("axi_tmr0");
     // Initialize AXI TMR IP 
-    axi_tmr0.init_axi_mmap_ptr(AXI_TMR0_RMAPSIZE, AXI_TMR0_BASEADDR * AXI_TMR_0_DEVICE_ID, AXI_TMR0_WORDSIZE);
+    axi_tmr0.init_axi_mmap_ptr(AXI_TMR0_UIO, AXI_TMR0_BASEADDR * AXI_TMR_0_DEVICE_ID, AXI_TMR0_RMAPSIZE);
     // Configure AXI TMR
     axi_tmr0.axi_bit_set(0, 1 << 1);    // Select Down Counter
     axi_tmr0.axi_write(1, TMR_10MS);		// Load CTR value to Load Reg
@@ -43,11 +43,9 @@ int main(int argc, char* argv[]) {
     // HEXAPOD IP CONTEXT
     //=================================================================
     // Declare Inverse Kinematics AXI IP Context
-    hexapod_locomotion hexapod(AXI_IK_UIO);
-    // Assign AXI IP Name
-    hexapod.ip_name = "hexapod";
+    hexapod_locomotion hexapod("ikenamtics_ip");
     // Initialize Inverse Kinematics IP
-    hexapod.init_axi_mmap_ptr(AXI_IK_RMAPSIZE, AXI_IK_MMAPADDR * AXI_IK_0_DEVICE_ID, AXI_IK_WORDSIZE);
+    hexapod.init_axi_mmap_ptr(AXI_IK_UIO, AXI_IK_MMAPADDR * AXI_IK_0_DEVICE_ID, AXI_IK_RMAPSIZE);
     // Initialize Joints Offsets
     hexapod.init_joint_offsets();
     // Initialize Servo Inversions
@@ -103,8 +101,6 @@ int main(int argc, char* argv[]) {
     // 3 : Quadruped 4+2
     // 4 : Pentapod
     uint32_t walk = 1;
-    // Walk Step Delay in ms
-    uint32_t delay = 10;
     // Number of gaits
     uint32_t gaits = 2;
     // Get Argv
@@ -118,9 +114,6 @@ int main(int argc, char* argv[]) {
         if ( argv[i] == std::string("-w") ) {
             walk = atoi(argv[i+1]);
         } 
-        if ( argv[i] == std::string("-delay") ) {
-            delay = atoi(argv[i+1]);
-        }
         if ( argv[i] == std::string("-gaits") ) {
             gaits = atoi(argv[i+1]);
         }

@@ -17,7 +17,7 @@ uint32_t hexapod_locomotion::step(float step_idx, uint32_t walk, float alpha) {
     this->get_step(step_idx, walk, alpha);
     
     #if defined(__LOCOMOTION_DEBUG) || defined(__ALL_DEBUG)
-    cout << "step(step_idx=" << step_idx << ",walk=" << walk << ",alpha=" << alpha << ")" << endl;
+    std::cout << "step(step_idx=" << step_idx << ",walk=" << walk << ",alpha=" << alpha << ")" << std::endl;
     ik_output_t locomotion_out;
     for (uint32_t leg=0; leg<6; leg++) {
         this->leg_ctr_config(IK_REG_LEGC_CTR_ONE_LEG, leg);
@@ -29,10 +29,10 @@ uint32_t hexapod_locomotion::step(float step_idx, uint32_t walk, float alpha) {
         }
         //locomotion_out = this->read_ik_output(leg+1);
         locomotion_out = this->read_ik_output(0);
-        cout << "OUT>" << step_idx << "," << leg << "," << locomotion_out.q1 << "," << locomotion_out.q2 << "," << locomotion_out.q3 << endl;
-        cout << "Result Q1 = " << *(float *) &locomotion_out.q1 << endl;
-        cout << "Result Q2 = " << *(float *) &locomotion_out.q2 << endl;
-        cout << "Result Q3 = " << *(float *) &locomotion_out.q3 << endl;
+        std::cout << "OUT>" << step_idx << "," << leg << "," << locomotion_out.q1 << "," << locomotion_out.q2 << "," << locomotion_out.q3 << std::endl;
+        std::cout << "Result Q1 = " << *(float *) &locomotion_out.q1 << std::endl;
+        std::cout << "Result Q2 = " << *(float *) &locomotion_out.q2 << std::endl;
+        std::cout << "Result Q3 = " << *(float *) &locomotion_out.q3 << std::endl;
     }
 
     #else
@@ -52,7 +52,7 @@ uint32_t hexapod_locomotion::get_step(float step_idx, uint32_t walk, float alpha
     ef_pos_t ef;
     
     if ( ! (this->S && this->res && this-> xo && this->yo && this->zo) ) {
-        cout << "ERROR: Locomotion parameters no initialized." << endl;
+        std::cout << "ERROR: Locomotion parameters no initialized." << std::endl;
         return 0;
     }
     
@@ -363,7 +363,7 @@ uint32_t hexapod_locomotion::get_step(float step_idx, uint32_t walk, float alpha
             }
             break;
         default :
-            cout << "ERROR: Undefined Walk " << walk << "." << endl;
+            std::cout << "ERROR: Undefined Walk " << walk << "." << std::endl;
             return 0;
             break;
     }
@@ -391,12 +391,12 @@ uint32_t hexapod_locomotion::get_step(float step_idx, uint32_t walk, float alpha
     this->ef_position = ef;
     
     #if defined(__LOCOMOTION_DEBUG) || defined(__ALL_DEBUG)
-    cout << "STEP>" << step_idx << "," << 0 << "," << ef.leg[0].x << "," << ef.leg[0].y << "," << ef.leg[0].z << endl;
-    cout << "STEP>" << step_idx << "," << 1 << "," << ef.leg[1].x << "," << ef.leg[1].y << "," << ef.leg[1].z << endl;
-    cout << "STEP>" << step_idx << "," << 2 << "," << ef.leg[2].x << "," << ef.leg[2].y << "," << ef.leg[2].z << endl;
-    cout << "STEP>" << step_idx << "," << 3 << "," << ef.leg[3].x << "," << ef.leg[3].y << "," << ef.leg[3].z << endl;
-    cout << "STEP>" << step_idx << "," << 4 << "," << ef.leg[4].x << "," << ef.leg[4].y << "," << ef.leg[4].z << endl;
-    cout << "STEP>" << step_idx << "," << 5 << "," << ef.leg[5].x << "," << ef.leg[5].y << "," << ef.leg[5].z << endl;
+    std::cout << "STEP>" << step_idx << "," << 0 << "," << ef.leg[0].x << "," << ef.leg[0].y << "," << ef.leg[0].z << std::endl;
+    std::cout << "STEP>" << step_idx << "," << 1 << "," << ef.leg[1].x << "," << ef.leg[1].y << "," << ef.leg[1].z << std::endl;
+    std::cout << "STEP>" << step_idx << "," << 2 << "," << ef.leg[2].x << "," << ef.leg[2].y << "," << ef.leg[2].z << std::endl;
+    std::cout << "STEP>" << step_idx << "," << 3 << "," << ef.leg[3].x << "," << ef.leg[3].y << "," << ef.leg[3].z << std::endl;
+    std::cout << "STEP>" << step_idx << "," << 4 << "," << ef.leg[4].x << "," << ef.leg[4].y << "," << ef.leg[4].z << std::endl;
+    std::cout << "STEP>" << step_idx << "," << 5 << "," << ef.leg[5].x << "," << ef.leg[5].y << "," << ef.leg[5].z << std::endl;
     #endif
     
     return 1;

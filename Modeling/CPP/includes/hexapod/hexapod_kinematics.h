@@ -109,7 +109,9 @@ class ikinematics_ip_context : public ip_context {
     //==== Method Prototypes ===================================================
     public :
         // Constructor
-        ikinematics_ip_context(char dev_name[]):ip_context(dev_name) {}
+        //ikinematics_ip_context(char dev_name[]):ip_context(dev_name) {}
+        ikinematics_ip_context(String ip_name):ip_context(ip_name) {}
+        ikinematics_ip_context(String ip_name, char dev_name[], uint32_t axi_base_address, uint32_t axi_mmap_size):ip_context(ip_name, dev_name, axi_base_address, axi_mmap_size) {}
         // Trigger FIFO Write Operation 
         void write_fifo();
         // Trigger Inverse Kinematics Calculation

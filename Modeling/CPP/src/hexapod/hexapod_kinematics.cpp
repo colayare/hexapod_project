@@ -9,7 +9,7 @@
 
 void ikinematics_ip_context::write_fifo() {
     #if defined(__IK_DEBUG) || defined(__ALL_DEBUG)
-    cout << "write_fifo()" << endl;
+    std::cout << "write_fifo()" << std::endl;
     #endif
     this->axi_write(IK_REG_TRIG, IK_REG_TRIG_WRITE_FIFO);
     this->axi_write(IK_REG_TRIG, 0);
@@ -17,7 +17,7 @@ void ikinematics_ip_context::write_fifo() {
 
 void ikinematics_ip_context::trigger_ikinematics() {
     #if defined(__IK_DEBUG) || defined(__ALL_DEBUG)
-    cout << "trigger_ikinematics()" << endl;
+    std::cout << "trigger_ikinematics()" << std::endl;
     #endif
     this->axi_write(IK_REG_TRIG, IK_REG_TRIG_TRIGGER);
     this->axi_write(IK_REG_TRIG, 0);
@@ -29,7 +29,7 @@ void ikinematics_ip_context::leg_ctr_config(uint32_t config, uint32_t leg_select
     uint32_t set_config  = (config << IK_REG_LEGC_CTR_MODE_O) & IK_REG_LEGC_CTR_MODE_M;
     uint32_t value       = set_val + set_config;
     #if defined(__IK_DEBUG) || defined(__ALL_DEBUG)
-    cout << hex << "leg_ctr_config(config=" << setw(8) << config << ", leg_select=" << setw(8) << leg_select << ")" << endl;
+    std::cout << std::hex << "leg_ctr_config(config=" << std::setw(8) << config << ", leg_select=" << setw(8) << leg_select << ")" << std::endl;
     #endif
     this->axi_write_mask(IK_REG_LEGC, value, mask);
 }
@@ -37,7 +37,7 @@ void ikinematics_ip_context::leg_ctr_config(uint32_t config, uint32_t leg_select
 void ikinematics_ip_context::leg_ctr_out_mux(uint32_t out_mux_select) {
     uint32_t mux_sel = (out_mux_select << IK_REG_LEGC_F2F_READ_MUX_O) & IK_REG_LEGC_F2F_READ_MUX_M;
     #if defined(__IK_DEBUG) || defined(__ALL_DEBUG)
-    cout << hex << "leg_ctr_out_mux(out_mux_select=" << setw(8) << out_mux_select << ")" << endl;
+    std::cout << std::hex << "leg_ctr_out_mux(out_mux_select=" << std::setw(8) << out_mux_select << ")" << std::endl;
     #endif
     this->axi_write_mask(IK_REG_LEGC, mux_sel, IK_REG_LEGC_F2F_READ_MUX_M);
 }
@@ -49,7 +49,7 @@ void ikinematics_ip_context::init_joint_offsets() {
         offset      = this->_joint_offsets_init[i];
         int_offset  = *(int *) &offset;
         #if defined(__IK_DEBUG) || defined(__ALL_DEBUG)
-        cout << "Offset [" << i << "] = " << hex << int_offset << endl;
+        std::cout << "Offset [" << i << "] = " << std::hex << int_offset << std::endl;
         #endif
         this->axi_write(i+IK_REG_OF01, int_offset);
     }
@@ -75,7 +75,7 @@ void ikinematics_ip_context::init_servo_invertion() {
         servo_inv += this->_servo_inv_init[s] << s;
     }
     #if defined(__IK_DEBUG) || defined(__ALL_DEBUG)
-    cout << "Inversion values " << hex << servo_inv << endl;
+    std::cout << "Inversion values " << std::hex << servo_inv << std::endl;
     #endif
     servo_inv = servo_inv << IK_REG_LEGC_PWM_INVERT_O;
     this->axi_write_mask(IK_REG_LEGC, servo_inv, IK_REG_LEGC_PWM_INVERT_M);
@@ -93,9 +93,9 @@ void ikinematics_ip_context::set_joint_direct(uint32_t leg, ik_output_t joints) 
     this->joint_pos[leg*3+2] = joints.q3;
     
     #if defined(__IK_DEBUG) || defined(__ALL_DEBUG)
-    cout << "Joint [" << 0+leg*3 << "] = " << hex << int_position[0] << endl;
-    cout << "Joint [" << 1+leg*3 << "] = " << hex << int_position[1] << endl;
-    cout << "Joint [" << 2+leg*3 << "] = " << hex << int_position[2] << endl;
+    std::cout << "Joint [" << 0+leg*3 << "] = " << std::hex << int_position[0] << std::endl;
+    std::cout << "Joint [" << 1+leg*3 << "] = " << std::hex << int_position[1] << std::endl;
+    std::cout << "Joint [" << 2+leg*3 << "] = " << std::hex << int_position[2] << std::endl;
     #endif
     
     this->leg_ctr_config(IK_REG_LEGC_CTR_ONE_LEG, leg);
@@ -109,9 +109,9 @@ void ikinematics_ip_context::set_joint_direct(uint32_t leg, ik_output_t joints) 
 
 void ikinematics_ip_context::write_ik_input(ik_input_t ik_input) {
     #if defined(__IK_DEBUG) || defined(__ALL_DEBUG)
-    cout << "Set X = " << ik_input.x << endl;
-    cout << "Set Y = " << ik_input.y << endl;
-    cout << "Set Z = " << ik_input.z << endl;
+    std::cout << "Set X = " << ik_input.x << std::endl;
+    std::cout << "Set Y = " << ik_input.y << std::endl;
+    std::cout << "Set Z = " << ik_input.z << std::endl;
     #endif
     this->axi_write(IK_REG_IKIX, *(int *) &ik_input.x);
     this->axi_write(IK_REG_IKIY, *(int *) &ik_input.y);

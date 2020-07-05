@@ -21,5 +21,7 @@
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 //#define __IP_LOG
 //#define __ALL_DEBUG
+//#define __IK_DEBUG
+//#DEFINE __LOCOMOTION_DEBUG
 
 #endif // __GLOBAL_DEFINES_H__
