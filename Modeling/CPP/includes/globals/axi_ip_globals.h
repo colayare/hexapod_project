@@ -47,7 +47,7 @@ class ip_context {
         uint32_t    get_axi_base_address();
         uint32_t    get_axi_word_size();
         
-        //== AXI IP Operations 32 Bit
+        //== AXI IP Operations 32-bit
         uint32_t    axi_read(uint32_t read_address);
         uint32_t    axi_read_mask(uint32_t read_address, uint32_t mask);
         void        axi_write(uint32_t write_address, uint32_t value);
@@ -58,8 +58,8 @@ class ip_context {
         uint32_t    axi_read_exp(uint32_t address, uint32_t expected_value);
         uint32_t    axi_wait(uint32_t address, uint32_t value, uint32_t cycles);
         uint32_t    axi_wait_mask(uint32_t address, uint32_t value, uint32_t mask, uint32_t cycles);
-        
-        //== AXI IP Operations 16 Bit
+
+        //== AXI IP Operations 16-bit
         uint16_t    axi_read16(uint16_t read_address);
         uint16_t    axi_read_mask16(uint16_t read_address, uint16_t mask);
         void        axi_write16(uint16_t write_address, uint16_t value);
@@ -69,17 +69,8 @@ class ip_context {
         void        axi_show_regs16(uint16_t start_address, uint16_t end_address);
         uint16_t    axi_read_exp16(uint16_t address, uint16_t expected_value);
         uint16_t    axi_wait16(uint16_t address, uint16_t value, uint16_t cycles);
+        uint16_t    axi_wait_mask16(uint16_t address, uint16_t value, uint16_t mask, uint16_t cycles);
         
-        //== AXI IP Operations 8 Bit
-        uint8_t     axi_read8(uint8_t read_address);
-        uint8_t     axi_read_mask8(uint8_t read_address, uint8_t mask);
-        void        axi_write8(uint8_t write_address, uint8_t value);
-        void        axi_write_mask8(uint8_t write_address, uint8_t value, uint8_t mask);
-        void        axi_bit_set8(uint8_t address, uint8_t bit_mask);
-        void        axi_bit_clr8(uint8_t address, uint8_t bit_mask);
-        void        axi_show_regs8(uint8_t start_address, uint8_t end_address);
-        uint8_t     axi_read_exp8(uint8_t address, uint8_t expected_value);
-        uint8_t     axi_wait8(uint8_t address, uint8_t value, uint8_t cycles);
 };
 
 #endif //__AXI_IP_GLOBALS__

@@ -134,7 +134,7 @@ void ip_context::axi_bit_clr(uint32_t address, uint32_t bit_mask) {
 //== AXI IP Show Registers
 void ip_context::axi_show_regs(uint32_t start_address, uint32_t end_address) {
     //TODO: Check counter i word size access
-    for (uint32_t i=0;i<=(end_address-start_address)+1;i++) {
+    for (uint32_t i=0;i<=(end_address-start_address);i++) {
         std::cout << std::hex << "REG32[" << std::setw(8) << i+start_address << "]\t= " << std::setw(8) << *(this->_axi_mmap_ptr+start_address+i) << std::endl;
     }
 }
@@ -189,74 +189,67 @@ uint32_t ip_context::axi_wait_mask(uint32_t address, uint32_t value, uint32_t ma
 //== AXI IP Read
 uint16_t ip_context::axi_read16(uint16_t read_address) {
     #ifdef __IP_LOG
-    uint16_t val_print = *(this->_axi_mmap_ptr+read_address);
-    std::cout << "R16[" << read_address << "] = " << std::hex << val_print << std::endl;
+    uint16_t val_print = *((uint16_t *)this->_axi_mmap_ptr+read_address);
+    std::cout << std::hex << "R16[" << std::setw(4) << read_address << "] = " << std::setw(4) << val_print << std::endl;
     #endif
-    return *(this->_axi_mmap_ptr+read_address);
+    return *((uint16_t *)this->_axi_mmap_ptr+read_address);
 }
 //== AXI IP Read with mask
 uint16_t ip_context::axi_read_mask16(uint16_t read_address, uint16_t mask) {
     #ifdef __IP_LOG
-    uint16_t val_print = *(this->_axi_mmap_ptr+read_address) & mask;
-    std::cout << "RM16[" << read_address << "," << mask << "] = " << std::hex << val_print << std::endl;
+    uint16_t val_print = *((uint16_t *)this->_axi_mmap_ptr+read_address) & mask;
+    std::cout << std::hex << "RM16[" << std::setw(4) << read_address << "," << std::setw(4) << mask << "] = " << std::setw(4) << val_print << std::endl;
     #endif
-    return *(this->_axi_mmap_ptr+read_address) & mask;
-}
-//== AXI IP Write
-void ip_context::axi_write16(uint16_t write_address, uint16_t value) {
-    #ifdef __IP_LOG
-    std::cout << "W16[" << write_address << "] = " << std::hex << value << std::endl;
-    #endif
-    *(this->_axi_mmap_ptr+write_address) = value;
+    return *((uint16_t *)this->_axi_mmap_ptr+read_address) & mask;
 }
 //== AXI IP Write with Mask
 void ip_context::axi_write_mask16(uint16_t write_address, uint16_t value, uint16_t mask) {
     uint16_t register_value;
-    register_value = *(this->_axi_mmap_ptr+write_address) & ~mask;
+    register_value = *((uint16_t *)this->_axi_mmap_ptr+write_address) & ~mask;
     #ifdef __IP_LOG
     uint16_t val_print = register_value + (value & mask);
-    std::cout << "WM16[" << write_address << "," << mask << "] = " << std::hex << val_print << std::endl;
+    std::cout << std::hex << "WM16[" << std::setw(4) << write_address << "," << std::setw(4) << value << "," << std::setw(4) << mask << "] = " << setw(4) << val_print << std::endl;
     #endif
-    *(this->_axi_mmap_ptr+write_address) = register_value + (value & mask);
+    *((uint16_t *)this->_axi_mmap_ptr+write_address) = register_value + (value & mask);
 }
 //== AXI IP Bit Set
 void ip_context::axi_bit_set16(uint16_t address, uint16_t bit_mask) {
     uint16_t register_value;
-    register_value = *(this->_axi_mmap_ptr+address) & ~bit_mask;
+    register_value = *((uint16_t *)this->_axi_mmap_ptr+address) & ~bit_mask;
     #ifdef __IP_LOG
     uint16_t val_print = register_value + bit_mask;
-    std::cout << "BS16[" << address << "," << bit_mask << "] = " << std::hex << val_print << std::endl;
+    std::cout << std::hex << "BS16[" << std::setw(4) << address << "," << std::setw(4) << bit_mask << "] = " << std::setw(4) << val_print << std::endl;
     #endif
-    *(this->_axi_mmap_ptr+address) = register_value + bit_mask;
+    *((uint16_t *)this->_axi_mmap_ptr+address) = register_value + bit_mask;
 }
 //== AXI IP Bit Clear
 void ip_context::axi_bit_clr16(uint16_t address, uint16_t bit_mask) {
     uint16_t register_value;
-    register_value = *(this->_axi_mmap_ptr+address) & ~bit_mask;
+    register_value = *((uint16_t *)this->_axi_mmap_ptr+address) & ~bit_mask;
     #ifdef __IP_LOG
     uint16_t val_print = register_value + bit_mask;
-    std::cout << "BC16[" << address << "," << bit_mask << "] = " << std::hex << val_print << std::endl;
+    std::cout << std::hex << "BC16[" << std::setw(4) << address << "," << std::setw(4) << bit_mask << "] = " << std::setw(4) << val_print << std::endl;
     #endif
-    *(this->_axi_mmap_ptr+address) = register_value;
+    *((uint16_t *)this->_axi_mmap_ptr+address) = register_value;
 }
 //== AXI IP Show Registers
 void ip_context::axi_show_regs16(uint16_t start_address, uint16_t end_address) {
     //TODO: Check counter i word size access
-    for (uint16_t i=0;i<(end_address-start_address);i++) {
-        std::cout << "REG16[" << i+start_address << "]\t= " << std::hex << *(this->_axi_mmap_ptr+start_address+i) << std::endl;
+    for (uint16_t i=0;i<=(end_address-start_address);i++) {
+        std::cout << std::hex << "REG16[" << std::setw(4) << i+start_address << "]\t= " << std::setw(4) << *((uint16_t *)this->_axi_mmap_ptr+start_address+i) << std::endl;
     }
 }
 //== AXI IP Read Expected Value
 uint16_t ip_context::axi_read_exp16(uint16_t address, uint16_t expected_value) {
     uint16_t result;
-    if ( *(this->_axi_mmap_ptr+address) == expected_value ) {
+    if ( *((uint16_t *)this->_axi_mmap_ptr+address) == expected_value ) {
         result =  1;
     } else {
         
         result = 0;
     }
     #ifdef __IP_LOG
-    std::cout << "RE16[" << std::hex << address << "," << expected_value << "] = " << *(this->_axi_mmap_ptr+address) << " = " << result << std::endl;
+    std::cout << "RE16[" << std::hex << std::setw(4) << address << "," << std::setw(4) << expected_value << "] = " << std::setw(4) << *((uint16_t *)this->_axi_mmap_ptr+address) << " = " << result << std::endl;
     #endif
     return result;
 }
@@ -264,109 +257,29 @@ uint16_t ip_context::axi_read_exp16(uint16_t address, uint16_t expected_value) {
 uint16_t ip_context::axi_wait16(uint16_t address, uint16_t value, uint16_t cycles) {
     uint16_t cnt    = 0;
     uint16_t exit   = 1;
-    while ( *(this->_axi_mmap_ptr+address) != value || exit ) {
+    while ( *((uint16_t *)this->_axi_mmap_ptr+address) != value || exit ) {
         cnt++;
         if ( cnt == cycles ) {
             exit = 0;
         }
     }
     #ifdef __IP_LOG
-    std::cout << "WAIT16[" << std::hex << address << "," << value << "," << cycles << "] = " << cnt << "," << exit << std::endl;
+    std::cout << std::hex << "WAIT16[" << std::setw(4) << address << "," << std::setw(4) << value << "," << std::dec << cycles << "] = " << cnt << "," << exit << std::endl;
     #endif
     return exit;
 }
-
-//==============================================================================
-//== 8 Bit Operations
-//==============================================================================
-//== AXI IP Read
-uint8_t ip_context::axi_read8(uint8_t read_address) {
-    uint32_t address;
-    address = (uint32_t) read_address;
-    #ifdef __IP_LOG
-    uint8_t val_print = *(this->_axi_mmap_ptr+address);
-    std::cout << "R8[" << std::hex << address << "] = " << val_print << std::endl;
-    #endif
-    return *(this->_axi_mmap_ptr+address);
-}
-//== AXI IP Read with mask
-uint8_t ip_context::axi_read_mask8(uint8_t read_address, uint8_t mask) {
-    #ifdef __IP_LOG
-    uint8_t val_print = *(this->_axi_mmap_ptr+read_address) & mask;
-    std::cout << "RM8[" << std::hex << read_address << "," << mask << "] = " << val_print << std::endl;
-    #endif
-    return *(this->_axi_mmap_ptr+read_address) & mask;
-}
-//== AXI IP Write
-void ip_context::axi_write8(uint8_t write_address, uint8_t value) {
-    #ifdef __IP_LOG
-    std::cout << "W8[" << std::hex << write_address << "] = " << value << std::endl;
-    #endif
-    *(this->_axi_mmap_ptr+write_address) = value;
-}
-//== AXI IP Write with Mask
-void ip_context::axi_write_mask8(uint8_t write_address, uint8_t value, uint8_t mask) {
-    uint8_t register_value;
-    register_value = *(this->_axi_mmap_ptr+write_address) & ~mask;
-    #ifdef __IP_LOG
-    uint8_t val_print = register_value + (value & mask);
-    std::cout << "WM8[" << std::hex << write_address << "," << mask << "] = " << val_print << std::endl;
-    #endif
-    *(this->_axi_mmap_ptr+write_address) = register_value + (value & mask);
-}
-//== AXI IP Bit Set
-void ip_context::axi_bit_set8(uint8_t address, uint8_t bit_mask) {
-    uint8_t register_value;
-    register_value = *(this->_axi_mmap_ptr+address) & ~bit_mask;
-    #ifdef __IP_LOG
-    uint8_t val_print = register_value + bit_mask;
-    std::cout << "BS8[" << std::hex << address << "," << bit_mask << "] = " << val_print << std::endl;
-    #endif
-    *(this->_axi_mmap_ptr+address) = register_value + bit_mask;
-}
-//== AXI IP Bit Clear
-void ip_context::axi_bit_clr8(uint8_t address, uint8_t bit_mask) {
-    uint8_t register_value;
-    register_value = *(this->_axi_mmap_ptr+address) & ~bit_mask;
-    #ifdef __IP_LOG
-    uint8_t val_print = register_value + bit_mask;
-    std::cout << "BC8[" << std::hex << address << "," << bit_mask << "] = " << val_print << std::endl;
-    #endif
-    *(this->_axi_mmap_ptr+address) = register_value;
-}
-//== AXI IP Show Registers
-void ip_context::axi_show_regs8(uint8_t start_address, uint8_t end_address) {
-    //TODO: Check counter i word size access
-    for (uint8_t i=0;i<(end_address-start_address);i++) {
-        std::cout << "REG8[" << std::hex << i+start_address << "]\t= " << *(this->_axi_mmap_ptr+start_address+i) << std::endl;
-    }
-}
-//== AXI IP Read Expected Value
-uint8_t ip_context::axi_read_exp8(uint8_t address, uint8_t expected_value) {
-    uint8_t result;
-    if ( *(this->_axi_mmap_ptr+address) == expected_value ) {
-        result =  1;
-    } else {
-        
-        result = 0;
-    }
-    #ifdef __IP_LOG
-    std::cout << "RE8[" << std::hex << address << "," << expected_value << "] = " << *(this->_axi_mmap_ptr+address) << " = " << result << std::endl;
-    #endif
-    return result;
-}
-//== AXI IP Wait for a Read Value
-uint8_t ip_context::axi_wait8(uint8_t address, uint8_t value, uint8_t cycles) {
-    uint8_t cnt    = 0;
-    uint8_t exit   = 1;
-    while ( *(this->_axi_mmap_ptr+address) != value || exit ) {
+//== AXI IP Wait for Read Value with Mask
+uint16_t ip_context::axi_wait_mask16(uint16_t address, uint16_t value, uint16_t mask, uint16_t cycles) {
+    uint16_t cnt    = 0;
+    uint16_t exit   = 1;
+    while ( (*((uint16_t *)this->_axi_mmap_ptr+address) & mask) != value && exit ) {
         cnt++;
         if ( cnt == cycles ) {
             exit = 0;
         }
     }
     #ifdef __IP_LOG
-    std::cout << "WAIT8[" << std::hex << address << "," << value << "," << cycles << "] = " << cnt << "," << exit << std::endl;
+    std::cout << std::hex << "WAIT16[" << std::setw(4) << address << "," << std::setw(4) << value << "," << std::dec << cycles << "] = " << cnt << "," << exit << std::std::endl;
     #endif
     return exit;
 }
