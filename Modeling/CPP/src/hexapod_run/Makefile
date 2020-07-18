@@ -45,9 +45,19 @@ I2C_OLED 	= $(patsubst %,$(IDIR)/i2c_peripherals/%,$(_I2C_OLED))
 _I2C_OLED_OBJ	= i2c_oled.o
 I2C_OLED_OBJ  	= $(patsubst %,$(ODIR)/%,$(_I2C_OLED_OBJ))
 
+#### I2C ARDUINO Objects
+_I2C_ARDUINO	= i2c_arduino_controller.h i2c_arduino_controller_params.h
+I2C_ARDUINO		= $(patsubst %,$(IDIR)/i2c_peripherals/%,$(_I2C_ARDUINO))
+
+_I2C_ARDUINO_OBJ	= i2c_arduino_controller.o
+I2C_ARDUINO_OBJ		= $(patsubst %,$(ODIR)/%,$(_I2C_ARDUINO_OBJ))
+
 #### Test Objects
 _LOCOMOTION_OBJ = locomotion.o 
 LOCOMOTION_OBJ  = $(patsubst %,$(ODIR)/%,$(_LOCOMOTION_OBJ))
+
+_RUN_WALK_OBJ 	= run_walk.o
+RUN_WALK_OBJ		= $(patsubst %,$(ODIR)/%,$(_RUN_WALK_OBJ))
 
 $(info > Globals)
 $(info $(GLOBALS))
@@ -67,8 +77,12 @@ $(info $(I2C_OBJ))
 $(info > I2C OLED Includes)
 $(info $(I2C_OLED_OBJ))
 
+$(info > I2C ARDUINO Includes)
+$(info $(I2C_ARDUINO_OBJ))
+
 $(info > Test Objects)
 $(info $(LOCOMOTION_OBJ))
+$(info $(RUN_WALK_OBJ))
 
 $(ODIR)/%.o: $(SDIR)/globals/%.cpp $(GLOBALS) 
 	$(CC) -Wall -c -o $@ $< $(CFLAGS)
@@ -85,7 +99,12 @@ $(ODIR)/%.o: $(SDIR)/i2c_peripherals/%.cpp $(I2C_DEPS) $(PARAMS) $(GLOBALS)
 $(ODIR)/%.o: $(SDIR)/hexapod_run/%.cpp $(PARAMS) $(GLOBALS) $(HEXA_DEPS)
 	$(CC) -Wall -c -o $@ $< $(CFLAGS)
 
-hexapod_run_locomotion:  $(LOCOMOTION_OBJ) $(I2C_OLED_OBJ) $(I2C_OBJ) $(HEXA_OBJ) $(GLOBALS_OBJ)
+run_walk:  $(RUN_WALK_OBJ) $(I2C_OLED_OBJ) $(I2C_OBJ) $(HEXA_OBJ) $(GLOBALS_OBJ) $(I2C_ARDUINO_OBJ)
+	@echo "==============================="
+	@echo -e "Compile \033[92m $(ODIR)/$@ \033[0m"
+	$(CC) -Wall -o $(ODIR)/$@ $^ $(CFLAGS)
+	
+locomotion:  $(LOCOMOTION_OBJ) $(I2C_OLED_OBJ) $(I2C_OBJ) $(HEXA_OBJ) $(GLOBALS_OBJ)
 	@echo "==============================="
 	@echo -e "Compile \033[92m $(ODIR)/$@ \033[0m"
 	$(CC) -Wall -o $(ODIR)/$@ $^ $(CFLAGS)

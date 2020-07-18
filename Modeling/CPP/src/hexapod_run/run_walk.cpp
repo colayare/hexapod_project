@@ -11,6 +11,8 @@
 #include "globals/axi_ip_globals.h"
 #include "hexapod/hexapod_kinematics.h"
 #include "hexapod/hexapod_locomotion.h"
+#include "i2c_peripherals/i2c_arduino_controller.h"
+#include "i2c_peripherals/i2c_arduino_controller_params.h"
 #include "i2c_peripherals/i2c_oled.h"
 #include "i2c_peripherals/i2c_oled_params.h"
 
@@ -18,8 +20,8 @@
 #define TMR_10MS  TMR_1MS * 10
 #define TMR_1S    TMR_1MS * 1000
 #define TMR_TMOUT TMR_1S * 3
+#define MAX_STEP  100
 //#define USE_OLED
-#define PRINT_STEP
 
 using namespace std;
 
@@ -29,11 +31,10 @@ int main(int argc, char* argv[]) {
     //=================================================================
     int32_t   opt;
     uint32_t  walk  = 1;
-    uint32_t  gaits = 2;
     uint32_t  delay = 10;
     float     hexapod_S = 7.0; 
     float     hexapod_res = 0.07;
-    while ((opt = getopt(argc, argv, "s:hw:hr:hd:hg:hh")) != -1 ) {
+    while ((opt = getopt(argc, argv, "s:hw:hr:hd:hh")) != -1 ) {
       switch(opt) {
           case 's':
             hexapod_S = static_cast<float>(atof(optarg));
@@ -51,9 +52,6 @@ int main(int argc, char* argv[]) {
             break;
           case 'd':
             delay = static_cast<uint32_t>(atoi(optarg));
-            break;
-          case 'g':
-            gaits = static_cast<uint32_t>(atoi(optarg));
             break;
           case 'h':
             cout << "Valid options:" << endl;
@@ -80,9 +78,8 @@ int main(int argc, char* argv[]) {
     cout << "res=" << hexapod_res << endl;
     cout << "walk=" << walk << endl;
     cout << "delay(ms)=" << delay << endl;
-    cout << "Gaits=" << gaits << endl;
     //=================================================================
-    
+
     //=================================================================
     // AXI TIMER IP CONTEXT 
     //=================================================================
@@ -96,7 +93,14 @@ int main(int argc, char* argv[]) {
     axi_tmr0.axi_bit_set(0, 1 << 5);		      // Load TMR0
     axi_tmr0.axi_bit_clr(0, 1 << 5);
     axi_tmr0.axi_bit_set(0, 1 << 6);		      // Enable TMR0 Interrupt
+    //=================================================================
 
+    //=================================================================
+    // ARDUINO I2C CONTROLLER
+    //=================================================================
+    i2c_arduino_controller joystick("/dev/i2c-0");
+    joystick.set_address(ARDUINO_I2C_ADDR);
+    joystick.get_joystick();
     //=================================================================
 
     //=================================================================
@@ -121,79 +125,37 @@ int main(int argc, char* argv[]) {
     //=================================================================
 
     //=================================================================
-    // I2C OLED CONTEXT
-    //=================================================================
-    #ifdef USE_OLED
-    // Declare I2C OLED Context
-    i2c_oled oled("/dev/i2c-0");
-    // Set I2C OLED Address
-    oled.set_address(SSD1306_ADDRESS);
-    // Initialize I2C OLED
-    oled.init();
-    // Declare String variable
-    char str[20];
-    strncpy(str, "Crixus 2.0", sizeof(str));
-    oled.set_cursor(0,0);
-    oled.disp_str((uint8_t *) &str);
-    strncpy(str, "Step:", sizeof(str));
-    oled.set_cursor(1,0);
-    oled.disp_str((uint8_t *) &str);
-    strncpy(str, "x:", sizeof(str));
-    oled.set_cursor(2,0);
-    oled.disp_str((uint8_t *) &str);
-    strncpy(str, "y:", sizeof(str));
-    oled.set_cursor(3,0);
-    oled.disp_str((uint8_t *) &str);
-    strncpy(str, "z:", sizeof(str));
-    oled.set_cursor(4,0);
-    oled.disp_str((uint8_t *) &str);
-    #endif
-		//=================================================================
-    
-		//=================================================================
     // RUN
     //=================================================================
-    for (uint32_t gait=0; gait<gaits; gait++) {
-        cout << RED << "##### GAIT N " << gait << RESET << endl;
-        for (uint32_t i=0; i<hexapod.iteration_size(); i++) {
-            #ifdef PRINT_STEP
-            cout << GREEN << "step : " << i << RESET << endl;
-            #endif
-            // Disable TMR0 Count
-            axi_tmr0.axi_bit_clr(0, 1 << 7);		
-            // Calculate & Send hexapod walk step
-            hexapod.step(i, walk, 0);
-            // Load TMR ctr value
-            axi_tmr0.axi_bit_set(0, 1 << 5);
-            axi_tmr0.axi_bit_clr(0, 1 << 5);
-            // Enable TMR0 Start Count
-            axi_tmr0.axi_bit_set(0, 1 << 7);
-            // During TMR0 Count display status
-            #ifdef USE_OLED
-            oled.set_cursor(1, C_FONT_SIZE * 6);
-            sprintf(str, "%d", gait);
-            oled.disp_str((uint8_t *) &str);
-            //oled.set_cursor(2, C_FONT_SIZE * 3);
-            //sprintf(str, "%.3f", hexapod.ef_position.leg[0].x);
-            //oled.disp_str((uint8_t *) &str);
-            //oled.set_cursor(3, C_FONT_SIZE * 3);
-            //sprintf(str, "%.3f", hexapod.ef_position.leg[0].y);
-            //oled.disp_str((uint8_t *) &str);
-            //oled.set_cursor(4, C_FONT_SIZE * 3);
-            //sprintf(str, "%.3f", hexapod.ef_position.leg[0].z);
-            //oled.disp_str((uint8_t *) &str);
-            #endif
-            // Poll AXI TMR0 Interrupt
-            axi_tmr0.axi_wait_mask(0, 1 << 8, 1 << 8, TMR_TMOUT);
-            // Clear TMR0 Interrupt Flag
-            axi_tmr0.axi_bit_set(0, 1 << 8);
+    const uint32_t max_step = static_cast<uint32_t>(hexapod_S/hexapod_res);
+    uint32_t step = 0;
+    while (1) {
+        // Get Joystick Position
+        joystick.get_joystick();
+        // Disable TMR0 Count
+        axi_tmr0.axi_bit_clr(0, 1 << 7);		
+        // Calculate & Send hexapod walk step
+        if ( joystick.dJoystick() ) {
+          cout << GREEN << "step : " << step << RESET << "\tdir : " << joystick.dJoystick() << "\tangle : " << joystick.xAngle() << endl;
+          hexapod.step(step, walk, joystick.xAngle());
+          if ( step < max_step-1 )
+              step++;
+          else
+              step = 0;
         }
-    }
-		//=================================================================
-
-    // Return Joints to initial position
-    hexapod.init_joint_position();
+        // Load TMR ctr value
+        axi_tmr0.axi_bit_set(0, 1 << 5);
+        axi_tmr0.axi_bit_clr(0, 1 << 5);
+        // Enable TMR0 Start Count
+        axi_tmr0.axi_bit_set(0, 1 << 7);
     
+        // Poll AXI TMR0 Interrupt
+        axi_tmr0.axi_wait_mask(0, 1 << 8, 1 << 8, TMR_TMOUT);
+        // Clear TMR0 Interrupt Flag
+        axi_tmr0.axi_bit_set(0, 1 << 8);
+    }
+
+
+
     return 0;
 }
-
