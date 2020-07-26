@@ -45,7 +45,7 @@
 |0x27|KO15|Leg 5 - Q3|
 |0x28|KO16|Leg 6 - Q1|
 |0x29|KO17|Leg 6 - Q2|
-|0x30|KO18|Leg 6 - Q3|
+|0x2A|KO18|Leg 6 - Q3|
 
 [_Detailed Register Map_](./register_map.md)
 

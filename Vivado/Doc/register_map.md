@@ -55,7 +55,7 @@ N     : Decimal\
 |0x27|KO15|Leg 5 - Q3|
 |0x28|KO16|Leg 6 - Q1|
 |0x29|KO17|Leg 6 - Q2|
-|0x30|KO18|Leg 6 - Q3|
+|0x2A|KO18|Leg 6 - Q3|
 
 ----
 # REGISTER SPECIFICATION 32-bit Register Size
@@ -567,7 +567,7 @@ __Bit Description__
 |31:0|RW|Leg 5 - Q3 Fixed-Point Servo Motor Output angle|
 
 ## Leg 6 - Q1
-__Address__ = 0x25\
+__Address__ = 0x28\
 __Word__    = 32-bit\
 \
 __Register Description__\
@@ -579,7 +579,7 @@ __Bit Description__
 |31:0|RW|Leg 6 - Q1 Fixed-Point Servo Motor Output angle|
 
 ## Leg 6 - Q2
-__Address__ = 0x26\
+__Address__ = 0x29\
 __Word__    = 32-bit\
 \
 __Register Description__\
@@ -591,7 +591,7 @@ __Bit Description__
 |31:0|RW|Leg 6 - Q2 Fixed-Point Servo Motor Output angle|
 
 ## Leg 6 - Q3
-__Address__ = 0x27\
+__Address__ = 0x2A\
 __Word__    = 32-bit\
 \
 __Register Description__\
