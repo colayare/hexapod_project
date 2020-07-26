@@ -48,7 +48,7 @@ This project is based on [Arty Z7-7010](https://store.digilentinc.com/arty-z7-ap
 ## Authors
 * **Carlos Roger Olaya Reyes** - _SoC Integration Design, Digital IP Design, Initial Work_ - [colayare](https://github.com/colayare)
 * **Guillermo Evangelista Adrianzen** - _Robotics Modeling, Initial Work_ - [Robo3001-design](https://github.com/Robo3001-design)
-* **Erick Rodriguez Davila** - _We are doing our best effort to discover what He actually does, Initial Work_
+* **Erick Rodriguez Davila** - _Electronics Design, Mechanical Design, Initial Work_
 * **Mauricio Gardini Obando** - _Electronics Design_
 
 ## Publications
