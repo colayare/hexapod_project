@@ -84,7 +84,8 @@ This register is implemented but is still not used.\
 \
 __Bit Description__
 |Bit|Type|Description|
-|
+|------|------|------|
+|31:0|-|Reserved. Unused.|
 
 ## Status Register
 __Address__ = 0x02\
@@ -95,7 +96,8 @@ This register is implemented but is still not used.\
 \
 __Bit Description__
 |Bit|Type|Description|
-|31:0|RW|Unused|
+|------|------|------|
+|31:0|-|Reserved. Unused.|
 
 ## Leg Counter Register
 __Address__ = 0x03\
