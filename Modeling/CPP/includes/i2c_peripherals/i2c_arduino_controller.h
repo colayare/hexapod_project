@@ -3,7 +3,7 @@
 
 #include "ip_context/i2c_ip_context.h"
 
-enum dSample_t { min, mid, max };
+enum dSample_t { joystickMin, joystickMid, joystickMax };
 enum dJoystick_t { C, N, NE, E, SE, S, SW, W, NW};
 
 class i2c_arduino_controller : public i2c_ip_context {
