@@ -21,7 +21,7 @@
 #define TMR_1S    TMR_1MS * 1000
 #define TMR_TMOUT TMR_1S * 3
 #define MAX_STEP  100
-//#define USE_OLED
+#define USE_OLED
 
 using namespace std;
 
@@ -125,6 +125,27 @@ int main(int argc, char* argv[]) {
     //=================================================================
 
     //=================================================================
+    // I2C OLED CONTEXT
+    //=================================================================
+    #ifdef USE_OLED
+    // Declare I2C OLED Context
+    i2c_oled oled("/dev/i2c-0");
+    // Set I2C OLED Address
+    oled.set_address(SSD1306_ADDRESS);
+    // Initialize I2C OLED
+    oled.init();
+    // Declare String variable
+    char str[20];
+    strncpy(str, "Crixus 2.0", sizeof(str));
+    oled.set_cursor(0,0);
+    oled.disp_str((uint8_t *) &str);
+    strncpy(str, "Step:", sizeof(str));
+    oled.set_cursor(1,0);
+    oled.disp_str((uint8_t *) &str);
+    #endif
+		//=================================================================
+
+    //=================================================================
     // RUN
     //=================================================================
     const uint32_t max_step = static_cast<uint32_t>(hexapod_S/hexapod_res);
@@ -137,6 +158,11 @@ int main(int argc, char* argv[]) {
         // Calculate & Send hexapod walk step
         if ( joystick.dJoystick() ) {
           cout << GREEN << "step : " << step << RESET << "\tdir : " << joystick.dJoystick() << "\tangle : " << joystick.xAngle() << endl;
+          #ifdef USE_OLED
+          sprintf(str, "%d", step);
+          oled.set_cursor(1, C_FONT_SIZE*6);
+          oled.disp_str((uint8_t *) &str);
+          #endif
           hexapod.step(step, walk, joystick.xAngle());
           if ( step < max_step-1 )
               step++;
