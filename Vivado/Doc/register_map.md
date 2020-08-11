@@ -1,7 +1,7 @@
 # Inverse Kinematics IP Register Map
 
-## Legend
-__Register Modes__\
+## Conventions
+__Register Bit Modes__\
 [T]   : Trigger\
 [R]   : Read\
 [W]   : Write\

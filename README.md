@@ -1,7 +1,6 @@
 # Hexapod Project
-The Hexapod Project is an Open Source Hexapod Robot Hardware Platform based on a Xilinx Zynq-7000 System-on-Chip Device. The aim is to provide a full-customizable processing environment for an Hexapod Robot.\
-The initial idea published on _Design and Modeling of a Research Platform based on Hexapod Robot with Embedded Systems and Interactive Control_ [[1]](#publications) and _Translational Motion Analysis of a Hexapod Walking Robot_ [[2]](#publications) presents the Robot Mechanics, Kinematics & Locomotion Control Model. In this first stage, all Hexapod Kinematics Equations was solved by main the processor. However, this complex equations involves complex trigonometics, square root and trascendental functions in addition to being redundant because must be calculated for each robot leg. This implies high computational cost that can be used to focus in more important and dynamic tasks such as image processing or trajectory planning. Thus, the approach presented on _Fully-pipelined CORDIC-based FPGA Realization for a 3-DOF Hexapod-Leg Inverse Kinematics Calculaiton_ [[3]](#publications) proposes an CORDIC-based Pipeline architecture in order to solve these equations concurrently in a FPGA Digital IP.\
-In the present, the processing platform has been migrated to a Zynq-7000 System-on-Chip where the Inverse Kinematics IP is located on Programmable Logic and the Locomotion calculation is performed in Software on the Processing System. 
+The Hexapod Project is an Open Source Hexapod Robot Hardware Platform based on a Xilinx Zynq-7000 System-on-Chip Device. The aim is to provide a full-customizable processing environment for a Hexapod Robot.\
+The present 
 The next step is to develope the Application Layer which involves computational vision to perform trajectory planning.
  
 
@@ -29,6 +28,16 @@ This project is based on [Arty Z7-7010](https://store.digilentinc.com/arty-z7-ap
 ### Mechanic Design
  - Under construction.
 
+## Software Modeling
+### Bare Metal App
+ - Under construction.
+
+### Petalinux Development
+ - Under construction.
+
+### Petalinux C++ Project
+ - Under construction.
+
 ## Deployment 
 
 1. Hardware Deploying\
@@ -44,6 +53,10 @@ This project is based on [Arty Z7-7010](https://store.digilentinc.com/arty-z7-ap
 
 ## Video Documentation
 [Hexapod Project Youtube Channel](https://www.youtube.com/channel/UCVvloneIRCm_nlw63EyGIQw)
+
+## About
+The initial idea published on _Design and Modeling of a Research Platform based on Hexapod Robot with Embedded Systems and Interactive Control_ [[1]](#publications) and _Translational Motion Analysis of a Hexapod Walking Robot_ [[2]](#publications) presents the Robot Mechanics, Kinematics & Locomotion Control Model. In this first stage, all Hexapod Kinematics Equations was solved by main the processor. However, this complex equations involves complex trigonometics, square root and trascendental functions in addition to being redundant because must be calculated for each robot leg. This implies high computational cost that can be used to focus in more important and dynamic tasks such as image processing or trajectory planning. Thus, the approach presented on _Fully-pipelined CORDIC-based FPGA Realization for a 3-DOF Hexapod-Leg Inverse Kinematics Calculaiton_ [[3]](#publications) proposes an CORDIC-based Pipeline architecture in order to solve these equations concurrently in a FPGA Digital IP.\
+In the present, the processing platform has been migrated to a Zynq-7000 System-on-Chip where the Inverse Kinematics IP is located on Programmable Logic and the Locomotion calculation is performed in Software on the Processing System. 
 
 ## Authors
 * **Carlos Roger Olaya Reyes** - _SoC Integration Design, Digital IP Design, Initial Work_ - [colayare](https://github.com/colayare)
