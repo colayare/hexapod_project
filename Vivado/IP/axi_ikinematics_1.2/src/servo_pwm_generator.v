@@ -77,10 +77,10 @@ reg                               s_pwm_out;
 //----------------------------------------------
 //-- FSM --
 always @(posedge CLK)
-  if (nRST)
-    fsm_state <= fsm_next_state;
-  else
+  if (~nRST)
     fsm_state <= 0;
+  else
+    fsm_state <= fsm_next_state;
 
 //-- FSM Next State Logic --
 always @(*)
@@ -162,19 +162,19 @@ always @(*)
 
 // Counters
 always @(posedge CLK)
-  if (nRST) begin
-    pwm_in            <= (COMPLEMENT) ? C_PWM_MAX_IN - PWM_IN : PWM_IN;
-    counter           <= counter_next;
-    pwm_step_counter  <= pwm_step_counter_next;
-    pwm_counter       <= pwm_counter_next;
-    PWM_OUT           <= s_pwm_out;
-    end
-  else begin
+  if (~nRST) begin
     pwm_in            <= 0;
     counter           <= 0;
     pwm_step_counter  <= 0;
     pwm_counter       <= 0;
     PWM_OUT           <= 0;
+    end
+  else begin
+    pwm_in            <= (COMPLEMENT) ? C_PWM_MAX_IN - PWM_IN : PWM_IN;
+    counter           <= counter_next;
+    pwm_step_counter  <= pwm_step_counter_next;
+    pwm_counter       <= pwm_counter_next;
+    PWM_OUT           <= s_pwm_out;
     end
 
 endmodule

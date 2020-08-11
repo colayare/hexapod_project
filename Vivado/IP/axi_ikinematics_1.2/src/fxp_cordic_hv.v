@@ -21,24 +21,25 @@
 
 
 module fxp_cordic_hv
-#(  parameter C_FXP_WIDTH=16,						// Fixed Point Data bus width : 16 bit
-	parameter C_FXP_POINT=12,						// Fixed Point dot ubication from right [INT].[DEC]
-	parameter C_COR_ITER=16,						// CORDIC positive iterations
-	parameter C_COR_N_ITER=2,						// CORDIC non-positive iterations
+#(  
+    parameter C_FXP_WIDTH   = 16,						// Fixed Point Data bus width : 16 bit
+    parameter C_FXP_POINT   = 12,						// Fixed Point dot ubication from right [INT].[DEC]
+    parameter C_COR_ITER    = 16,						// CORDIC positive iterations
+    parameter C_COR_N_ITER  = 2,						// CORDIC non-positive iterations
     // ROM Memory ATAN LUT Address Bus Size
-    parameter C_ITER_SIZE=$clog2(C_COR_ITER+C_COR_N_ITER)		
+    parameter C_ITER_SIZE   = $clog2(C_COR_ITER+C_COR_N_ITER)		
 )(	
 	// SYSTEM INTERFACE
-    input 								nRST,		// Reset active low
-    input 								CLK,		// Clock signal
+    input 								              nRST,		  // Reset active low
+    input 								              CLK,		  // Clock signal
     // CONTROL INTERFACE
-    input 								START,		// Start active high
-    output  							VALID_CO,	// Valid operation carry-out active high
-    output reg 							DATA_RDY,	// Data ready active high
+    input 								              START,		// Start active high
+    output  							              VALID_CO,	// Valid operation carry-out active high
+    output reg 							            DATA_RDY,	// Data ready active high
     // CORDIC INPUTS & OUTPUTS INTERFACE
-    input signed [C_FXP_WIDTH-1:0]		X_IN,		// Fixed Point CORDIC X input
-    input signed [C_FXP_WIDTH-1:0] 		Y_IN,		// Fixed Point CORDIC Y input
-    output reg signed [C_FXP_WIDTH-1:0]	X_OUT		// Fixed Point CORDIC X output
+    input signed [C_FXP_WIDTH-1:0]		  X_IN,			// Fixed Point CORDIC X input
+    input signed [C_FXP_WIDTH-1:0] 		  Y_IN,			// Fixed Point CORDIC Y input
+    output reg signed [C_FXP_WIDTH-1:0]	X_OUT			// Fixed Point CORDIC X output
     );
 
 //----------------------------------------------
@@ -51,45 +52,45 @@ localparam [C_FXP_WIDTH-1:0]	C_FXP_ZERO 		= {C_FXP_WIDTH{1'b0}};
 // Fixed Point One
 localparam [C_FXP_WIDTH-1:0]	C_FXP_ONE 		= {{C_FXP_WIDTH-C_FXP_POINT-1{1'b0}},1'b1,{C_FXP_POINT{1'b0}}};
 // CORDIC FSM States Definition
-localparam [2:0]	rset    = 0,    				// Reset
-                    idle    = 1,    				// Idle
-                    imem	= 2,					// Init Memory
-                    iter    = 3,    				// Iterating
-                    drdy    = 4;    				// Data Ready
+localparam [2:0]	  rset    = 0, 	// Reset
+                    idle    = 1, 	// Idle
+                    imem	  = 2, 	// Init Memory
+                    iter    = 3, 	// Iterating
+                    drdy    = 4; 	// Data Ready
 
 //----------------------------------------------
 //-- Signals Definitions
 //----------------------------------------------
 // Reg Vectors
-reg signed [C_FXP_WIDTH-1:0]	reg_xin,        	// Register X input
-                				reg_yin,        	// Register Y input
-                				shift_x,			// X Register Shifting 1
-                				shift_y;			// Y Register Shifting 1
-reg [2:0]						state, 				// FSM State Register
-								state_next;			// FSM Next State Register
-reg [C_ITER_SIZE-1:0]			iteration,			// Iteration Register
-								nextiter;			// Next Iteration Register
+reg signed [C_FXP_WIDTH-1:0]	reg_xin,        // Register X input
+                              reg_yin,        // Register Y input
+                              shift_x,			  // X Register Shifting 1
+                              shift_y;			  // Y Register Shifting 1
+reg [2:0]						          state, 				  // FSM State Register
+								              state_next;			// FSM Next State Register
+reg [C_ITER_SIZE-1:0]			    iteration,			// Iteration Register
+                              nextiter;			  // Next Iteration Register
 // Wire Vectors
-wire signed [C_FXP_WIDTH-1:0]	mux_xin,			// Input Mux X
-                				mux_yin,			// Input Mux Y
-                				adder2_x_mux,		
-                				adder2_y_mux,		
-                				mux_xout,			// Output Mux X
-                				mux_yout,			// Output Mux Y
-                				adder1_x_out,		// Adder X Out
-                				adder1_y_out,		// Adder Y Out
-                				adder2_x_out,		// Adder X Out
-                				adder2_y_out;		// Adder Y Out
+wire signed [C_FXP_WIDTH-1:0]	mux_xin,			  // Input Mux X
+                              mux_yin,			  // Input Mux Y
+                              adder2_x_mux,		
+                              adder2_y_mux,		
+                              mux_xout,			  // Output Mux X
+                              mux_yout,			  // Output Mux Y
+                              adder1_x_out,	  // Adder X Out
+                              adder1_y_out,	  // Adder Y Out
+                              adder2_x_out,	  // Adder X Out
+                              adder2_y_out;	  // Adder Y Out
 // Reg
-reg 							mux_sel, 			// Input Mux Selectors
-								reg_overflow;		
+reg 							            mux_sel, 			  // Input Mux Selectors
+                              reg_overflow;		
 // Wire
-wire							sign_ope,			// Addition/Substraction bit select
-								iterSign,			
-								adder1_x_flag,		// Adder X Operation Result Flag
-								adder1_y_flag,		// Adder Y Operation Result Flag
-								adder2_x_flag,		// Adder X Operation Result Flag
-								adder2_y_flag;		// Adder Y Operation Result Flag
+wire							            sign_ope,			  // Addition/Substraction bit select
+                              iterSign,			
+                              adder1_x_flag,  // Adder X Operation Result Flag
+                              adder1_y_flag,	// Adder Y Operation Result Flag
+                              adder2_x_flag,	// Adder X Operation Result Flag
+                              adder2_y_flag;	// Adder Y Operation Result Flag
 
 //----------------------------------------------
 //-- Instantiations
@@ -149,30 +150,30 @@ assign mux_yin = mux_sel ? adder2_y_out : Y_IN;
 
 // XYZ-input registers
 always @(posedge CLK)
-	if (nRST) begin
-		reg_xin       <= mux_xin;
-		reg_yin       <= mux_yin;
-		end
-	else begin
+	if (~nRST) begin
 		reg_xin       <= {C_FXP_WIDTH{1'b0}};
 		reg_yin       <= {C_FXP_WIDTH{1'b0}};
+		end
+	else begin
+		reg_xin       <= mux_xin;
+		reg_yin       <= mux_yin;
 		end
 
 //-- Iteration Control --
 // Iteration Register
 always @(posedge CLK) 
-	if (nRST)
-		iteration <= nextiter;
-	else
+	if (~nRST)
 		iteration	<= {C_ITER_SIZE{1'b0}};
+	else
+		iteration <= nextiter;
 
 //-- FSM --
 // CORDIC FSM Register
 always @(posedge CLK)
-	if (nRST)
-		state <= state_next;
-	else
+	if (~nRST)
 		state <= rset;
+	else
+		state <= state_next;
 
 // FSM Next State Logic
 always @(*)
@@ -189,32 +190,32 @@ always @(*)
 always @(*)
 	case (state)
 		rset : begin
-			mux_sel = 1'b0;
+			mux_sel  = 1'b0;
 			DATA_RDY = 1'b0;
 			nextiter = {C_ITER_SIZE{1'b0}};
 			end
 		idle : begin
-			mux_sel = 1'b0;
+			mux_sel  = 1'b0;
 			DATA_RDY = 1'b0;
 			nextiter = {C_ITER_SIZE{1'b0}};
 			end
 		imem : begin
-			mux_sel = 1'b0;
+			mux_sel  = 1'b0;
 			DATA_RDY = 1'b0;
 			nextiter = {C_ITER_SIZE{1'b0}};
 			end
 		iter : begin
-			mux_sel = 1'b1;
+			mux_sel  = 1'b1;
 			DATA_RDY = 1'b0;
 			nextiter = iteration + 1;
 			end
 		drdy : begin
-			mux_sel = 1'b1;
+			mux_sel  = 1'b1;
 			DATA_RDY = 1'b1;
 			nextiter = {C_ITER_SIZE{1'b0}};
 			end
 		default : begin
-			mux_sel = 1'b0;
+			mux_sel  = 1'b0;
 			DATA_RDY = 1'b0;
 			nextiter = {C_ITER_SIZE{1'b0}};
 			end
@@ -244,13 +245,13 @@ assign adder2_y_mux = (iterSign) ? adder1_y_out : reg_yin;
 
 //-- Overflow Control --
 always @(posedge CLK)
-	if (nRST)
+	if (~nRST)
+		reg_overflow <= 1'b0;
+	else
 		if (START)
 			reg_overflow <= 1'b0;
 		else
 			reg_overflow <= reg_overflow || adder1_x_flag || adder2_x_flag || adder1_y_flag || adder2_y_flag;
-	else
-		reg_overflow <= 1'b0;
 
 assign VALID_CO = reg_overflow;
 
@@ -260,9 +261,9 @@ assign mux_xout = (iteration == C_COR_MAXITER) ? adder2_x_out : X_OUT;
 
 // Output Registers
 always @(posedge CLK)
-	if (nRST)
-		X_OUT <= mux_xout;
-	else
+	if (~nRST)
 		X_OUT <= {C_FXP_WIDTH{1'b0}};
+	else
+		X_OUT <= mux_xout;
 
 endmodule

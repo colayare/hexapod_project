@@ -21,9 +21,9 @@
 
 
 module fxp_to_pwm #(
-	parameter integer FXP_WIDTH = 20,
+	parameter integer FXP_WIDTH  = 20,
 	parameter integer PWM_OFFSET = 8,
-	parameter integer PWM_WIDTH = 8
+	parameter integer PWM_WIDTH  = 8
 ) (
 	input wire [FXP_WIDTH-1:0]	FXP_IN,
 	output wire [PWM_WIDTH-1:0]	PWM_OUT

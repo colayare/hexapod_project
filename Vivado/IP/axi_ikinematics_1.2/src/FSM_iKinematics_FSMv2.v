@@ -120,10 +120,10 @@ fxp_multiplier #(
 //----------------------------------------------
 // FSM State Register
 always @(posedge CLK)
-  if (nRST)
-    fsm_state <= fsm_next_state;
-  else
+  if (~nRST)
     fsm_state <= {fsm_size{1'b0}};
+  else
+    fsm_state <= fsm_next_state;
 
 // FSM Next State Logic
 always @(*)
@@ -234,58 +234,62 @@ always @(*)
   endcase
 
 always @(posedge CLK)
-  if (nRST) begin
-    reg_mult_mux_in1  <= mult_mux_in1;
-    reg_mult_mux_in2  <= mult_mux_in2;
-    reg_add_mux_in1   <= add_mux_in1;
-    reg_add_mux_in2   <= add_mux_in2;
-    end
-  else begin
+  if (~nRST) begin
     reg_mult_mux_in1  <= C_FXP_ZERO;
     reg_mult_mux_in2  <= C_FXP_ZERO;
     reg_add_mux_in1   <= C_FXP_ZERO;
     reg_add_mux_in2   <= C_FXP_ZERO;
     end
+  else begin
+    reg_mult_mux_in1  <= mult_mux_in1;
+    reg_mult_mux_in2  <= mult_mux_in2;
+    reg_add_mux_in1   <= add_mux_in1;
+    reg_add_mux_in2   <= add_mux_in2;
+    end
 
 // Multiplication Register
 always @(posedge CLK)
-  if (nRST)
-    reg_mult <= mult_out;
-  else
+  if (~nRST)
     reg_mult <= C_FXP_ZERO;
+  else
+    reg_mult <= mult_out;
 
 // Addition Register
 always @(posedge CLK)
-  if (nRST)
-    reg_add <= add_out;
-  else
+  if (~nRST)
     reg_add <= C_FXP_ZERO;
+  else
+    reg_add <= add_out;
 
 //// r out Register
 always @(posedge CLK)
-  if (nRST)
+  if (~nRST)
+    reg_r <= C_FXP_ZERO;
+  else
     if (fsm_state == fsm_cal0)  // The first calculation is ik * (k*r)
       reg_r <= mult_out;
     else
       reg_r <= reg_r;
-  else
-    reg_r <= C_FXP_ZERO;
 
 //-- Overflow Control --
 always @(posedge CLK)
-  if (nRST)
+  if (~nRST)
+    reg_overflow <= 1'b0;
+  else
     if (START)
       reg_overflow <= 1'b0;
     else
       reg_overflow <= add_overflow || mult_overflow;
-  else
-    reg_overflow <= 1'b0;
 
 assign DATA_VALID = reg_overflow;
 
 // D out Register
 always @(posedge CLK)
-  if (nRST)
+  if (~nRST) begin
+    STAGE2_REG0 <= C_FXP_ZERO;
+    STAGE2_REG1 <= C_FXP_ZERO;
+    end
+  else 
     if (fsm_state == fsm_wtc5) begin
       STAGE2_REG0 <= mult_out;  // <<< 3
       STAGE2_REG1 <= add_out;
@@ -294,9 +298,5 @@ always @(posedge CLK)
       STAGE2_REG0 <= STAGE2_REG0;
       STAGE2_REG1 <= STAGE2_REG1;
       end
-  else begin
-    STAGE2_REG0 <= C_FXP_ZERO;
-    STAGE2_REG1 <= C_FXP_ZERO;
-    end
 
 endmodule

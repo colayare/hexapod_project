@@ -21,29 +21,30 @@
 
 
 module fxp_cordic_c
-#(  parameter C_FXP_WIDTH=16,						// Fixed Point Data bus width : 16 bit
-	parameter C_FXP_POINT=12,						// Fixed Point dot ubication from right [INT].[DEC]
-	parameter C_COR_ITER=16,						// CORDIC Iterations	
-    parameter C_MEMPTR_SIZE=$clog2(C_COR_ITER)		// ROM Memory ATAN LUT Address Bus Size
+#(  
+    parameter C_FXP_WIDTH   = 16,						        // Fixed Point Data bus width : 16 bit
+    parameter C_FXP_POINT   = 12,						        // Fixed Point dot ubication from right [INT].[DEC]
+    parameter C_COR_ITER    = 16,						        // CORDIC Iterations	
+    parameter C_MEMPTR_SIZE = $clog2(C_COR_ITER)		// ROM Memory ATAN LUT Address Bus Size
 )(	
-	// SYSTEM INTERFACE
-    input 								nRST,		// Reset active low
-    input 								CLK,		// Clock signal
+    // SYSTEM INTERFACE
+    input 								              nRST,		  // Reset active low
+    input 								              CLK,		  // Clock signal
     // CONTROL INTERFACE
-    input 								START,		// Start active high
-    input 								MODE,		// CORDIC Mode - 0 : Rotation, 1: Vectoring
-    output  							VALID_CO,	// Valid operation carry-out active high
-    output reg 							DATA_RDY,	// Data ready active high
+    input 								              START,		// Start active high
+    input 								              MODE,		  // CORDIC Mode - 0 : Rotation, 1: Vectoring
+    output  							              VALID_CO,	// Valid operation carry-out active high
+    output reg 							            DATA_RDY,	// Data ready active high
     // CORDIC INPUTS & OUTPUTS INTERFACE
-    input signed [C_FXP_WIDTH-1:0]		X_IN,		// Fixed Point CORDIC X input
-    input signed [C_FXP_WIDTH-1:0] 		Y_IN,		// Fixed Point CORDIC Y input
-    input signed [C_FXP_WIDTH-1:0] 		Z_IN,		// Fixed Point CORDIC Z input
+    input signed [C_FXP_WIDTH-1:0]		  X_IN,		  // Fixed Point CORDIC X input
+    input signed [C_FXP_WIDTH-1:0] 		  Y_IN,		  // Fixed Point CORDIC Y input
+    input signed [C_FXP_WIDTH-1:0] 		  Z_IN,		  // Fixed Point CORDIC Z input
     output reg signed [C_FXP_WIDTH-1:0]	X_OUT,		// Fixed Point CORDIC X output
     output reg signed [C_FXP_WIDTH-1:0] Y_OUT,		// Fixed Point CORDIC Y output
     output reg signed [C_FXP_WIDTH-1:0] Z_OUT,		// Fixed Point CORDIC Z output
     // MEMORY INTERFACE
-    input [C_FXP_WIDTH-1:0] 			LUT_OUT,	// Fixed Point CORDIC ATAN LUT input
-    output reg [C_MEMPTR_SIZE-1:0]		MEM_PTR		// Memory pointer 
+    input [C_FXP_WIDTH-1:0] 			      LUT_OUT,	// Fixed Point CORDIC ATAN LUT input
+    output reg [C_MEMPTR_SIZE-1:0]		  MEM_PTR		// Memory pointer 
     );
 
 //----------------------------------------------
@@ -56,44 +57,44 @@ localparam C_FXP_ZERO = {C_FXP_WIDTH{1'b0}};
 // Max LUT Access Pointer
 localparam [C_MEMPTR_SIZE-1:0] C_LUT_MAX_PTR = C_COR_ITER - 3;
 // CORDIC FSM States Definition
-localparam [2:0]	rset    = 0,    				// Reset
-                    idle    = 1,    				// Idle
-                    imem	= 2,					// Init Memory
-                    iter    = 3,    				// Iterating
-                    drdy    = 4;    				// Data Ready
+localparam [2:0]	  rset    = 0,	// Reset
+                    idle    = 1,	// Idle
+                    imem	  = 2,	// Init Memory
+                    iter    = 3,	// Iterating
+                    drdy    = 4;	// Data Ready
 
 //----------------------------------------------
 //-- Signals Definitions
 //----------------------------------------------
 // Reg Vectors
-reg signed [C_FXP_WIDTH-1:0]	reg_xin,        	// Register X input
-                				reg_yin,        	// Register Y input
-              		  			reg_zin,        	// Register Z input
-              		  			reg_lutout;     	// Register ATAN LUT input
-reg [2:0]						state, 				// FSM State Register
-								state_next;			// FSM Next State Register
-reg [C_MEMPTR_SIZE-1:0]			iteration,			// Iteration Register
-								nextiter;			// Next Iteration Register
+reg signed [C_FXP_WIDTH-1:0]	reg_xin,      // Register X input
+                              reg_yin,      // Register Y input
+                              reg_zin,      // Register Z input
+                              reg_lutout;   // Register ATAN LUT input
+reg [2:0]						          state, 				// FSM State Register
+                              state_next;		// FSM Next State Register
+reg [C_MEMPTR_SIZE-1:0]			  iteration,		// Iteration Register
+                              nextiter;			// Next Iteration Register
 // Wire Vectors
 wire signed [C_FXP_WIDTH-1:0]	mux_xin,			// Input Mux X
-                				mux_yin,			// Input Mux Y
-                				mux_zin,			// Input Mux Z
-                				mux_xout,			// Output Mux X
-                				mux_yout,			// Output Mux Y
-                				mux_zout,			// Output Mux Z
-                				xadderout,			// Adder X Out
-                				yadderout,			// Adder Y Out
-                				zadderout,			// Adder Z Out
-                				shift_x,			// X Register Shifting
-                				shift_y;			// Y Register Shifting
+                              mux_yin,			// Input Mux Y
+                              mux_zin,			// Input Mux Z
+                              mux_xout,			// Output Mux X
+                              mux_yout,			// Output Mux Y
+                              mux_zout,			// Output Mux Z
+                              xadderout,		// Adder X Out
+                              yadderout,		// Adder Y Out
+                              zadderout,		// Adder Z Out
+                              shift_x,			// X Register Shifting
+                              shift_y;			// Y Register Shifting
 // Reg
-reg 							mux_sel, 			// Input Mux Selectors
-								reg_overflow;
+reg 							            mux_sel, 			// Input Mux Selectors
+                              reg_overflow;
 // Wire
-wire							sign_ope,			// Addition/Substraction bit select
-								adderx_flag,		// Adder X Operation Result Flag
-								addery_flag,		// Adder Y Operation Result Flag
-								adderz_flag;		// Adder Z Operation Result Flag
+wire							            sign_ope,			// Addition/Substraction bit select
+                              adderx_flag,	// Adder X Operation Result Flag
+                              addery_flag,	// Adder Y Operation Result Flag
+                              adderz_flag;	// Adder Z Operation Result Flag
 
 //----------------------------------------------
 //-- Instantiations
@@ -143,34 +144,34 @@ assign mux_zin = mux_sel ? zadderout : Z_IN;
 
 // XYZ-input registers
 always @(posedge CLK)
-	if (nRST) begin
-		reg_xin       <= mux_xin;
-		reg_yin       <= mux_yin;
-		reg_zin       <= mux_zin;
-		reg_lutout    <= LUT_OUT;
-		end
-	else begin
+	if (~nRST) begin
 		reg_xin       <= C_FXP_ZERO;
 		reg_yin       <= C_FXP_ZERO;
 		reg_zin       <= C_FXP_ZERO;
 		reg_lutout    <= C_FXP_ZERO;
 		end
+	else begin
+		reg_xin       <= mux_xin;
+		reg_yin       <= mux_yin;
+		reg_zin       <= mux_zin;
+		reg_lutout    <= LUT_OUT;
+		end
 
 //-- Iteration Control --
 // Iteration Register
 always @(posedge CLK) 
-	if (nRST)
-		iteration <= nextiter;
-	else
+	if (~nRST)
 		iteration	<= {C_MEMPTR_SIZE{1'b0}};
+	else
+		iteration <= nextiter;
 
 //-- FSM --
 // CORDIC FSM Register
 always @(posedge CLK)
-	if (nRST)
-		state <= state_next;
-	else
+	if (~nRST)
 		state <= rset;
+	else
+		state <= state_next;
 
 // FSM Next State Logic
 always @(*)
@@ -187,40 +188,40 @@ always @(*)
 always @(*)
 	case (state)
 		rset : begin
-			mux_sel = 1'b0;
-			DATA_RDY = 1'b0;
-			MEM_PTR = {C_MEMPTR_SIZE{1'b0}};
-			nextiter = {C_MEMPTR_SIZE{1'b0}};
+			mux_sel   = 1'b0;
+			DATA_RDY  = 1'b0;
+			MEM_PTR   = {C_MEMPTR_SIZE{1'b0}};
+			nextiter  = {C_MEMPTR_SIZE{1'b0}};
 			end
 		idle : begin
-			mux_sel = 1'b0;
-			DATA_RDY = 1'b0;
-			MEM_PTR = (START) ? 1 : 0;
-			nextiter = {C_MEMPTR_SIZE{1'b0}};
+			mux_sel   = 1'b0;
+			DATA_RDY  = 1'b0;
+			MEM_PTR   = (START) ? 1 : 0;
+			nextiter  = {C_MEMPTR_SIZE{1'b0}};
 			end
 		imem : begin
-			mux_sel = 1'b0;
-			DATA_RDY = 1'b0;
-			MEM_PTR = 2;
-			nextiter = {C_MEMPTR_SIZE{1'b0}};
+			mux_sel   = 1'b0;
+			DATA_RDY  = 1'b0;
+			MEM_PTR   = 2;
+			nextiter  = {C_MEMPTR_SIZE{1'b0}};
 			end
 		iter : begin
-			mux_sel = 1'b1;
-			DATA_RDY = 1'b0;
-			MEM_PTR = (iteration<C_LUT_MAX_PTR) ? iteration + 3 : {C_MEMPTR_SIZE{1'b0}};
-			nextiter = iteration + 1;
+			mux_sel   = 1'b1;
+			DATA_RDY  = 1'b0;
+			MEM_PTR   = (iteration<C_LUT_MAX_PTR) ? iteration + 3 : {C_MEMPTR_SIZE{1'b0}};
+			nextiter  = iteration + 1;
 			end
 		drdy : begin
-			mux_sel = 1'b1;
-			DATA_RDY = 1'b1;
-			MEM_PTR = {C_MEMPTR_SIZE{1'b0}};
-			nextiter = {C_MEMPTR_SIZE{1'b0}};
+			mux_sel   = 1'b1;
+			DATA_RDY  = 1'b1;
+			MEM_PTR   = {C_MEMPTR_SIZE{1'b0}};
+			nextiter  = {C_MEMPTR_SIZE{1'b0}};
 			end
 		default : begin
-			mux_sel = 1'b0;
-			DATA_RDY = 1'b0;
-			MEM_PTR = {C_MEMPTR_SIZE{1'b0}};
-			nextiter = {C_MEMPTR_SIZE{1'b0}};
+			mux_sel   = 1'b0;
+			DATA_RDY  = 1'b0;
+			MEM_PTR   = {C_MEMPTR_SIZE{1'b0}};
+			nextiter  = {C_MEMPTR_SIZE{1'b0}};
 			end
 	endcase
 
@@ -234,13 +235,13 @@ assign sign_ope = MODE ? !reg_yin[C_FXP_WIDTH-1] : reg_zin[C_FXP_WIDTH-1];
 
 //-- Overflow Control --
 always @(posedge CLK)
-	if (nRST)
+	if (~nRST)
+		reg_overflow <= 1'b0;
+	else
 		if (START)
 			reg_overflow <= 1'b0;
 		else
 			reg_overflow <= reg_overflow || adderx_flag || addery_flag || adderz_flag;
-	else
-		reg_overflow <= 1'b0;
 
 assign VALID_CO = reg_overflow;
 
@@ -252,15 +253,15 @@ assign mux_zout = (iteration == C_COR_MAXITER) ? zadderout : Z_OUT;
 
 // Output Registers
 always @(posedge CLK)
-	if (nRST) begin
-		X_OUT <= mux_xout;
-		Y_OUT <= mux_yout;
-		Z_OUT <= mux_zout;
-		end
-	else begin
+	if (~nRST) begin
 		X_OUT <= C_FXP_ZERO;
 		Y_OUT <= C_FXP_ZERO;
 		Z_OUT <= C_FXP_ZERO;
+		end
+	else begin
+		X_OUT <= mux_xout;
+		Y_OUT <= mux_yout;
+		Z_OUT <= mux_zout;
 		end
 
 endmodule

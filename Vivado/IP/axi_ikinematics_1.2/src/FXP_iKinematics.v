@@ -43,16 +43,16 @@ module FXP_iKinematics
   parameter integer C_COR_N_ITER=1
 )(
   //-- SYSTEM INTERFACE --
-    input                               nRST,     // Reset active low
-    input                               CLK,      // Clock signal
+    input                               nRST,           // Reset active low
+    input                               CLK,            // Clock signal
     //-- CONTROL INTERFACE --
-    input                               START,      // Architecture Trigger Signal
-    output reg                          DATA_VALID,   // Output Calculation Valid
+    input                               START,          // Architecture Trigger Signal
+    output reg                          DATA_VALID,     // Output Calculation Valid
     output reg                          OUT_DATA_READY, // 
-    output                              BUSY,     // Architecture Busy
+    output                              BUSY,           // Architecture Busy
     //-- FIFO INTERFACE --
     input                               FIFO_EMPTY,
-    output                              FIFO_READ,    // Read Next Input From FIFO
+    output                              FIFO_READ,      // Read Next Input From FIFO
     //-- Inverse Kinematics In/Out Parameters --
     input signed [C_FXP_WIDTH-1:0]      X_IN,
     input signed [C_FXP_WIDTH-1:0]      Y_IN,
@@ -92,7 +92,7 @@ localparam [C_FSM_BUS_SIZE:0]       fsm_rset        = 0,    //Reset
 
 //-- XMP Dual Port ROM Memory Parameters --
 // Memory Size : Fixed Point Data Width * Memory Depth(Total Iterations)
-localparam                          MEMORY_SIZE   = C_FXP_WIDTH * (C_COR_ITER+C_COR_N_ITER);
+localparam                          MEMORY_SIZE     = C_FXP_WIDTH * (C_COR_ITER+C_COR_N_ITER);
 
 //----------------------------------------------
 //-- Signals Definition
@@ -189,58 +189,58 @@ wire signed [C_FXP_WIDTH-1:0] stage1_c1_xout,     // Stage 1
 // xpm_memory_dprom: Dual Port ROM
 // Xilinx Parameterized Macro, version 2018.3
 xpm_memory_dprom #(
-  .ADDR_WIDTH_A(C_MEM_ASIZE),               // DECIMAL
-  .ADDR_WIDTH_B(C_MEM_ASIZE),               // DECIMAL
-  .AUTO_SLEEP_TIME(0),                  // DECIMAL
-  .CLOCKING_MODE("common_clock"),       // String
-  .ECC_MODE("no_ecc"),                  // String
+  .ADDR_WIDTH_A(C_MEM_ASIZE),             // DECIMAL
+  .ADDR_WIDTH_B(C_MEM_ASIZE),             // DECIMAL
+  .AUTO_SLEEP_TIME(0),                    // DECIMAL
+  .CLOCKING_MODE("common_clock"),         // String
+  .ECC_MODE("no_ecc"),                    // String
   .MEMORY_INIT_FILE("atan_lut_mem.mem"),  // String
-  .MEMORY_INIT_PARAM("0"),              // String
-  .MEMORY_OPTIMIZATION("true"),         // String
-  .MEMORY_PRIMITIVE("auto"),            // String
+  .MEMORY_INIT_PARAM("0"),                // String
+  .MEMORY_OPTIMIZATION("true"),           // String
+  .MEMORY_PRIMITIVE("auto"),              // String
   .MEMORY_SIZE(MEMORY_SIZE),              // DECIMAL
-  .MESSAGE_CONTROL(0),                  // DECIMAL
-  .READ_DATA_WIDTH_A(C_FXP_WIDTH),      // DECIMAL
-  .READ_DATA_WIDTH_B(C_FXP_WIDTH),      // DECIMAL
-  .READ_LATENCY_A(2),                   // DECIMAL
-  .READ_LATENCY_B(2),                   // DECIMAL
-  .READ_RESET_VALUE_A("0"),             // String
-  .READ_RESET_VALUE_B("0"),             // String
-  .RST_MODE_A("SYNC"),                  // String
-  .RST_MODE_B("SYNC"),                  // String
-  .USE_MEM_INIT(1),                     // DECIMAL
-  .WAKEUP_TIME("disable_sleep")         // String
-) xpm_memory_dprom_inst (
-  .dbiterra(),                          // 1-bit output: Leave open.
-  .dbiterrb(),                          // 1-bit output: Leave open.
-  .douta(lut_out_a),                    // READ_DATA_WIDTH_A-bit output: Data output for port A read operations.
-  .doutb(lut_out_b),                    // READ_DATA_WIDTH_B-bit output: Data output for port B read operations.
-  .sbiterra(),                          // 1-bit output: Leave open.
-  .sbiterrb(),                          // 1-bit output: Leave open.
-  .addra(lut_ptr_a),                    // ADDR_WIDTH_A-bit input: Address for port A read operations.
-  .addrb(lut_ptr_b),                    // ADDR_WIDTH_B-bit input: Address for port B read operations.
-  .clka(CLK),                           // 1-bit input: Clock signal for port A. Also clocks port B when
-                                        // parameter CLOCKING_MODE is "common_clock".
-  .clkb(CLK),                           // 1-bit input: Clock signal for port B when parameter CLOCKING_MODE is
-                                        // "independent_clock". Unused when parameter CLOCKING_MODE is
-                                        // "common_clock".
-  .ena(1'b1),                           // 1-bit input: Memory enable signal for port A. Must be high on clock
-                                        // cycles when read operations are initiated. Pipelined internally.
-  .enb(1'b1),                           // 1-bit input: Memory enable signal for port B. Must be high on clock
-                                        // cycles when read operations are initiated. Pipelined internally.
-  .injectdbiterra(1'b0),                // 1-bit input: Do not change from the provided value.
-  .injectdbiterrb(1'b0),                // 1-bit input: Do not change from the provided value.
-  .injectsbiterra(1'b0),                // 1-bit input: Do not change from the provided value.
-  .injectsbiterrb(1'b0),                // 1-bit input: Do not change from the provided value.
-  .regcea(1'b1),                        // 1-bit input: Do not change from the provided value.
-  .regceb(1'b1),                        // 1-bit input: Do not change from the provided value.
-  .rsta(!nRST),                         // 1-bit input: Reset signal for the final port A output register stage.
-                                        // Synchronously resets output port douta to the value specified by
-                                        // parameter READ_RESET_VALUE_A.
-  .rstb(!nRST),                         // 1-bit input: Reset signal for the final port B output register stage.
-                                        // Synchronously resets output port doutb to the value specified by
-                                        // parameter READ_RESET_VALUE_B.
-  .sleep(1'b0)                          // 1-bit input: sleep signal to enable the dynamic power saving feature.
+  .MESSAGE_CONTROL(0),                    // DECIMAL
+  .READ_DATA_WIDTH_A(C_FXP_WIDTH),        // DECIMAL
+  .READ_DATA_WIDTH_B(C_FXP_WIDTH),        // DECIMAL
+  .READ_LATENCY_A(2),                     // DECIMAL
+  .READ_LATENCY_B(2),                     // DECIMAL
+  .READ_RESET_VALUE_A("0"),               // String
+  .READ_RESET_VALUE_B("0"),               // String
+  .RST_MODE_A("SYNC"),                    // String
+  .RST_MODE_B("SYNC"),                    // String
+  .USE_MEM_INIT(1),                       // DECIMAL
+  .WAKEUP_TIME("disable_sleep")           // String
+) xpm_memory_dprom_inst (                
+  .dbiterra(),                            // 1-bit output: Leave open.
+  .dbiterrb(),                            // 1-bit output: Leave open.
+  .douta(lut_out_a),                      // READ_DATA_WIDTH_A-bit output: Data output for port A read operations.
+  .doutb(lut_out_b),                      // READ_DATA_WIDTH_B-bit output: Data output for port B read operations.
+  .sbiterra(),                            // 1-bit output: Leave open.
+  .sbiterrb(),                            // 1-bit output: Leave open.
+  .addra(lut_ptr_a),                      // ADDR_WIDTH_A-bit input: Address for port A read operations.
+  .addrb(lut_ptr_b),                      // ADDR_WIDTH_B-bit input: Address for port B read operations.
+  .clka(CLK),                             // 1-bit input: Clock signal for port A. Also clocks port B when
+                                          // parameter CLOCKING_MODE is "common_clock".
+  .clkb(CLK),                             // 1-bit input: Clock signal for port B when parameter CLOCKING_MODE is
+                                          // "independent_clock". Unused when parameter CLOCKING_MODE is
+                                          // "common_clock".
+  .ena(1'b1),                             // 1-bit input: Memory enable signal for port A. Must be high on clock
+                                          // cycles when read operations are initiated. Pipelined internally.
+  .enb(1'b1),                             // 1-bit input: Memory enable signal for port B. Must be high on clock
+                                          // cycles when read operations are initiated. Pipelined internally.
+  .injectdbiterra(1'b0),                  // 1-bit input: Do not change from the provided value.
+  .injectdbiterrb(1'b0),                  // 1-bit input: Do not change from the provided value.
+  .injectsbiterra(1'b0),                  // 1-bit input: Do not change from the provided value.
+  .injectsbiterrb(1'b0),                  // 1-bit input: Do not change from the provided value.
+  .regcea(1'b1),                          // 1-bit input: Do not change from the provided value.
+  .regceb(1'b1),                          // 1-bit input: Do not change from the provided value.
+  .rsta(!nRST),                           // 1-bit input: Reset signal for the final port A output register stage.
+                                          // Synchronously resets output port douta to the value specified by
+                                          // parameter READ_RESET_VALUE_A.
+  .rstb(!nRST),                           // 1-bit input: Reset signal for the final port B output register stage.
+                                          // Synchronously resets output port doutb to the value specified by
+                                          // parameter READ_RESET_VALUE_B.
+  .sleep(1'b0)                            // 1-bit input: sleep signal to enable the dynamic power saving feature.
 );
 //-- PIPELINE STAGE 1 --
 // CORDIC 1 : Circular Vectorial
@@ -258,11 +258,11 @@ fxp_cordic_c #(
   .Z_IN(C_FXP_ZERO),
   .LUT_OUT(lut_out_a),
   .X_OUT(stage1_c1_xout),
-  .Y_OUT(),             // DISCONNECTED
+  .Y_OUT(),                       // DISCONNECTED
   .Z_OUT(stage1_c1_zout),
   .MEM_PTR(cor_ptr),
   .VALID_CO(stage1_c1_overflow),
-  .DATA_RDY()             // DISCONNECTED
+  .DATA_RDY()                     // DISCONNECTED
     );
 //-- PIPELINE STAGE 2 --
 FSM_iKinematics_FSMv2 #(
@@ -298,7 +298,7 @@ fxp_cordic_hv #(
   .Y_IN(stage2_reg0),
   .X_OUT(stage3_c2_xout),
   .VALID_CO(stage3_c2_overflow),
-  .DATA_RDY()             // DISCONNECTED
+  .DATA_RDY()                       // DISCONNECTED
     );
 // CORDIC 4: Circular Vectorial
 fxp_cordic_c #(
@@ -315,11 +315,11 @@ fxp_cordic_c #(
   .Z_IN(C_FXP_ZERO),
   .LUT_OUT(lut_out_a),
   .X_OUT(stage3_c4_xout),
-  .Y_OUT(),             //DISCONNECTED
-  .Z_OUT(),             //DISCONNECTED
-  .MEM_PTR(),             //DISCONNECTED
+  .Y_OUT(),                         //DISCONNECTED
+  .Z_OUT(),                         //DISCONNECTED
+  .MEM_PTR(),                       //DISCONNECTED
   .VALID_CO(stage3_c4_overflow),
-  .DATA_RDY()             // DISCONNECTED
+  .DATA_RDY()                       // DISCONNECTED
     );
 // Multiplier
 fxp_multiplier #(
@@ -345,7 +345,7 @@ fxp_cordic_lv #(
   .Y_IN(stage3_reg3),
   .Z_OUT(stage4_c7_zout),
   .VALID_CO(stage4_c7_overflow),
-  .DATA_RDY()             // DISCONNECTED
+  .DATA_RDY()                       // DISCONNECTED
     );
 // Multiplier
 fxp_multiplier #(
@@ -372,12 +372,12 @@ cordic_c_exp #(
   .Y_IN(stage4_mult_out),
   .Z_IN(C_FXP_ZERO),
   .LUT_OUT(lut_out_b),
-  .X_OUT(),             //DISCONNECTED
-  .Y_OUT(),             //DISCONNECTED
+  .X_OUT(),                           // DISCONNECTED
+  .Y_OUT(),                           // DISCONNECTED
   .Z_OUT(stage4_c3_zout),
-  .MEM_PTR(),             //DISCONNECTED
+  .MEM_PTR(),                         // DISCONNECTED
   .VALID_CO(stage4_c3_overflow),
-  .DATA_RDY()             // DISCONNECTED
+  .DATA_RDY()                         // DISCONNECTED
     );
 // Substractor
 fxp_adder #(
@@ -405,7 +405,7 @@ fxp_cordic_hv #(
   .Y_IN(stage4_reg0),
   .X_OUT(stage5_c8_xout),
   .VALID_CO(stage5_c8_overflow),
-  .DATA_RDY()             // DISCONNECTED
+  .DATA_RDY()                           // DISCONNECTED
     );
 // Multiplier
 fxp_multiplier #(
@@ -442,12 +442,12 @@ fxp_cordic_c #(
   .Y_IN(C_FXP_ZERO),
   .Z_IN(stage4_reg2),
   .LUT_OUT(lut_out_a),
-  .X_OUT(),             //DISCONNECTED
+  .X_OUT(),                             // DISCONNECTED
   .Y_OUT(stage5_c5_yout),
-  .Z_OUT(),             //DISCONNECTED
-  .MEM_PTR(),             //DISCONNECTED
+  .Z_OUT(),                             // DISCONNECTED
+  .MEM_PTR(),                           // DISCONNECTED
   .VALID_CO(stage5_c5_overflow),
-  .DATA_RDY()             // DISCONNECTED
+  .DATA_RDY()                           // DISCONNECTED
     );
 //-- PIPELINE STAGE 6 --
 // CORDIC 9: Circular Vectorial
@@ -464,12 +464,12 @@ fxp_cordic_c #(
   .Y_IN(stage5_reg1),
   .Z_IN(C_FXP_ZERO),
   .LUT_OUT(lut_out_a),
-  .X_OUT(),             //DISCONNECTED
-  .Y_OUT(),             //DISCONNECTED
+  .X_OUT(),                             // DISCONNECTED
+  .Y_OUT(),                             // DISCONNECTED
   .Z_OUT(stage6_c9_zout),
-  .MEM_PTR(),             //DISCONNECTED
+  .MEM_PTR(),                           // DISCONNECTED
   .VALID_CO(stage6_c9_overflow),
-  .DATA_RDY()             // DISCONNECTED
+  .DATA_RDY()                           // DISCONNECTED
     );  
 // CORDIC 6: Circular Vectorial
 fxp_cordic_c #(
@@ -485,12 +485,12 @@ fxp_cordic_c #(
   .Y_IN(stage5_reg3),
   .Z_IN(C_FXP_ZERO),
   .LUT_OUT(lut_out_a),
-  .X_OUT(),             //DISCONNECTED
-  .Y_OUT(),             //DISCONNECTED
+  .X_OUT(),                             // DISCONNECTED
+  .Y_OUT(),                             // DISCONNECTED
   .Z_OUT(stage6_c6_zout),
-  .MEM_PTR(),             //DISCONNECTED
+  .MEM_PTR(),                           // DISCONNECTED
   .VALID_CO(stage6_c6_overflow),
-  .DATA_RDY()             // DISCONNECTED
+  .DATA_RDY()                           // DISCONNECTED
     );
 // Substractor
 fxp_adder #(
@@ -510,10 +510,11 @@ fxp_adder #(
 //-- FSM --
 // FSM State Register
 always @(posedge CLK)
-  if (nRST)
-    fsm_state <= fsm_next_state;
-  else
+  if (~nRST)
     fsm_state <= {C_FSM_BUS_SIZE{1'b0}};
+  else
+    fsm_state <= fsm_next_state;
+
 // FSM Next State Logic
 always @(*)
   case (fsm_state)
@@ -527,17 +528,19 @@ always @(*)
 //-- Pipeline Signals Behavior
 //Pipeline Activity Register
 always @(posedge CLK)
-  if (nRST)
+  if (~nRST)
+    pip_activity <= 6'h00;
+  else
     if (START || pip_clock || OUT_DATA_READY) // ADD : || DATA_RDY
       pip_activity <= {(START || FIFO_READ),pip_activity[5:1]};
     else
       pip_activity <= pip_activity;
-  else
-    pip_activity <= 6'h00;
 
 //Pipeline Counter
 always @(posedge CLK)
-  if (nRST)
+  if (~nRST)
+    pip_ctr <= {C_PIP_CTR_SIZE{1'b0}};
+  else
     if (fsm_state == fsm_srun)
       if (pip_ctr < C_PIP_MAX_PCNTR)
         pip_ctr <= pip_ctr + 1;
@@ -545,8 +548,6 @@ always @(posedge CLK)
         pip_ctr <= {C_PIP_CTR_SIZE{1'b0}};
     else
       pip_ctr <= {C_PIP_CTR_SIZE{1'b0}};
-  else
-    pip_ctr <= {C_PIP_CTR_SIZE{1'b0}};
 
 // Pipeline Clock
 assign pip_clock = ((pip_ctr == C_PIP_MAX_PCNTR) && |pip_activity[5:1]) || START; // Verify if START can be asynchronous
@@ -559,7 +560,12 @@ assign lut_ptr_b = cor_ptr;
 
 //-- Input Registers --
 always @(posedge CLK)
-  if (nRST)
+  if (~nRST) begin
+    reg_xin <= C_FXP_ZERO;
+    reg_yin <= C_FXP_ZERO;
+    reg_zin <= C_FXP_ZERO;
+    end
+  else
     if (START || FIFO_READ) begin
       reg_xin <= X_IN;
       reg_yin <= Y_IN;
@@ -570,15 +576,34 @@ always @(posedge CLK)
       reg_yin <= reg_yin;
       reg_zin <= reg_zin;
     end
-  else begin
-    reg_xin <= C_FXP_ZERO;
-    reg_yin <= C_FXP_ZERO;
-    reg_zin <= C_FXP_ZERO;
-    end
 
 //-- Pipeline Registers --
 always @(posedge CLK)
-  if (nRST)
+  if (~nRST) begin
+    stage1_reg0 <= C_FXP_ZERO;
+    stage1_reg1 <= C_FXP_ZERO;
+    stage1_reg2 <= C_FXP_ZERO;
+    stage2_reg0 <= C_FXP_ZERO;
+    stage2_reg1 <= C_FXP_ZERO;
+    stage2_reg2 <= C_FXP_ZERO;
+    stage2_reg3 <= C_FXP_ZERO;
+    stage3_reg0 <= C_FXP_ZERO;
+    stage3_reg1 <= C_FXP_ZERO;
+    stage3_reg2 <= C_FXP_ZERO;
+    stage3_reg3 <= C_FXP_ZERO;
+    stage3_reg4 <= C_FXP_ZERO;
+    stage4_reg0 <= C_FXP_ZERO;
+    stage4_reg1 <= C_FXP_ZERO;
+    stage4_reg2 <= C_FXP_ZERO;
+    stage4_reg3 <= C_FXP_ZERO;
+    stage5_reg0 <= C_FXP_ZERO;
+    stage5_reg1 <= C_FXP_ZERO;
+    stage5_reg2 <= C_FXP_ZERO;
+    stage5_reg3 <= C_FXP_ZERO;
+    stage5_reg4 <= C_FXP_ZERO;
+    stage5_reg5 <= C_FXP_ZERO;
+    end
+  else
     if (pip_ctr == C_PIP_MAX_PCNTR-1) begin
       stage1_reg0 <= stage1_c1_xout;
       stage1_reg1 <= stage1_c1_zout;
@@ -627,34 +652,17 @@ always @(posedge CLK)
       stage5_reg4 <= stage5_reg4;
       stage5_reg5 <= stage5_reg5;
       end
-  else begin
-    stage1_reg0 <= C_FXP_ZERO;
-    stage1_reg1 <= C_FXP_ZERO;
-    stage1_reg2 <= C_FXP_ZERO;
-    stage2_reg0 <= C_FXP_ZERO;
-    stage2_reg1 <= C_FXP_ZERO;
-    stage2_reg2 <= C_FXP_ZERO;
-    stage2_reg3 <= C_FXP_ZERO;
-    stage3_reg0 <= C_FXP_ZERO;
-    stage3_reg1 <= C_FXP_ZERO;
-    stage3_reg2 <= C_FXP_ZERO;
-    stage3_reg3 <= C_FXP_ZERO;
-    stage3_reg4 <= C_FXP_ZERO;
-    stage4_reg0 <= C_FXP_ZERO;
-    stage4_reg1 <= C_FXP_ZERO;
-    stage4_reg2 <= C_FXP_ZERO;
-    stage4_reg3 <= C_FXP_ZERO;
-    stage5_reg0 <= C_FXP_ZERO;
-    stage5_reg1 <= C_FXP_ZERO;
-    stage5_reg2 <= C_FXP_ZERO;
-    stage5_reg3 <= C_FXP_ZERO;
-    stage5_reg4 <= C_FXP_ZERO;
-    stage5_reg5 <= C_FXP_ZERO;
-    end
 
 // Pipeline Overflow
 always @(posedge CLK)
-  if (nRST)
+  if (~nRST) begin
+    stage1_overflow <= 1'b0;
+    stage2_overflow <= 1'b0;
+    stage3_overflow <= 1'b0;
+    stage4_overflow <= 1'b0;
+    stage5_overflow <= 1'b0;
+    end
+  else
     if (pip_ctr == C_PIP_MAX_PCNTR-1) begin
       stage1_overflow <= stage1_c1_overflow;
       stage2_overflow <= stage1_overflow || stage2_fsm_overflow;
@@ -669,27 +677,26 @@ always @(posedge CLK)
       stage4_overflow <= stage4_overflow;
       stage5_overflow <= stage5_overflow;
       end
-  else begin
-    stage1_overflow <= 1'b0;
-    stage2_overflow <= 1'b0;
-    stage3_overflow <= 1'b0;
-    stage4_overflow <= 1'b0;
-    stage5_overflow <= 1'b0;
-    end
 
 // Data Ready Signal
 always @(posedge CLK)
-  if (nRST)
-    OUT_DATA_READY <= pip_activity[0] && (pip_ctr == C_PIP_MAX_PCNTR-1);
-  else
+  if (~nRST)
     OUT_DATA_READY <= 1'b0;
+  else
+    OUT_DATA_READY <= pip_activity[0] && (pip_ctr == C_PIP_MAX_PCNTR-1);
     
 //-- Busy Signal --
 assign BUSY = ((fsm_state == fsm_srun) || (fsm_state == fsm_dout));
     
 //-- Output Registers --
 always @(posedge CLK)
-  if (nRST)
+  if (nRST) begin
+    Q1_OUT <= C_FXP_ZERO;
+    Q2_OUT <= C_FXP_ZERO;
+    Q3_OUT <= C_FXP_ZERO;
+    DATA_VALID <= 1'b0;
+    end
+  else
     if (pip_ctr == C_PIP_MAX_PCNTR-1) begin
       Q1_OUT <= stage5_reg5;
       Q2_OUT <= stage6_add_out;
@@ -701,12 +708,6 @@ always @(posedge CLK)
       Q2_OUT <= Q2_OUT;
       Q3_OUT <= Q3_OUT;
       DATA_VALID <= DATA_VALID;
-    end
-  else begin
-    Q1_OUT <= C_FXP_ZERO;
-    Q2_OUT <= C_FXP_ZERO;
-    Q3_OUT <= C_FXP_ZERO;
-    DATA_VALID <= 1'b0;
     end
 
 endmodule
