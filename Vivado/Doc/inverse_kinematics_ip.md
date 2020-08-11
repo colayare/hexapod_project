@@ -13,20 +13,17 @@ E1 = Inverse Kinematics Parameter Q1\
 E2 = Inverse Kinematics Parameter Q2\
 E3 = Inverse Kinematics Parameter Q3
 
-## Usage
-- [Write Input FIFO](#Write-Input-Fifo)
-- [Trigger Inverse Kinematics](#Trigger-Inverse-Kinematics)
-- [Leg Counter Configuration](#Leg-counter-configuration)
-- Output Fixed-Point to Floating-Point Convertion Read Mux
+
+## Integration Guide
+_Under construction._
 
 ## Numeric Format
 Floating Point 32-bit Representation:\
 Fixed-Point 20-bit Representation:\
-    Integer : 4-bit\
-    Decimal : 16-bit
+Integer : 4-bit\
+Decimal : 16-bit
 
-
-## Inverse Kinematics IP 
+## Inverse Kinematics IP Parameters
 |Parameter|Value|Format|Comment|
 |------|------|------|------|
 |C_FIFO_DEPTH|16|Integer|FIFO Depth (This parameter will be fixed to 6 in upcoming versions)|
@@ -51,86 +48,6 @@ Fixed-Point 20-bit Representation:\
 |C_ROB_NJOINTS|3|Integer|
 
 _Note: Some of these parameters will be set as local param in upcoming releases._
-
- 
-## Write Input FIFO
-The first step of Inverse Kinematics Calculation is to write the Direct Kinematics Parameters into the FIFO through the IKIX, IKIY and IKIZ registers and writing 0b1 in the TRIG register. This operation will trigger the FIFO write operation.
-- Write Calculation for one hexapod leg:
-```c
-float Input_X;
-float Input_Y;
-float Input_Z;
-...
-axi_write(BASE_ADDR+IKIX, *(uint32_t *) &Input_X);  // Direct Kinematics Input X
-axi_write(BASE_ADDR+IKIY, *(uint32_t *) &Input_Y);  // Direct Kinematics Input Y
-axi_write(BASE_ADDR+IKIZ, *(uint32_t *) &Input_Z);  // Direct Kinematics Input Z
-axi_write(BASE_ADDR+TRIG, 0b1);      // Write Direct Kinematics Input parameters into FIFO
-axi_write(BASE_ADDR+TRIG, 0b0);      // Not mandatory
-```
-- Write Calculation for the six hexapod legs:
-```c
-float Input_X;
-float Input_Y;
-float Input_Z;
-...
-for(int i=0;i<6;<i++) {
-    axi_write(BASE_ADDR+IKIX, *(uint32_t *) &Input_X[i]);  // Direct Kinematics Input X - Leg i
-    axi_write(BASE_ADDR+IKIY, *(uint32_t *) &Input_Y[i]);  // Direct Kinematics Input Y - Leg i
-    axi_write(BASE_ADDR+IKIZ, *(uint32_t *) &Input_Z[i]);  // Direct Kinematics Input Z - Leg i
-    axi_write(BASE_ADDR+TRIG, 0b1);         // Write Direct Kinematics Input parameters into FIFO
-    axi_write(BASE_ADDR+TRIG, 0b0);         // Not mandatory
-}
-```
-
-It is no necessary to write back to 0b0 the Triger FIFO Write bit in TRIG register after Direct Kinematics FIFO Write because this registers is Trigger Type, this means the FIFO Write operation is only performed on the AXI-Write operation on this register. But is it recomended since some AXI functions implemented in this project will re-write the current value of the IP registers and may cause unexpected behavioral.
-
-## Trigger Inverse Kinematics
-- Trigger Inverse Kinematics Calculation for one hexapod leg:
-```c
-float Input_X;
-float Input_Y;
-float Input_Z;
-...
-axi_write(BASE_ADDR+IKIX, *(uint32_t *) &Input_X);  // Direct Kinematics Input X
-axi_write(BASE_ADDR+IKIY, *(uint32_t *) &Input_Y);  // Direct Kinematics Input Y
-axi_write(BASE_ADDR+IKIZ, *(uint32_t *) &Input_Z);  // Direct Kinematics Input Z
-axi_write(BASE_ADDR+TRIG, 0b1);      // Write Direct Kinematics Input parameters into FIFO
-axi_write(BASE_ADDR+TRIG, 0b0);      // Not mandatory
-axi_write(BASE_ADDR+TRIG, 0b2);      // Trigger Inverse Kinematics Calculation
-axi_write(BASE_ADDR+TRIG, 0b0);      // Not mandatory
-```
-
-- Trigger Inverse kinematics Calculation for the six hexapod legs:
-```c
-float Input_X;
-float Input_Y;
-float Input_Z;
-...
-for(int i=0;i<6;<i++) {
-    axi_write(BASE_ADDR+IKIX, *(uint32_t *) &Input_X[i]);  // Direct Kinematics Input X - Leg i
-    axi_write(BASE_ADDR+IKIY, *(uint32_t *) &Input_Y[i]);  // Direct Kinematics Input Y - Leg i
-    axi_write(BASE_ADDR+IKIZ, *(uint32_t *) &Input_Z[i]);  // Direct Kinematics Input Z - Leg i
-    axi_write(BASE_ADDR+TRIG, 0b1);         // Write Direct Kinematics Input parameters into FIFO
-    axi_write(BASE_ADDR+TRIG, 0b0);         // Not mandatory
-}
-axi_write(BASE_ADDR+TRIG, 0b2);             // Trigger Inverse Kinematics Calculation of all 6 legs
-axi_write(BASE_ADDR+TRIG, 0b0);             // Not mandatory
-```
-
-## Leg Counter Configuration
-LEGC Register controls the Hexapod Leg Pointer. This points to the hexapod leg where the next Inverse Kinematics calculation is assigned to. This register is composed by many configurations bits. These configurations can be done at the same axi transaction simultaneously.
-See updated masks and bit offsets on [LEGC Register Details](register_map.md).
-
-```c
-uint32_t counter_mode;
-uint32_t select_leg;
-...
-counter_mode = (counter_mode & 0x30) << 0x4;  // Set Leg Counter mode and shift offset 
-select_leg   = (select_leg & 0x7);            // Set Leg Counter to a leg value
-
-axi_write(BASE_ADDR+LEGC, counter_mode+select_leg+0x8); 
-axi_write(BASE_ADDR+LEGC, select_leg
-```
 
 ## Register Map
 |ADDR|REG NAME|Comment|
@@ -180,5 +97,88 @@ axi_write(BASE_ADDR+LEGC, select_leg
 |0x2A|KO18|Leg 6 - Q3|
 
 [_Detailed Register Map_](./register_map.md)
+ 
+## Usage
+- [Write Input FIFO](#Write-Input-Fifo)
+- [Trigger Inverse Kinematics](#Trigger-Inverse-Kinematics)
+- [Leg Counter Configuration](#Leg-counter-configuration)
+- Output Fixed-Point to Floating-Point Convertion Read Mux
 
-Under construction.
+### Write Input FIFO
+The first step of Inverse Kinematics Calculation is to write the Direct Kinematics Parameters into the FIFO through the IKIX, IKIY and IKIZ registers and writing 0b1 in the TRIG register. This operation will trigger the FIFO write operation.
+- Write Calculation for one hexapod leg:
+```c
+float Input_X;
+float Input_Y;
+float Input_Z;
+...
+axi_write(BASE_ADDR+IKIX, *(uint32_t *) &Input_X);  // Direct Kinematics Input X
+axi_write(BASE_ADDR+IKIY, *(uint32_t *) &Input_Y);  // Direct Kinematics Input Y
+axi_write(BASE_ADDR+IKIZ, *(uint32_t *) &Input_Z);  // Direct Kinematics Input Z
+axi_write(BASE_ADDR+TRIG, 0b1);      // Write Direct Kinematics Input parameters into FIFO
+axi_write(BASE_ADDR+TRIG, 0b0);      // Not mandatory
+```
+- Write Calculation for the six hexapod legs:
+```c
+float Input_X;
+float Input_Y;
+float Input_Z;
+...
+for(int i=0;i<6;<i++) {
+    axi_write(BASE_ADDR+IKIX, *(uint32_t *) &Input_X[i]);  // Direct Kinematics Input X - Leg i
+    axi_write(BASE_ADDR+IKIY, *(uint32_t *) &Input_Y[i]);  // Direct Kinematics Input Y - Leg i
+    axi_write(BASE_ADDR+IKIZ, *(uint32_t *) &Input_Z[i]);  // Direct Kinematics Input Z - Leg i
+    axi_write(BASE_ADDR+TRIG, 0b1);         // Write Direct Kinematics Input parameters into FIFO
+    axi_write(BASE_ADDR+TRIG, 0b0);         // Not mandatory
+}
+```
+
+It is no necessary to write back to 0b0 the Triger FIFO Write bit in TRIG register after Direct Kinematics FIFO Write because this registers is Trigger Type, this means the FIFO Write operation is only performed on the AXI-Write operation on this register. But is it recomended since some AXI functions implemented in this project will re-write the current value of the IP registers and may cause unexpected behavioral.
+
+### Trigger Inverse Kinematics
+- Trigger Inverse Kinematics Calculation for one hexapod leg:
+```c
+float Input_X;
+float Input_Y;
+float Input_Z;
+...
+axi_write(BASE_ADDR+IKIX, *(uint32_t *) &Input_X);  // Direct Kinematics Input X
+axi_write(BASE_ADDR+IKIY, *(uint32_t *) &Input_Y);  // Direct Kinematics Input Y
+axi_write(BASE_ADDR+IKIZ, *(uint32_t *) &Input_Z);  // Direct Kinematics Input Z
+axi_write(BASE_ADDR+TRIG, 0b1);      // Write Direct Kinematics Input parameters into FIFO
+axi_write(BASE_ADDR+TRIG, 0b0);      // Not mandatory
+axi_write(BASE_ADDR+TRIG, 0b2);      // Trigger Inverse Kinematics Calculation
+axi_write(BASE_ADDR+TRIG, 0b0);      // Not mandatory
+```
+
+- Trigger Inverse kinematics Calculation for the six hexapod legs:
+```c
+float Input_X;
+float Input_Y;
+float Input_Z;
+...
+for(int i=0;i<6;<i++) {
+    axi_write(BASE_ADDR+IKIX, *(uint32_t *) &Input_X[i]);  // Direct Kinematics Input X - Leg i
+    axi_write(BASE_ADDR+IKIY, *(uint32_t *) &Input_Y[i]);  // Direct Kinematics Input Y - Leg i
+    axi_write(BASE_ADDR+IKIZ, *(uint32_t *) &Input_Z[i]);  // Direct Kinematics Input Z - Leg i
+    axi_write(BASE_ADDR+TRIG, 0b1);         // Write Direct Kinematics Input parameters into FIFO
+    axi_write(BASE_ADDR+TRIG, 0b0);         // Not mandatory
+}
+axi_write(BASE_ADDR+TRIG, 0b2);             // Trigger Inverse Kinematics Calculation of all 6 legs
+axi_write(BASE_ADDR+TRIG, 0b0);             // Not mandatory
+```
+
+### Leg Counter Configuration
+LEGC Register controls the Hexapod Leg Pointer. This points to the hexapod leg where the next Inverse Kinematics calculation is assigned to. This register is composed by many configurations bits. These configurations can be done at the same axi transaction simultaneously.
+See updated masks and bit offsets on [LEGC Register Details](register_map.md).
+
+```c
+uint32_t counter_mode;
+uint32_t select_leg;
+...
+counter_mode = (counter_mode & 0x30) << 0x4;  // Set Leg Counter mode and shift offset 
+select_leg   = (select_leg & 0x7);            // Set Leg Counter to a leg value
+
+axi_write(BASE_ADDR+LEGC, counter_mode+select_leg+0x8); 
+axi_write(BASE_ADDR+LEGC, select_leg
+```
