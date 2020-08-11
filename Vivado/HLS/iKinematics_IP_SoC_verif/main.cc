@@ -5,6 +5,7 @@
 #include <iostream>
 #include "xil_printf.h"
 #include "ip_context.h"
+#include "IP_reg_map.h"
 #include "iKinematics_IP.h"
 #include "iKinematics_IP_params.h"
 

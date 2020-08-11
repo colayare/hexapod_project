@@ -8,58 +8,53 @@
 #ifndef SRC_IKINEMATICS_IP_PARAMS_H_
 #define SRC_IKINEMATICS_IP_PARAMS_H_
 
-//-- Inverse Kinematics IP Parameters
-#define AXI_IK_BASEADDR 0x40000000
-#define AXI_IK_HIGHADDR 0x4000FFFF
-#define AXI_IK_PAGESIZE AXI_IK_HIGHADDR - AXI_IK_BASEADDR + 1
-#define AXI_IK_RMAPSIZE 40
-#define AXI_IK_WORDSIZE 4
-
 //-- Inverse Kinematics IP Register Map
 #define REG_TRIG 0
-#define REG_LEGC 1
-#define REG_IKIX 2
-#define REG_IKIY 3
-#define REG_IKIZ 4
-#define REG_IKQ1 2
-#define REG_IKQ2 3
-#define REG_IKQ3 4
-#define REG_OF01 5
-#define REG_OF02 6
-#define REG_OF03 7
-#define REG_OF04 8
-#define REG_OF05 9
-#define REG_OF06 10
-#define REG_OF07 11
-#define REG_OF08 12
-#define REG_OF09 13
-#define REG_OF10 14
-#define REG_OF11 15
-#define REG_OF12 16
-#define REG_OF13 17
-#define REG_OF14 18
-#define REG_OF15 19
-#define REG_OF16 20
-#define REG_OF17 21
-#define REG_OF18 22
-#define REG_KO01 23
-#define REG_KO02 24
-#define REG_KO03 25
-#define REG_KO04 26
-#define REG_KO05 27
-#define REG_KO06 28
-#define REG_KO07 29
-#define REG_KO08 30
-#define REG_KO09 31
-#define REG_KO10 32
-#define REG_KO11 33
-#define REG_KO12 34
-#define REG_KO13 35
-#define REG_KO14 36
-#define REG_KO15 37
-#define REG_KO16 38
-#define REG_KO17 39
-#define REG_KO18 40
+#define REG_CTRL 1
+#define REG_STAT 2
+#define REG_LEGC 3
+#define REG_IKIX 4
+#define REG_IKIY 5
+#define REG_IKIZ 6
+#define REG_IKQ1 4
+#define REG_IKQ2 5
+#define REG_IKQ3 6
+#define REG_OF01 7
+#define REG_OF02 8
+#define REG_OF03 9
+#define REG_OF04 10
+#define REG_OF05 11
+#define REG_OF06 12
+#define REG_OF07 13
+#define REG_OF08 14
+#define REG_OF09 15
+#define REG_OF10 16
+#define REG_OF11 17
+#define REG_OF12 18
+#define REG_OF13 19
+#define REG_OF14 20
+#define REG_OF15 21
+#define REG_OF16 22
+#define REG_OF17 23
+#define REG_OF18 24
+#define REG_KO01 25
+#define REG_KO02 26
+#define REG_KO03 27
+#define REG_KO04 28
+#define REG_KO05 29
+#define REG_KO06 30
+#define REG_KO07 31
+#define REG_KO08 32
+#define REG_KO09 33
+#define REG_KO10 34
+#define REG_KO11 35
+#define REG_KO12 36
+#define REG_KO13 37
+#define REG_KO14 38
+#define REG_KO15 39
+#define REG_KO16 40
+#define REG_KO17 41
+#define REG_KO18 42
 
 //- IP Control & Trigger Register
 // Bit Definition
