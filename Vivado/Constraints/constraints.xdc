@@ -22,8 +22,14 @@ set_property -dict { PACKAGE_PIN A20   IOSTANDARD LVCMOS33 } [get_ports { pwm_ou
 set_property -dict { PACKAGE_PIN P16   IOSTANDARD LVCMOS33 } [get_ports { IIC_scl_io }]; #IO_L24N_T3_34 Sch=CK_SCL
 set_property -dict { PACKAGE_PIN P15   IOSTANDARD LVCMOS33 } [get_ports { IIC_sda_io }]; #IO_L24P_T3_34 Sch=CK_SDA
 
-# LED0
-set_property -dict { PACKAGE_PIN R14    IOSTANDARD LVCMOS33 } [get_ports { tmr_led }]; #IO_L6N_T0_VREF_34 Sch=LED0
+# SPI
+set_property -dict { PACKAGE_PIN W15   IOSTANDARD LVCMOS33 } [get_ports { SPI_io1_io }]; #IO_L10N_T1_34 Sch=CK_MISO
+set_property -dict { PACKAGE_PIN T12   IOSTANDARD LVCMOS33 } [get_ports { SPI_io0_io }]; #IO_L2P_T0_34  Sch=CK_MISO
+set_property -dict { PACKAGE_PIN H15   IOSTANDARD LVCMOS33 } [get_ports { SPI_sck_io  }]; #IO_L19P_T3_35 Sch=CK_SCK
+set_property -dict { PACKAGE_PIN F16   IOSTANDARD LVCMOS33 } [get_ports { SPI_ss_io   }]; #IO_L6P_T0_35  Sch=CK_SS
+# Not Connected SPI
+set_property -dict { PACKAGE_PIN F17   IOSTANDARD LVCMOS33 } [get_ports { SPI_ss1_o }]; #IO_L6N_T0_VREF_35
+set_property -dict { PACKAGE_PIN G18   IOSTANDARD LVCMOS33 } [get_ports { SPI_ss2_o }]; #IO_L16N_T2_35
 
 #clk_fpga_0
 create_clock -name VCLK -period 10

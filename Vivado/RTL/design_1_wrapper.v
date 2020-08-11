@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-//Date        : Wed Apr 29 12:42:58 2020
+//Date        : Thu Jul 30 15:30:21 2020
 //Host        : DESKTOP-7SEKLH3 running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -33,6 +33,12 @@ module design_1_wrapper
     FIXED_IO_ps_srstb,
     IIC_scl_io,
     IIC_sda_io,
+    SPI_io0_io,
+    SPI_io1_io,
+    SPI_sck_io,
+    SPI_ss1_o,
+    SPI_ss2_o,
+    SPI_ss_io,
     pwm_out);
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
@@ -57,6 +63,12 @@ module design_1_wrapper
   inout FIXED_IO_ps_srstb;
   inout IIC_scl_io;
   inout IIC_sda_io;
+  inout SPI_io0_io;
+  inout SPI_io1_io;
+  inout SPI_sck_io;
+  output SPI_ss1_o;
+  output SPI_ss2_o;
+  inout SPI_ss_io;
   output [17:0]pwm_out;
 
   wire [14:0]DDR_addr;
@@ -88,6 +100,24 @@ module design_1_wrapper
   wire IIC_sda_io;
   wire IIC_sda_o;
   wire IIC_sda_t;
+  wire SPI_io0_i;
+  wire SPI_io0_io;
+  wire SPI_io0_o;
+  wire SPI_io0_t;
+  wire SPI_io1_i;
+  wire SPI_io1_io;
+  wire SPI_io1_o;
+  wire SPI_io1_t;
+  wire SPI_sck_i;
+  wire SPI_sck_io;
+  wire SPI_sck_o;
+  wire SPI_sck_t;
+  wire SPI_ss1_o;
+  wire SPI_ss2_o;
+  wire SPI_ss_i;
+  wire SPI_ss_io;
+  wire SPI_ss_o;
+  wire SPI_ss_t;
   wire [17:0]pwm_out;
 
   IOBUF IIC_scl_iobuf
@@ -100,6 +130,26 @@ module design_1_wrapper
         .IO(IIC_sda_io),
         .O(IIC_sda_i),
         .T(IIC_sda_t));
+  IOBUF SPI_io0_iobuf
+       (.I(SPI_io0_o),
+        .IO(SPI_io0_io),
+        .O(SPI_io0_i),
+        .T(SPI_io0_t));
+  IOBUF SPI_io1_iobuf
+       (.I(SPI_io1_o),
+        .IO(SPI_io1_io),
+        .O(SPI_io1_i),
+        .T(SPI_io1_t));
+  IOBUF SPI_sck_iobuf
+       (.I(SPI_sck_o),
+        .IO(SPI_sck_io),
+        .O(SPI_sck_i),
+        .T(SPI_sck_t));
+  IOBUF SPI_ss_iobuf
+       (.I(SPI_ss_o),
+        .IO(SPI_ss_io),
+        .O(SPI_ss_i),
+        .T(SPI_ss_t));
   design_1 design_1_i
        (.DDR_addr(DDR_addr),
         .DDR_ba(DDR_ba),
@@ -128,5 +178,19 @@ module design_1_wrapper
         .IIC_sda_i(IIC_sda_i),
         .IIC_sda_o(IIC_sda_o),
         .IIC_sda_t(IIC_sda_t),
+        .SPI_io0_i(SPI_io0_i),
+        .SPI_io0_o(SPI_io0_o),
+        .SPI_io0_t(SPI_io0_t),
+        .SPI_io1_i(SPI_io1_i),
+        .SPI_io1_o(SPI_io1_o),
+        .SPI_io1_t(SPI_io1_t),
+        .SPI_sck_i(SPI_sck_i),
+        .SPI_sck_o(SPI_sck_o),
+        .SPI_sck_t(SPI_sck_t),
+        .SPI_ss1_o(SPI_ss1_o),
+        .SPI_ss2_o(SPI_ss2_o),
+        .SPI_ss_i(SPI_ss_i),
+        .SPI_ss_o(SPI_ss_o),
+        .SPI_ss_t(SPI_ss_t),
         .pwm_out(pwm_out));
 endmodule
