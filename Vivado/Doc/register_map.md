@@ -13,53 +13,53 @@ N     : Decimal\
 ## REGISTER MAP
 |ADDR|REG NAME|Comment|
 |------|------|------|
-|0x00|TRIG|Trigger Register|
-|0x01|CTRL|Control Register|
-|0x02|STAT|Status Register|
-|0x03|LEGC|Leg Counter Register|
-|0x04|IKIX|Inverse Kinematics Input X|
-|0x05|IKIY|Inverse Kinematics Input Y|
-|0x06|IKIZ|Inverse Kinematics Input Z|
-|0x07|OF01|Digital Offset Q1|
-|0x08|OF02|Digital Offset Q2|
-|0x09|OF03|Digital Offset Q3|
-|0x0A|OF04|Digital Offset Q4|
-|0x0B|OF05|Digital Offset Q5|
-|0x0C|OF06|Digital Offset Q6|
-|0x0D|OF07|Digital Offset Q7|
-|0x0E|OF08|Digital Offset Q8|
-|0x0F|OF09|Digital Offset Q9|
-|0x10|OF10|Digital Offset Q10|
-|0x11|OF11|Digital Offset Q11|
-|0x12|OF12|Digital Offset Q12|
-|0x13|OF13|Digital Offset Q13|
-|0x14|OF14|Digital Offset Q14|
-|0x15|OF15|Digital Offset Q15|
-|0x16|OF16|Digital Offset Q16|
-|0x17|OF17|Digital Offset Q17|
-|0x18|OF18|Digital Offset Q18|
-|0x19|KO01|Leg 1 - Q1|
-|0x1A|KO02|Leg 1 - Q2|
-|0x1B|KO03|Leg 1 - Q3|
-|0x1C|KO04|Leg 2 - Q1|
-|0x1D|KO05|Leg 2 - Q2|
-|0x1E|KO06|Leg 2 - Q3|
-|0x1F|KO07|Leg 3 - Q1|
-|0x20|KO08|Leg 3 - Q2|
-|0x21|KO09|Leg 3 - Q3|
-|0x22|KO10|Leg 4 - Q1|
-|0x23|KO11|Leg 4 - Q2|
-|0x24|KO12|Leg 4 - Q3|
-|0x25|KO13|Leg 5 - Q1|
-|0x26|KO14|Leg 5 - Q2|
-|0x27|KO15|Leg 5 - Q3|
-|0x28|KO16|Leg 6 - Q1|
-|0x29|KO17|Leg 6 - Q2|
-|0x2A|KO18|Leg 6 - Q3|
-
-----
+|0x00|[TRIG](#Trigger-register)|Trigger Register|
+|0x01|[CTRL](#Control-register)|Control Register|
+|0x02|[STAT](#Status-register)|Status Register|
+|0x03|[LEGC](#Leg-counter-register)|Leg Counter Register|
+|0x04|[IKIX](#Inverse-kinematics-input-x)|Inverse Kinematics Input X|
+|0x05|[IKIY](#Inverse-kinematics-input-y)|Inverse Kinematics Input Y|
+|0x06|[IKIZ](#Inverse-kinematics-input-z)|Inverse Kinematics Input Z|
+|0x07|[OF01](#Digital-offset-q1)|Digital Offset Q1|
+|0x08|[OF02](#Digital-offset-q2)|Digital Offset Q2|
+|0x09|[OF03](#Digital-offset-q3)|Digital Offset Q3|
+|0x0A|[OF04](#Digital-offset-q4)|Digital Offset Q4|
+|0x0B|[OF05](#Digital-offset-q5)|Digital Offset Q5|
+|0x0C|[OF06](#Digital-offset-q6)|Digital Offset Q6|
+|0x0D|[OF07](#Digital-offset-q7)|Digital Offset Q7|
+|0x0E|[OF08](#Digital-offset-q8)|Digital Offset Q8|
+|0x0F|[OF09](#Digital-offset-q9)|Digital Offset Q9|
+|0x10|[OF10](#Digital-offset-q10)|Digital Offset Q10|
+|0x11|[OF11](#Digital-offset-q11)|Digital Offset Q11|
+|0x12|[OF12](#Digital-offset-q12)|Digital Offset Q12|
+|0x13|[OF13](#Digital-offset-q13)|Digital Offset Q13|
+|0x14|[OF14](#Digital-offset-q14)|Digital Offset Q14|
+|0x15|[OF15](#Digital-offset-q15)|Digital Offset Q15|
+|0x16|[OF16](#Digital-offset-q16)|Digital Offset Q16|
+|0x17|[OF17](#Digital-offset-q17)|Digital Offset Q17|
+|0x18|[OF18](#Digital-offset-q18)|Digital Offset Q18|
+|0x19|[KO01](#Leg-1---q1)|Leg 1 - Q1|
+|0x1A|[KO02](#Leg-1---q2)|Leg 1 - Q2|
+|0x1B|[KO03](#Leg-1---q3)|Leg 1 - Q3|
+|0x1C|[KO04](#Leg-2---q1)|Leg 2 - Q1|
+|0x1D|[KO05](#Leg-2---q2)|Leg 2 - Q2|
+|0x1E|[KO06](#Leg-2---q3)|Leg 2 - Q3|
+|0x1F|[KO07](#Leg-3---q1)|Leg 3 - Q1|
+|0x20|[KO08](#Leg-3---q2)|Leg 3 - Q2|
+|0x21|[KO09](#Leg-3---q3)|Leg 3 - Q3|
+|0x22|[KO10](#Leg-4---q1)|Leg 4 - Q1|
+|0x23|[KO11](#Leg-4---q2)|Leg 4 - Q2|
+|0x24|[KO12](#Leg-4---q3)|Leg 4 - Q3|
+|0x25|[KO13](#Leg-5---q1)|Leg 5 - Q1|
+|0x26|[KO14](#Leg-5---q2)|Leg 5 - Q2|
+|0x27|[KO15](#Leg-5---q3)|Leg 5 - Q3|
+|0x28|[KO16](#Leg-6---q1)|Leg 6 - Q1|
+|0x29|[KO17](#Leg-6---q2)|Leg 6 - Q2|
+|0x2A|[KO18](#Leg-6---q3)|Leg 6 - Q3|
+      
+----  
 # REGISTER SPECIFICATION 32-bit Register Size
-
+      
 ## Trigger Register
 __Address__ = 0x00\
 __Word__    = 32-bit\
@@ -75,7 +75,7 @@ __Bit Description__
 |2|T|Write angular value direct to Output Trigger|
 |31:3|-|Unused|
 
-## Control Register Register
+## Control Register
 __Address__ = 0x01\
 __Word__    = 32-bit\
 \
