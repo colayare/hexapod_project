@@ -1,17 +1,35 @@
 # Inverse Kinematics IP
 
+
+## Index
+- [Introduction](#Introduction)
+- [Hexapod Leg Kinematics Model](#Hexapod-leg-kinematics-model)
+- [Integration Guide](#Integration-guide)
+- [Inverse Kinematics IP Parameters](#Inverse-kinematics-ip-parameters)
+- [Register Map](#Register-map)
+- [Usage](#Usage)
+
 ## Introduction
 
 
-## Hexapod Leg Inverse Kinematics Model
+## Hexapod Leg Kinematics Model
 ![Hexapod Leg](./images/hexapod_leg.PNG)
 
+For the current Hexapod Crixus the values of L1, L2, L3 are:\
 L1 = 0.0275 m\
 L2 = 0.0963 m\
 L3 = 0.1051 m\
 E1 = Inverse Kinematics Parameter Q1\
 E2 = Inverse Kinematics Parameter Q2\
 E3 = Inverse Kinematics Parameter Q3
+
+Inverse Kinematics equations provides the leg joints positions in rad according to the cartesian positio of the final effector:
+
+![](./images/hexapod_inverse_kinematics_original.PNG)
+
+These equations are adapted in order to be solved with CORDIC-based operations as follows:
+
+![](./images/hexapod_inverse_kinematics_cordic.PNG)
 
 
 ## Integration Guide
