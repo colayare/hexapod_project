@@ -89,10 +89,10 @@ int main(int argc, char* argv[]) {
     axi_tmr0.init_axi_mmap_ptr(AXI_TMR0_UIO, AXI_TMR0_BASEADDR * AXI_TMR_0_DEVICE_ID, AXI_TMR0_RMAPSIZE);
     // Configure AXI TMR
     axi_tmr0.axi_bit_set(0, 1 << 1);          // Select Down Counter
-    axi_tmr0.axi_write(1, delay * TMR_1MS);		// Load CTR value to Load Reg
-    axi_tmr0.axi_bit_set(0, 1 << 5);		      // Load TMR0
+    axi_tmr0.axi_write(1, delay * TMR_1MS);   // Load CTR value to Load Reg
+    axi_tmr0.axi_bit_set(0, 1 << 5);          // Load TMR0
     axi_tmr0.axi_bit_clr(0, 1 << 5);
-    axi_tmr0.axi_bit_set(0, 1 << 6);		      // Enable TMR0 Interrupt
+    axi_tmr0.axi_bit_set(0, 1 << 6);          // Enable TMR0 Interrupt
     //=================================================================
 
     //=================================================================
@@ -117,11 +117,11 @@ int main(int argc, char* argv[]) {
     // Initialize Joints Positions
     hexapod.init_joint_position();
     // Initialize Locomotion Parameters
-    hexapod.xo  = 12.38;		//
+    hexapod.xo  = 12.38;
     hexapod.yo  = 5.0;
     hexapod.zo  = -10.51;
-    hexapod.S 	= hexapod_S;
-    hexapod.res	= hexapod_res;
+    hexapod.S   = hexapod_S;
+    hexapod.res = hexapod_res;
     //=================================================================
 
     //=================================================================
@@ -142,8 +142,11 @@ int main(int argc, char* argv[]) {
     strncpy(str, "Step:", sizeof(str));
     oled.set_cursor(1,0);
     oled.disp_str((uint8_t *) &str);
+    strncpy(str, "Angle:", sizeof(str));
+    oled.set_cursor(2,0);
+    oled.disp_str((uint8_t *) &str);
     #endif
-		//=================================================================
+    //=================================================================
 
     //=================================================================
     // RUN
@@ -154,13 +157,16 @@ int main(int argc, char* argv[]) {
         // Get Joystick Position
         joystick.get_joystick();
         // Disable TMR0 Count
-        axi_tmr0.axi_bit_clr(0, 1 << 7);		
+        axi_tmr0.axi_bit_clr(0, 1 << 7);    
         // Calculate & Send hexapod walk step
         if ( joystick.dJoystick() ) {
           cout << GREEN << "step : " << step << RESET << "\tdir : " << joystick.dJoystick() << "\tangle : " << joystick.xAngle() << endl;
           #ifdef USE_OLED
           sprintf(str, "%d", step);
           oled.set_cursor(1, C_FONT_SIZE*6);
+          oled.disp_str((uint8_t *) &str);
+          sprintf(str, "%.3f", joystick.xAngle());
+          oled.set_cursor(2, C_FONT_SIZE*6);
           oled.disp_str((uint8_t *) &str);
           #endif
           hexapod.step(step, walk, joystick.xAngle());
